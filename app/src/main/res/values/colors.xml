@@ -3,5 +3,5 @@
     <color name="colorPrimary">#019b45</color>
     <color name="colorPrimaryDark">#01873c</color>
     <color name="colorAccent">#272b36</color>
-    <color name="colorMenuIcons">#FFFFFF</color>
+    <color name="colorSecondary">#FFFFFF</color>
 </resources>

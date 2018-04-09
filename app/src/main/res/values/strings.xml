@@ -1,9 +1,9 @@
 <resources>
     <!--                App data                -->
-    <string name="app_name">planete Dashboard</string>
+    <string name="app_name">Planete Dashboard</string>
 
 
-    <!--               Nav Menu                 -->
+    <!--                    Menu                 -->
     <string name="menu_sales">Sales</string>
     <string name="menu_stock">Stock</string>
     <string name="menu_purchase">Purchases</string>
@@ -14,6 +14,11 @@
     <string name="menu_parameter">Parameters</string>
 
 
-    <!--                Android                 -->
+    <!--                Text Views                -->
+    <string name="tv_today">Today</string>
+    <string name="tv_yesterday">Yesterday</string>
+    <string name="tv_quantity_sold">Qty.sold</string>
+    <string name="tv_articles_number">No.invoice</string>
+    <string name="tv_average_price">Avg.price</string>
 
 </resources>

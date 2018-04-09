@@ -6,20 +6,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">@color/colorMenuIcons</item>
-        <item name="android:actionMenuTextColor">@color/colorMenuIcons</item>
-        <item name="android:textColorPrimary">@color/colorMenuIcons</item>
+        <item name="android:textColor">@color/colorSecondary</item>
+        <item name="android:actionMenuTextColor">@color/colorSecondary</item>
+        <item name="android:textColorPrimary">@color/colorSecondary</item>
         <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
 
         <!--                    Material values                 -->
         <item name="material_drawer_background">@color/colorAccent</item>
-        <item name="material_drawer_primary_text">@color/colorMenuIcons</item>
-        <item name="material_drawer_primary_icon">@color/colorMenuIcons</item>
-        <item name="material_drawer_secondary_text">@color/colorMenuIcons</item>
+        <item name="material_drawer_primary_text">@color/colorSecondary</item>
+        <item name="material_drawer_primary_icon">@color/colorSecondary</item>
+        <item name="material_drawer_secondary_text">@color/colorSecondary</item>
         <item name="material_drawer_selected">@color/colorPrimary</item>
         <item name="material_drawer_divider">@color/material_drawer_divider</item>
-        <item name="material_drawer_selected_text">@color/colorMenuIcons</item>
-        <item name="material_drawer_header_selection_text">@color/colorMenuIcons</item>
+        <item name="material_drawer_selected_text">@color/colorSecondary</item>
+        <item name="material_drawer_header_selection_text">@color/colorSecondary</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
