@@ -13,6 +13,22 @@
     <string name="menu_setting">Settings</string>
     <string name="menu_parameter">Parameters</string>
 
+    <!--                   Graph                -->
+    <string name="monday_short">MON</string>
+    <string name="tuesday_short">TUE</string>
+    <string name="wednesday_short">WED</string>
+    <string name="thursday_short">THU</string>
+    <string name="friday_short">FRI</string>
+    <string name="saturday_short">SAT</string>
+    <string name="sunday_short">SUN</string>
+    <string name="week_actual">This week</string>
+    <string name="week_previous">Last week</string>
+
+    <!--                    Tab Host            -->
+    <string name="tab_day">Day</string>
+    <string name="tab_week">Week</string>
+    <string name="tab_month">Month</string>
+
 
     <!--                Text Views                -->
     <string name="tv_today">Today</string>
