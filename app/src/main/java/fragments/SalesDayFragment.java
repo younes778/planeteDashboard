@@ -21,7 +21,7 @@ public class SalesDayFragment extends Fragment {
 
 
     View view;
-    TextView tv_today,tv_yesterday;
+    TextView tv_today,tv_yesterday,tv_today_date,tv_yesterday_date;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,11 +32,18 @@ public class SalesDayFragment extends Fragment {
 
         tv_today = (TextView) view.findViewById(R.id.tv_today);
         tv_yesterday = (TextView) view.findViewById(R.id.tv_yesterday);
+        tv_today_date = (TextView) view.findViewById(R.id.tv_today_date);
+        tv_yesterday_date = (TextView) view.findViewById(R.id.tv_yesterday_date);
 
         // initialize the font
         typeface(view);
         tv_today.setTypeface(AppData.fontAppBold);
         tv_yesterday.setTypeface(AppData.fontAppBold);
+
+        tv_today_date.setText(AppData.getDayDateFormatted());
+        tv_yesterday_date.setText(AppData.getYesterdayDateFormatted());
+
+
 
         return view;
     }

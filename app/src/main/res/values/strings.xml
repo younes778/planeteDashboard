@@ -1,6 +1,8 @@
 <resources>
     <!--                App data                -->
     <string name="app_name">Planete Dashboard</string>
+    <string name="currency">DZ</string>
+
 
 
     <!--                    Menu                 -->
@@ -14,15 +16,17 @@
     <string name="menu_parameter">Parameters</string>
 
     <!--                   Graph                -->
-    <string name="monday_short">MON</string>
-    <string name="tuesday_short">TUE</string>
-    <string name="wednesday_short">WED</string>
-    <string name="thursday_short">THU</string>
-    <string name="friday_short">FRI</string>
-    <string name="saturday_short">SAT</string>
-    <string name="sunday_short">SUN</string>
-    <string name="week_actual">This week</string>
-    <string name="week_previous">Last week</string>
+    <string-array name="days_shors">
+        <item name="sunday_short">SU</item>
+        <item name="monday_short">MO</item>
+        <item name="tuesday_short">TU</item>
+        <item name="wednesday_short">WE</item>
+        <item name="thursday_short">TH</item>
+        <item name="friday_short">FR</item>
+        <item name="saturday_short">SA</item>
+    </string-array>
+
+    <string name="chart_title_sales_week">Sales this week</string>
 
     <!--                    Tab Host            -->
     <string name="tab_day">Day</string>
