@@ -30,6 +30,7 @@ import com.norbsoft.typefacehelper.TypefaceHelper;
 import classes.AppData;
 import d2si.apps.planetedashboard.R;
 import fragments.SalesDayFragment;
+import fragments.SalesMonthFragment;
 import fragments.SalesWeekFragment;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
@@ -69,9 +70,17 @@ public class MainActivity extends AppCompatActivity{
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition()==0) loadFragment(new SalesDayFragment());
-                if (tab.getPosition()==1) loadFragment(new SalesWeekFragment());
+                switch (tab.getPosition()){
+                    case 0:
+                        loadFragment(new SalesDayFragment());
+                        break;
+                    case 1:
+                        loadFragment(new SalesWeekFragment());
+                        break;
+                    case 2:
+                        loadFragment(new SalesMonthFragment());
 
+                }
             }
 
             @Override
@@ -91,13 +100,11 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         // initialize the action bar title font
-        ActionBarHelper.setTitle(
-                getSupportActionBar(),
-                typeface(this,R.string.app_name));
+        AppData.setActionBarTitle(this,R.string.app_name);
 
 
         // For test
-        loadFragment(new SalesDayFragment());
+        loadFragment(new SalesMonthFragment());
 
         // Nav drawer initialize
         new DrawerBuilder().withActivity(this).build();
@@ -132,6 +139,7 @@ public class MainActivity extends AppCompatActivity{
                         navDrawer.closeDrawer();
                         if (position==1) {
                             loadFragment(new SalesDayFragment());
+                            AppData.setActionBarTitle(MainActivity.this,R.string.menu_sales);
                         }
                         return true;
                     }
@@ -157,6 +165,8 @@ public class MainActivity extends AppCompatActivity{
         fragmentTransaction.replace(R.id.fragment_manager, fragment);
         fragmentTransaction.commit(); // save the changes
     }
+
+
 
     // initialize the icons library context
     @Override

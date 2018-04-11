@@ -26,7 +26,7 @@
         app:tabBackground="@color/colorSecondary"
         app:tabMode="fixed"
         app:tabIndicatorColor="@color/colorPrimary"
-        app:tabTextColor="@color/colorPrimary"
+        app:tabTextColor="@color/colorTextSecondary"
         app:tabSelectedTextColor="@color/colorPrimary"
         app:tabGravity="fill" />
 

@@ -1,21 +1,21 @@
 <resources>
     <!--                App data                -->
-    <string name="app_name">Planete Dashboard</string>
+    <string name="app_name">PLANETE DASHBOARD</string>
     <string name="currency">DZ</string>
 
 
 
     <!--                    Menu                 -->
-    <string name="menu_sales">Sales</string>
-    <string name="menu_stock">Stock</string>
-    <string name="menu_purchase">Purchases</string>
-    <string name="menu_client">Clients</string>
-    <string name="menu_provider">Providers</string>
-    <string name="menu_logout">Log out</string>
-    <string name="menu_setting">Settings</string>
-    <string name="menu_parameter">Parameters</string>
+    <string name="menu_sales">SALES</string>
+    <string name="menu_stock">STOCK</string>
+    <string name="menu_purchase">PURCHASES</string>
+    <string name="menu_client">CLIENTS</string>
+    <string name="menu_provider">PROVIDERS</string>
+    <string name="menu_logout">LOG OUT</string>
+    <string name="menu_setting">SETTINGS</string>
+    <string name="menu_parameter">PARAMETERS</string>
 
-    <!--                   Graph                -->
+    <!--                   Chart               -->
     <string-array name="days_shors">
         <item name="sunday_short">SU</item>
         <item name="monday_short">MO</item>
@@ -26,12 +26,10 @@
         <item name="saturday_short">SA</item>
     </string-array>
 
-    <string name="chart_title_sales_week">Sales this week</string>
-
     <!--                    Tab Host            -->
-    <string name="tab_day">Day</string>
-    <string name="tab_week">Week</string>
-    <string name="tab_month">Month</string>
+    <string name="tab_day">DAY</string>
+    <string name="tab_week">WEEK</string>
+    <string name="tab_month">MONTH</string>
 
 
     <!--                Text Views                -->

@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--                Version Green           -
     <color name="colorPrimary">#019b45</color>
     <color name="colorPrimaryDark">#01873c</color>
     <color name="colorAccent">#272b36</color>
     <color name="colorSecondary">#FFFFFF</color>
+    -->
+
+    <!--                Version Violet           -->
+    <color name="colorPrimary">#6772e5</color>
+    <color name="colorPrimaryDark">#404ab2</color>
+    <color name="colorAccent">#272b36</color>
+    <color name="colorSecondary">#FFFFFF</color>
+    <color name="colorTextSecondary">#676767</color>
+
 </resources>

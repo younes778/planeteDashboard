@@ -2,16 +2,12 @@ package fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
@@ -26,7 +22,7 @@ import d2si.apps.planetedashboard.R;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
-public class SalesWeekFragment extends Fragment implements OnChartValueSelectedListener {
+public class SalesMonthFragment extends Fragment implements OnChartValueSelectedListener {
 
     private LineChart chart;
     private View view;
@@ -40,17 +36,17 @@ public class SalesWeekFragment extends Fragment implements OnChartValueSelectedL
         chart = (LineChart) view.findViewById(R.id.chart);
         chart.setOnChartValueSelectedListener(this);
 
+
         // intialize for test
         LinkedHashMap<String,List<Float>> entries = new LinkedHashMap<>();
-        List<Float> thisWeekEntries = new ArrayList<Float>(){{add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);}};
-        List<Float> lastWeekEntries = new ArrayList<Float>(){{add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);}};
+        List<Float> thisMonthEntries = new ArrayList<Float>(){{add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);}};
+        List<Float> lastMonthEntries = new ArrayList<Float>(){{add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);}};
+
+        entries.put(AppData.getMonthFormatted(getActivity()),thisMonthEntries);
+        entries.put(AppData.getLastMonthFormatted(getActivity()),lastMonthEntries);
 
 
-        entries.put(AppData.getWeekDateFormatted(getActivity()),thisWeekEntries);
-        entries.put(AppData.getLastWeekDateFormatted(getActivity()),lastWeekEntries);
-
-
-        new LineChartCustom(getActivity(),chart,getResources().getStringArray(R.array.days_shors),entries, LineChartCustom.LINE_CHART_TYPE.STANDARD);
+        new LineChartCustom(getActivity(),chart,null,entries,LineChartCustom.LINE_CHART_TYPE.CUBIC);
 
         // initialize the font
         typeface(view);
