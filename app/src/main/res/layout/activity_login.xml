@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        app:srcCompat="@drawable/login_background" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorBackgroundSecondary"
+        android:textSize="15dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/app_copyright"
+        android:textColor="@color/colorPrimary" />
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:textSize="30dp"
+            android:textColor="@color/colorTextPrimary"
+            android:background="@color/colorPrimary"
+            android:text="@string/app_name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:background="@color/colorBackgroundSecondary"
+            android:orientation="vertical">
+
+            <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+
+                android:id="@+id/field_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelText="@string/et_user"
+                app:secondaryColor="@color/colorTextPrimary"
+                app:primaryColor="@color/colorTextPrimary"
+                app:errorColor="@color/colorError"
+                android:layout_marginBottom="10dp"
+                app:panelBackgroundColor="@color/colorPrimary"
+                app:hasClearButton="true"
+                app:enabled="true"
+                >
+
+                <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                    android:id="@+id/et_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    />
+
+            </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+            <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                android:id="@+id/field_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelText="@string/et_password"
+                app:secondaryColor="@color/colorTextPrimary"
+                app:primaryColor="@color/colorTextPrimary"
+                app:errorColor="@color/colorError"
+                android:layout_marginBottom="10dp"
+                app:panelBackgroundColor="@color/colorPrimary"
+                app:hasClearButton="true"
+                app:enabled="true"
+                >
+
+                <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:inputType="textPassword"
+                    />
+
+            </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                app:mrl_rippleHover="true"
+                app:mrl_rippleBackground="@color/colorTextPrimary"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:padding="10dp"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:enabled="true"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_login"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_gravity="center"/>
+
+            </com.balysv.materialripple.MaterialRippleLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+</RelativeLayout>

@@ -7,6 +7,8 @@ import android.graphics.Typeface;
 import android.text.format.DateUtils;
 
 import com.norbsoft.typefacehelper.ActionBarHelper;
+import com.norbsoft.typefacehelper.TypefaceCollection;
+import com.norbsoft.typefacehelper.TypefaceHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,11 +32,40 @@ public class AppData {
     public static Typeface fontAppBold;
 
     public static void init(Context context){
+
+        addChartColors(context);
+        initializeFonts(context);
+
+    }
+
+    // initialize app fonts
+    public static void initializeFonts(Context context){
+
+        // init fonts from assests
         fontApp = Typeface.createFromAsset(context.getAssets(), "fonts/AppFont.ttf");
         fontAppBold = Typeface.createFromAsset(context.getAssets(), "fonts/AppFont_Bold.ttf");
+
+        // initialize the default font
+        TypefaceCollection typeface = new TypefaceCollection.Builder()
+                .set(Typeface.BOLD, AppData.fontApp)
+                .create();
+        TypefaceHelper.init(typeface);
+
+
+    }
+
+    // Add chart colors
+    public static void addChartColors(Context context){
         CHART_COLORS.add(context.getResources().getColor(R.color.colorPrimary));
         CHART_COLORS.add(context.getResources().getColor(R.color.colorAccent));
         CHART_COLORS.add(context.getResources().getColor(R.color.colorPrimaryDark));
+    }
+
+    //set ActionBar title with specific font
+    public static void setActionBarTitle(AppCompatActivity activity, int ressource){
+        ActionBarHelper.setTitle(
+                activity.getSupportActionBar(),
+                typeface(activity,ressource));
     }
 
     public static String getDayDateFormatted(){
@@ -77,13 +108,5 @@ public class AppData {
     public static String getCurrencyFormatted(Context context,String value){
         return context.getString(R.string.currency)+value;
     }
-
-    //set ActionBar title with specific font
-    public static void setActionBarTitle(AppCompatActivity activity, int ressource){
-        ActionBarHelper.setTitle(
-                activity.getSupportActionBar(),
-                typeface(activity,ressource));
-    }
-
 
 }

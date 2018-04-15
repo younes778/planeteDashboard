@@ -1,19 +1,21 @@
 <resources>
     <!--                App data                -->
-    <string name="app_name">PLANETE DASHBOARD</string>
+    <string name="app_name">PLANETE <b>DASHBOARD</b></string>
+    <string name="activity_login">LOGIN</string>
     <string name="currency">DZ</string>
+    <string name="app_copyright">© 2018 <b>DSSI</b></string>
 
 
 
     <!--                    Menu                 -->
-    <string name="menu_sales">SALES</string>
-    <string name="menu_stock">STOCK</string>
-    <string name="menu_purchase">PURCHASES</string>
-    <string name="menu_client">CLIENTS</string>
-    <string name="menu_provider">PROVIDERS</string>
-    <string name="menu_logout">LOG OUT</string>
-    <string name="menu_setting">SETTINGS</string>
-    <string name="menu_parameter">PARAMETERS</string>
+    <string name="menu_sales"><b>SALES</b></string>
+    <string name="menu_stock"><b>STOCK</b></string>
+    <string name="menu_purchase"><b>PURCHASES</b></string>
+    <string name="menu_client"><b>CLIENTS</b></string>
+    <string name="menu_provider"><b>PROVIDERS</b></string>
+    <string name="menu_logout"><b>LOG OUT</b></string>
+    <string name="menu_setting"><b>SETTINGS</b></string>
+    <string name="menu_parameter"><b>PARAMETERS</b></string>
 
     <!--                   Chart               -->
     <string-array name="days_shors">
@@ -38,5 +40,15 @@
     <string name="tv_quantity_sold">Qty.sold</string>
     <string name="tv_articles_number">No.invoice</string>
     <string name="tv_average_price">Avg.price</string>
+
+    <!--                Edit Texts                -->
+    <string name="et_user">User</string>
+    <string name="et_user_helper">Enter the user name</string>
+    <string name="et_password">Password</string>
+    <string name="et_password_helper">Enter the user password</string>
+    <string name="et_error_not_empty">Field must not be empty</string>
+
+    <!--                 Buttons                   -->
+    <string name="btn_login"><b>Login</b></string>
 
 </resources>

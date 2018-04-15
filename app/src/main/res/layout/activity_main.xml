@@ -23,7 +23,7 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:tabBackground="@color/colorSecondary"
+        app:tabBackground="@color/colorTextPrimary"
         app:tabMode="fixed"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabTextColor="@color/colorTextSecondary"

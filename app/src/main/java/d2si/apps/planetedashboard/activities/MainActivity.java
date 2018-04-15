@@ -4,12 +4,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -23,9 +22,6 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.norbsoft.typefacehelper.ActionBarHelper;
-import com.norbsoft.typefacehelper.TypefaceCollection;
-import com.norbsoft.typefacehelper.TypefaceHelper;
 
 import classes.AppData;
 import d2si.apps.planetedashboard.R;
@@ -45,14 +41,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // init App Data values
-        AppData.init(getBaseContext());
-
-        // initialize the default font
-        TypefaceCollection typeface = new TypefaceCollection.Builder()
-                .set(Typeface.BOLD, AppData.fontApp)
-                .create();
-        TypefaceHelper.init(typeface);
+        //Apply font to the activity
         typeface(this);
 
         // Initialize TanLayout
@@ -104,7 +93,7 @@ public class MainActivity extends AppCompatActivity{
 
 
         // For test
-        loadFragment(new SalesMonthFragment());
+        loadFragment(new SalesDayFragment());
 
         // Nav drawer initialize
         new DrawerBuilder().withActivity(this).build();
@@ -149,8 +138,6 @@ public class MainActivity extends AppCompatActivity{
 
         // set the font of the nav drawer header
         typeface(navDrawer.getHeader());
-
-
 
 
     }
