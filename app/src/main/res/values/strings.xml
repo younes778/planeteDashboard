@@ -35,8 +35,8 @@
 
 
     <!--                Text Views                -->
-    <string name="tv_today">Today</string>
-    <string name="tv_yesterday">Yesterday</string>
+    <string name="tv_today"><b>Today</b></string>
+    <string name="tv_yesterday"><b>Yesterday</b></string>
     <string name="tv_quantity_sold">Qty.sold</string>
     <string name="tv_articles_number">No.invoice</string>
     <string name="tv_average_price">Avg.price</string>

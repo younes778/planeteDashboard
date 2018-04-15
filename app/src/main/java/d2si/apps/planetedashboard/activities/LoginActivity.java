@@ -1,10 +1,12 @@
 package d2si.apps.planetedashboard.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.balysv.materialripple.MaterialRippleLayout;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         if (!validatePassword())
             field_password.setError(getString(R.string.et_error_not_empty),false);
 
-        // if valid launch main activity
+        // if all validated launch main activity
         if (validateUser() && validatePassword()) {
             Intent MainActivityLauncher = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(MainActivityLauncher);
@@ -57,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
      *
      * @param savedInstanceState The activity instance
      */
-
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -65,11 +66,15 @@ public class LoginActivity extends AppCompatActivity {
 
         // init the AppData ressources
         AppData.init(getBaseContext());
+        // Bind resources
         ButterKnife.bind(this);
 
-        //set the activity font
+        //set the activity and actionBar font
         typeface(this);
         AppData.setActionBarTitle(this,R.string.activity_login);
+
+        // To Test
+        AppData.launchActivity(this,MainActivity.class);
 
     }
 
@@ -78,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
      *
      */
     private boolean validateUser(){
+        // check field not empty
         return !et_user.getText().toString().equals("");
     }
 
@@ -86,8 +92,17 @@ public class LoginActivity extends AppCompatActivity {
      *
      */
     private boolean validatePassword(){
+        // check field not empty
         return !et_password.getText().toString().equals("");
     }
 
-
+    /**
+     * Method call to initialize the icons library context
+     *
+     */
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
     }
+
+}

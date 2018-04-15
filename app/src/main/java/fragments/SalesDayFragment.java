@@ -12,38 +12,56 @@ import android.widget.Toast;
 
 import com.norbsoft.typefacehelper.TypefaceHelper;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import classes.AppData;
 import d2si.apps.planetedashboard.R;
+import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
+/**
+ * Sales Fragment by day
+ *
+ * Fragment that represents the sales by day
+ *
+ * @author younessennadj
+ */
 public class SalesDayFragment extends Fragment {
 
 
     View view;
-    TextView tv_today,tv_yesterday,tv_today_date,tv_yesterday_date;
+    @BindView(R.id.tv_today) TextView tv_today;
+    @BindView(R.id.tv_yesterday) TextView tv_yesterday;
+    @BindView(R.id.tv_today_date) TextView tv_today_date;
+    @BindView(R.id.tv_yesterday_date) TextView tv_yesterday_date;
+
 
     @Override
+    /**
+     * Method that create the activity
+     *
+     * @param inflater View Inflater
+     * @param container View container
+     * @param savedInstanceState The activity instance
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_sales_day, container, false);
 
-        tv_today = (TextView) view.findViewById(R.id.tv_today);
-        tv_yesterday = (TextView) view.findViewById(R.id.tv_yesterday);
-        tv_today_date = (TextView) view.findViewById(R.id.tv_today_date);
-        tv_yesterday_date = (TextView) view.findViewById(R.id.tv_yesterday_date);
-
         // initialize the font
         typeface(view);
+        ButterKnife.bind(this,view);
+
+        // set the bold font for some texts
         tv_today.setTypeface(AppData.fontAppBold);
         tv_yesterday.setTypeface(AppData.fontAppBold);
 
+        // set the texts
         tv_today_date.setText(AppData.getDayDateFormatted());
         tv_yesterday_date.setText(AppData.getYesterdayDateFormatted());
-
-
 
         return view;
     }

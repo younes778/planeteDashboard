@@ -2,7 +2,6 @@ package d2si.apps.planetedashboard.activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -12,7 +11,6 @@ import android.view.View;
 
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -23,6 +21,8 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import classes.AppData;
 import d2si.apps.planetedashboard.R;
 import fragments.SalesDayFragment;
@@ -31,11 +31,24 @@ import fragments.SalesWeekFragment;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
+/**
+ * Main Activity
+ *
+ * Activity that represents the main functions given by the app including the menu drawer
+ *
+ * @author younessennadj
+ */
 public class MainActivity extends AppCompatActivity{
 
+    @BindView(R.id.tabs) TabLayout tabLayout;
     private Drawer navDrawer;
-    private TabLayout tabLayout;
+
     @Override
+    /**
+     * Method that create the activity
+     *
+     * @param savedInstanceState The activity instance
+     */
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -43,22 +56,21 @@ public class MainActivity extends AppCompatActivity{
 
         //Apply font to the activity
         typeface(this);
-
-        // Initialize TanLayout
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        ButterKnife.bind(this);
 
         // Add different tabs Sales
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_day)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_week)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_month)));
 
-        // set the font
+        // set the font of the tabs
         typeface(tabLayout);
 
-        // Tab Layout of sales
+        // Tab Layout of sales click listener
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                // load the right fragment when select
                 switch (tab.getPosition()){
                     case 0:
                         loadFragment(new SalesDayFragment());
@@ -92,11 +104,12 @@ public class MainActivity extends AppCompatActivity{
         AppData.setActionBarTitle(this,R.string.app_name);
 
 
-        // For test
+        // For fragment for test only
         loadFragment(new SalesDayFragment());
 
-        // Nav drawer initialize
+        // Initialize Nav drawer
         new DrawerBuilder().withActivity(this).build();
+
         // Add Items to the nav drawer
         navDrawer = new DrawerBuilder()
                 .withActivity(this)
@@ -142,7 +155,11 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    // Load fragment into the App
+    /**
+     * Method that load fragment
+     *
+     * @param fragment The fragment to load
+     */
     private void loadFragment(Fragment fragment) {
         // create a FragmentManager
         FragmentManager fm = getFragmentManager();
@@ -150,14 +167,7 @@ public class MainActivity extends AppCompatActivity{
         android.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
         // replace the FrameLayout with new Fragment
         fragmentTransaction.replace(R.id.fragment_manager, fragment);
-        fragmentTransaction.commit(); // save the changes
-    }
-
-
-
-    // initialize the icons library context
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+        // save the changes
+        fragmentTransaction.commit();
     }
 }
