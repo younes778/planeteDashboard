@@ -31,6 +31,8 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  * @author younessennadj
  */
 public class AppData {
+    public static boolean VERSTION_TEST = true;
+    public static String[] CHART_MONTHS_FORMAT= new String[31];
     public static int CHART_RADIUS_1 = 4;
     public static int CHART_WIDTH_1= 2;
     public static int CHART_TEXT_SIZE_1= 15;
@@ -47,7 +49,7 @@ public class AppData {
     public static void init(Context context){
         addChartColors(context);
         initializeFonts(context);
-
+        addChartMonthFormat();
     }
 
     /**
@@ -78,6 +80,19 @@ public class AppData {
         CHART_COLORS.add(context.getResources().getColor(R.color.colorPrimary));
         CHART_COLORS.add(context.getResources().getColor(R.color.colorAccent));
         CHART_COLORS.add(context.getResources().getColor(R.color.colorPrimaryDark));
+    }
+
+    /**
+     * Method that add specific format to the Chart Month {1,15,30}
+     *
+     */
+    public static void addChartMonthFormat(){
+        for (int i=0;i<CHART_MONTHS_FORMAT.length;i++)
+            CHART_MONTHS_FORMAT[i]="";
+
+        CHART_MONTHS_FORMAT[0]="01";
+        CHART_MONTHS_FORMAT[14]="15";
+        CHART_MONTHS_FORMAT[30]="31";
     }
 
     /**

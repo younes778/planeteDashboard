@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -56,11 +55,11 @@ public class SalesMonthFragment extends Fragment implements OnChartValueSelected
 
         // intialize for test
         LinkedHashMap<String,List<Float>> entries = new LinkedHashMap<>();
-        List<Float> thisMonthEntries = new ArrayList<Float>(){{add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);}};
-        List<Float> lastMonthEntries = new ArrayList<Float>(){{add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);}};
-        entries.put(AppData.getMonthFormatted(getActivity()),thisMonthEntries);
-        entries.put(AppData.getLastMonthFormatted(getActivity()),lastMonthEntries);
-        new LineChartCustom(getActivity(),chart,null,entries,LineChartCustom.LINE_CHART_TYPE.CUBIC);
+        List<Float> thisMonthEntries = new ArrayList<Float>(){{add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(34f);add(20f);add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(34f);}};
+        List<Float> lastMonthEntries = new ArrayList<Float>(){{add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);add(50f);add(30f);add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);}};
+        entries.put(AppData.getMonthFormatted(),thisMonthEntries);
+        entries.put(AppData.getLastMonthFormatted(),lastMonthEntries);
+        new LineChartCustom(getActivity(),chart,AppData.CHART_MONTHS_FORMAT,entries,LineChartCustom.LINE_CHART_TYPE.CUBIC);
 
         // initialize the font
         typeface(view);

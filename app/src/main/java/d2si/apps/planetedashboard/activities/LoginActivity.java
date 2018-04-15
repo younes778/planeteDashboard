@@ -47,11 +47,8 @@ public class LoginActivity extends AppCompatActivity {
             field_password.setError(getString(R.string.et_error_not_empty),false);
 
         // if all validated launch main activity
-        if (validateUser() && validatePassword()) {
-            Intent MainActivityLauncher = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(MainActivityLauncher);
-            finish();
-        }
+        if (validateUser() && validatePassword())
+            AppData.launchActivity(this,MainActivity.class);
     }
 
     /**
@@ -74,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         AppData.setActionBarTitle(this,R.string.activity_login);
 
         // To Test
-        AppData.launchActivity(this,MainActivity.class);
+        if (AppData.VERSTION_TEST) AppData.launchActivity(this,MainActivity.class);
 
     }
 
