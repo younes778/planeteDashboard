@@ -25,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import classes.AppData;
 import d2si.apps.planetedashboard.R;
+import fragments.MainMenuFragment;
 import fragments.SalesDayFragment;
 import fragments.SalesMonthFragment;
 import fragments.SalesWeekFragment;
@@ -40,8 +41,8 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  */
 public class MainActivity extends AppCompatActivity{
 
-    @BindView(R.id.tabs) TabLayout tabLayout;
-    private Drawer navDrawer;
+    @BindView(R.id.tabs) public TabLayout tabLayout;
+    public static Drawer navDrawer;
 
     @Override
     /**
@@ -73,13 +74,14 @@ public class MainActivity extends AppCompatActivity{
                 // load the right fragment when select
                 switch (tab.getPosition()){
                     case 0:
-                        loadFragment(new SalesDayFragment());
+                        AppData.loadFragment(MainActivity.this,new SalesDayFragment());
                         break;
                     case 1:
-                        loadFragment(new SalesWeekFragment());
+                        AppData.loadFragment(MainActivity.this,new SalesWeekFragment());
                         break;
                     case 2:
-                        loadFragment(new SalesMonthFragment());
+                        AppData.loadFragment(MainActivity.this,new SalesMonthFragment());
+                        break;
 
                 }
             }
@@ -103,9 +105,9 @@ public class MainActivity extends AppCompatActivity{
         // initialize the action bar title font
         AppData.setActionBarTitle(this,R.string.app_name);
 
-
-        // For fragment for test only
-        loadFragment(new SalesDayFragment());
+        // inti fragment with the Main menu
+        AppData.loadFragment(MainActivity.this,new MainMenuFragment());
+        tabLayout.setVisibility(View.GONE);
 
         // Initialize Nav drawer
         new DrawerBuilder().withActivity(this).build();
@@ -140,8 +142,9 @@ public class MainActivity extends AppCompatActivity{
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         navDrawer.closeDrawer();
                         if (position==1) {
-                            loadFragment(new SalesDayFragment());
+                            AppData.loadFragment(MainActivity.this,new SalesDayFragment());
                             AppData.setActionBarTitle(MainActivity.this,R.string.menu_sales);
+                            tabLayout.setVisibility(View.VISIBLE);
                         }
                         return true;
                     }
@@ -155,19 +158,4 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    /**
-     * Method that load fragment
-     *
-     * @param fragment The fragment to load
-     */
-    private void loadFragment(Fragment fragment) {
-        // create a FragmentManager
-        FragmentManager fm = getFragmentManager();
-        // create a FragmentTransaction to begin the transaction and replace the Fragment
-        android.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        // replace the FrameLayout with new Fragment
-        fragmentTransaction.replace(R.id.fragment_manager, fragment);
-        // save the changes
-        fragmentTransaction.commit();
-    }
 }

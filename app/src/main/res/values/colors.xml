@@ -13,7 +13,14 @@
     <color name="colorAccent">#272b36</color>
     <color name="colorTextPrimary">#FFFFFF</color>
     <color name="colorTextSecondary">#676767</color>
-    <color name="colorError">#E91E63</color>
+    <color name="colorError">#DD3D3D</color>
     <color name="colorBackgroundSecondary">#f1f1f1</color>
+
+    <!--          Main Menu color           -->
+    <color name="colorMenuBlue">#39A9DC</color>
+    <color name="colorMenuGreen">#97BF0D</color>
+    <color name="colorMenuYellow">#F0C40D</color>
+    <color name="colorMenuOrange">#F2940D</color>
+    <color name="colorMenuRed">#DD3D3D</color>
 
 </resources>

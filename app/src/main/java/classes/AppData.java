@@ -1,6 +1,8 @@
 package classes;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
@@ -18,7 +20,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.R;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
@@ -101,9 +102,9 @@ public class AppData {
      * @param activity actual activity
      * @param resource actionbar title resource
      */
-    public static void setActionBarTitle(AppCompatActivity activity, int resource){
+    public static void setActionBarTitle(Activity activity, int resource){
         ActionBarHelper.setTitle(
-                activity.getSupportActionBar(),
+                ((AppCompatActivity) activity).getSupportActionBar(),
                 typeface(activity,resource));
     }
 
@@ -201,6 +202,25 @@ public class AppData {
         Intent activityLauncher = new Intent(caller,launched);
         caller.startActivity(activityLauncher);
         caller.finish();
+    }
+
+    /**
+     * Method that load fragment
+     *
+     * @param activity the activity to load on
+     * @param fragment The fragment to load
+     */
+    public static void loadFragment(Activity activity, Fragment fragment){
+
+        // create a FragmentManager
+        FragmentManager fm = activity.getFragmentManager();
+        // create a FragmentTransaction to begin the transaction and replace the Fragment
+        android.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        // replace the FrameLayout with new Fragment
+        fragmentTransaction.replace(R.id.fragment_manager, fragment);
+        // save the changes
+        fragmentTransaction.commit();
+
     }
 
 }
