@@ -66,9 +66,6 @@ public class MainActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // initialize the action bar title font
-        AppData.setActionBarTitle(this,R.string.app_name);
-
         // inti fragment with the Main menu with the tabs
         int fragment_to_launch= Integer.parseInt(AppData.getDataFromLaunchedActivity(this));
         setupTabs(fragment_to_launch);
@@ -106,9 +103,7 @@ public class MainActivity extends AppCompatActivity{
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         navDrawer.closeDrawer();
                         if (position==1) {
-                            AppData.loadFragment(MainActivity.this,new SalesDayFragment());
-                            AppData.setActionBarTitle(MainActivity.this,R.string.menu_sales);
-                            tabLayout.setVisibility(View.VISIBLE);
+                            setupTabs(FRAGMENT_SALES);
                         }
                         return true;
                     }
@@ -123,7 +118,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     /**
-     * Method that setup the tabs
+     * Method that setup the tabs according to the fragment to be load, set the Action Bar title & load the initial fragment
      *
      * @param fragment The fragment that the tabs will be loaded for
      */
@@ -131,6 +126,9 @@ public class MainActivity extends AppCompatActivity{
         switch (fragment){
             case FRAGMENT_SALES:
                 AppData.loadFragment(this,new SalesDayFragment());
+
+                // initialize the action bar title font
+                AppData.setActionBarTitle(this,R.string.menu_sales);
 
                 //remove all tabs first
                 tabLayout.removeAllTabs();

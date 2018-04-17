@@ -55,8 +55,12 @@ dependencies {
     // Material field text library with custom errors
     implementation 'com.github.HITGIF:TextFieldBoxes:1.4.3'
 
-    //Binding Library
+    // Binding Library
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    // Rest Web service Library
+    implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
 
 }

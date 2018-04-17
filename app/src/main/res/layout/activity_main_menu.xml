@@ -38,8 +38,8 @@
 
                     <ImageView
                         android:id="@+id/img_sales"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         app:srcCompat="@drawable/ic_menu_gallery" />
                     <TextView
                         android:paddingLeft="30dp"
@@ -81,8 +81,8 @@
 
                     <ImageView
                         android:id="@+id/img_stock"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         app:srcCompat="@drawable/ic_menu_gallery" />
                     <TextView
                         android:paddingLeft="30dp"
@@ -124,8 +124,8 @@
 
                         <ImageView
                             android:id="@+id/img_purchase"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             app:srcCompat="@drawable/ic_menu_gallery" />
                         <TextView
                             android:paddingLeft="30dp"
@@ -167,8 +167,8 @@
 
                         <ImageView
                             android:id="@+id/img_client"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             app:srcCompat="@drawable/ic_menu_gallery" />
                         <TextView
                             android:paddingLeft="30dp"
@@ -209,8 +209,8 @@
 
                         <ImageView
                             android:id="@+id/img_providers"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             app:srcCompat="@drawable/ic_menu_gallery" />
                         <TextView
                             android:paddingLeft="30dp"
