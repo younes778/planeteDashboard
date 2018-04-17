@@ -33,6 +33,8 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  * @author younessennadj
  */
 public class AppData {
+    public static String REST_SERVER_URL="http://192.168.1.7";
+    public static String REST_SERVER_PORT="8080";
     public static boolean VERSTION_TEST = true;
     public static String ACTIVITY_DATA="Data";
     public static String[] CHART_MONTHS_FORMAT= new String[31];

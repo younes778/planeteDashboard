@@ -1,7 +1,6 @@
 package d2si.apps.planetedashboard.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -71,7 +70,9 @@ public class LoginActivity extends AppCompatActivity {
         AppData.setActionBarTitle(this,R.string.activity_login);
 
         //Test
-        if (AppData.VERSTION_TEST) AppData.launchActivity(this,MainMenuActivity.class,true,null);
+        if (AppData.VERSTION_TEST)
+            //AppData.launchActivity(this,MainMenuActivity.class,true,null);
+            AppData.launchActivity(this,ConnexionActivity.class,true,null);
 
     }
 
