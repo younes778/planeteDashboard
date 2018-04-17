@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -33,6 +34,7 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  */
 public class AppData {
     public static boolean VERSTION_TEST = true;
+    public static String ACTIVITY_DATA="Data";
     public static String[] CHART_MONTHS_FORMAT= new String[31];
     public static int CHART_RADIUS_1 = 4;
     public static int CHART_WIDTH_1= 2;
@@ -195,13 +197,36 @@ public class AppData {
      * Method that launch activity launched from activity caller
      *
      * @param caller activity caller
-     * @param launched activity will be launched class
+     * @param launched activity class that will be launched
+     * @param finishing indicate whether finish the activity caller or not
+     * @param extra data to be transferred to the activity to be launched
      *
      */
-    public static void launchActivity(AppCompatActivity caller,Class launched){
+    public static void launchActivity(AppCompatActivity caller,Class launched,boolean finishing,String extra){
         Intent activityLauncher = new Intent(caller,launched);
+        activityLauncher.putExtra(ACTIVITY_DATA,extra);
         caller.startActivity(activityLauncher);
-        caller.finish();
+        if (finishing) caller.finish();
+    }
+
+    /**
+     * Method that will get the data put by the activity caller
+     *
+     * @param launched activity that will be launched
+     *
+     * @return the Data passed from activity to the launched activity
+     */
+    public static String getDataFromLaunchedActivity(AppCompatActivity launched){
+        Intent activityIntent= launched.getIntent();
+        Bundle b = activityIntent.getExtras();
+        String result=null;
+
+        if(b!=null)
+        {
+            result =(String) b.get(ACTIVITY_DATA);
+        }
+
+        return result;
     }
 
     /**

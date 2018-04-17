@@ -1,7 +1,5 @@
 package d2si.apps.planetedashboard.activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -25,7 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import classes.AppData;
 import d2si.apps.planetedashboard.R;
-import fragments.MainMenuFragment;
 import fragments.SalesDayFragment;
 import fragments.SalesMonthFragment;
 import fragments.SalesWeekFragment;
@@ -41,8 +38,14 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  */
 public class MainActivity extends AppCompatActivity{
 
-    @BindView(R.id.tabs) public TabLayout tabLayout;
-    public static Drawer navDrawer;
+    public static final int FRAGMENT_SALES = 0;
+    public static final int FRAGMENT_STOCK = 1;
+    public static final int FRAGMENT_PURCHASE = 2;
+    public static final int FRAGMENT_CLIENT = 3;
+    public static final int FRAGMENT_PROVIDER = 4;
+
+    @BindView(R.id.tabs) TabLayout tabLayout;
+    private Drawer navDrawer;
 
     @Override
     /**
@@ -59,45 +62,6 @@ public class MainActivity extends AppCompatActivity{
         typeface(this);
         ButterKnife.bind(this);
 
-        // Add different tabs Sales
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_day)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_week)));
-        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_month)));
-
-        // set the font of the tabs
-        typeface(tabLayout);
-
-        // Tab Layout of sales click listener
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                // load the right fragment when select
-                switch (tab.getPosition()){
-                    case 0:
-                        AppData.loadFragment(MainActivity.this,new SalesDayFragment());
-                        break;
-                    case 1:
-                        AppData.loadFragment(MainActivity.this,new SalesWeekFragment());
-                        break;
-                    case 2:
-                        AppData.loadFragment(MainActivity.this,new SalesMonthFragment());
-                        break;
-
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-
         // Get the actionBar toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -105,9 +69,9 @@ public class MainActivity extends AppCompatActivity{
         // initialize the action bar title font
         AppData.setActionBarTitle(this,R.string.app_name);
 
-        // inti fragment with the Main menu
-        AppData.loadFragment(MainActivity.this,new MainMenuFragment());
-        tabLayout.setVisibility(View.GONE);
+        // inti fragment with the Main menu with the tabs
+        int fragment_to_launch= Integer.parseInt(AppData.getDataFromLaunchedActivity(this));
+        setupTabs(fragment_to_launch);
 
         // Initialize Nav drawer
         new DrawerBuilder().withActivity(this).build();
@@ -149,13 +113,71 @@ public class MainActivity extends AppCompatActivity{
                         return true;
                     }
                 })
-                .withSelectedItem(-1)
+                .withSelectedItem(fragment_to_launch)
                 .build();
 
         // set the font of the nav drawer header
         typeface(navDrawer.getHeader());
 
 
+    }
+
+    /**
+     * Method that setup the tabs
+     *
+     * @param fragment The fragment that the tabs will be loaded for
+     */
+    private void setupTabs(int fragment){
+        switch (fragment){
+            case FRAGMENT_SALES:
+                AppData.loadFragment(this,new SalesDayFragment());
+
+                //remove all tabs first
+                tabLayout.removeAllTabs();
+
+                // Add different tabs Sales
+                tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_day)));
+                tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_week)));
+                tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.tab_month)));
+
+                // set the font of the tabs
+                typeface(tabLayout);
+
+                // Tab Layout of sales click listener
+                tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        // load the right fragment when select
+                        switch (tab.getPosition()){
+                            case 0:
+                                AppData.loadFragment(MainActivity.this,new SalesDayFragment());
+                                break;
+                            case 1:
+                                AppData.loadFragment(MainActivity.this,new SalesWeekFragment());
+                                break;
+                            case 2:
+                                AppData.loadFragment(MainActivity.this,new SalesMonthFragment());
+                                break;
+
+                        }
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+
+                    }
+                });
+
+                // setup tabs
+                tabLayout.setVisibility(View.VISIBLE);
+
+                break;
+        }
     }
 
 }

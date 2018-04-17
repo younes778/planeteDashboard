@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // if all validated launch main activity
         if (validateUser() && validatePassword())
-            AppData.launchActivity(this,MainActivity.class);
+            AppData.launchActivity(this,MainMenuActivity.class,true,null);
     }
 
     /**
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // init the AppData ressources
+        // init the AppData resources
         AppData.init(getBaseContext());
         // Bind resources
         ButterKnife.bind(this);
@@ -70,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
         typeface(this);
         AppData.setActionBarTitle(this,R.string.activity_login);
 
-        // To Test
-        if (AppData.VERSTION_TEST) AppData.launchActivity(this,MainActivity.class);
+        //Test
+        if (AppData.VERSTION_TEST) AppData.launchActivity(this,MainMenuActivity.class,true,null);
 
     }
 
