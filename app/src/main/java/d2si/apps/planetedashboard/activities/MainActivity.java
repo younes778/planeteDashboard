@@ -36,7 +36,7 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  *
  * @author younessennadj
  */
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends RealmActivity{
 
     public static final int FRAGMENT_SALES = 0;
     public static final int FRAGMENT_STOCK = 1;
@@ -57,10 +57,6 @@ public class MainActivity extends AppCompatActivity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //Apply font to the activity
-        typeface(this);
-        ButterKnife.bind(this);
 
         // Get the actionBar toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

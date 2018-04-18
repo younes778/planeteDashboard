@@ -1,4 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+
+realm {
+    syncEnabled = true;
+}
 
 android {
     compileSdkVersion 27
@@ -22,6 +27,10 @@ android {
         exclude 'META-INF/license.txt'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/notice.txt'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+    lintOptions {
+        disable 'InvalidPackage'
     }
 }
 
@@ -69,5 +78,6 @@ dependencies {
     // Rest Web service Library
     implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+
 
 }

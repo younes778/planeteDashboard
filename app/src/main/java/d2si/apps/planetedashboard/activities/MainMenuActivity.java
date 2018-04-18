@@ -22,13 +22,13 @@ import d2si.apps.planetedashboard.R;
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
 /**
- * Main menu fragment
+ * Main menu Activity
  *
- * Fragment that represents the main menu options
+ * Activity that represents the main menu options
  *
  * @author younessennadj
  */
-public class MainMenuActivity extends AppCompatActivity {
+public class MainMenuActivity extends RealmActivity {
 
     @BindView(R.id.img_sales) ImageView img_sales;
     @BindView(R.id.img_stock) ImageView img_stock;
@@ -54,13 +54,7 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        // init the AppData resources
-        AppData.init(getBaseContext());
-        // Bind resources
-        ButterKnife.bind(this);
-
-        //set the activity and actionBar font
-        typeface(this);
+        // set the action bar title and font
         AppData.setActionBarTitle(this,R.string.app_name);
 
         // initialize the images with drawables

@@ -24,7 +24,7 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  *
  * @author younessennadj
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends RealmActivity {
     @BindView(R.id.et_user) ExtendedEditText et_user;
     @BindView(R.id.field_user) TextFieldBoxes field_user;
     @BindView(R.id.et_password) ExtendedEditText et_password;
@@ -60,17 +60,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // init the AppData resources
-        AppData.init(getBaseContext());
-        // Bind resources
-        ButterKnife.bind(this);
-
-        //set the activity and actionBar font
-        typeface(this);
+        // set the action bar title and font
         AppData.setActionBarTitle(this,R.string.activity_login);
 
         //Test
-        if (AppData.VERSTION_TEST)
+        if (AppData.VERSION_TEST)
             //AppData.launchActivity(this,MainMenuActivity.class,true,null);
             AppData.launchActivity(this,ConnexionActivity.class,true,null);
 
@@ -94,13 +88,6 @@ public class LoginActivity extends AppCompatActivity {
         return !et_password.getText().toString().equals("");
     }
 
-    /**
-     * Method call to initialize the icons library context
-     *
-     */
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
-    }
+
 
 }

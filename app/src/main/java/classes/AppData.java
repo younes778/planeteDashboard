@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import com.norbsoft.typefacehelper.ActionBarHelper;
 import com.norbsoft.typefacehelper.TypefaceCollection;
@@ -33,9 +34,8 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  * @author younessennadj
  */
 public class AppData {
-    public static String REST_SERVER_URL="http://192.168.1.7";
-    public static String REST_SERVER_PORT="8080";
-    public static boolean VERSTION_TEST = true;
+
+    public static boolean VERSION_TEST = true;
     public static String ACTIVITY_DATA="Data";
     public static String[] CHART_MONTHS_FORMAT= new String[31];
     public static int CHART_RADIUS_1 = 4;
@@ -247,7 +247,27 @@ public class AppData {
         fragmentTransaction.replace(R.id.fragment_manager, fragment);
         // save the changes
         fragmentTransaction.commit();
+    }
 
+    /**
+     * Method that form Url of a get request with format "ServerUrl:port/urlRequest?field1=value1&field2=value2..."
+     *
+     * @param url Server url
+     * @param port Server port
+     * @param  urlRequest the service requested
+     * @param fields Fields name to be filled to the get request
+     * @param values Values of the fields of the get request
+     * @return Urf formatted for a get
+     */
+    public static String formGetUrl(String url,int port,String urlRequest,ArrayList<String> fields,ArrayList<String> values){
+        String res=url+":"+port+"/"+urlRequest;
+        if (fields!=null)
+            for (int i=0;i<fields.size();i++){
+            if (i==0) res=res+"?";
+            res=res+fields.get(i)+"="+values.get(i);
+            if (i!=fields.size()-1) res=res+"&";
+            }
+        return res;
     }
 
 }
