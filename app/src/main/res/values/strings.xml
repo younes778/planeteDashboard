@@ -2,7 +2,7 @@
 
     <!--                App Configuration           -->
     <!--                Rest Server Data            -->
-    <string name="REST_SERVER_URL">http://192.168.1.5</string>
+    <string name="REST_SERVER_URL">http://192.168.1.2</string>
     <string name="REST_SERVER_PORT">8080</string>
     <string name="REST_REQUEST_SALES">sales</string>
     <string name="REST_FIELD_URL">url</string>
@@ -11,7 +11,7 @@
     <string name="REST_FIELD_DATE_TO">dateTo</string>
 
     <!--                DataBase Data               -->
-    <string name="DB_URL">192.168.1.3</string>
+    <string name="DB_URL">192.168.1.5</string>
     <string name="DB_NAME">SOMAFEPLANETE</string>
 
 

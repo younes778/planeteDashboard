@@ -10,10 +10,15 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.classes.AppData;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.data.Sale;
+import d2si.apps.planetedashboard.webservice.WSSale;
+
+import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
 public class ConnexionActivity extends RealmActivity {
 
@@ -21,6 +26,12 @@ public class ConnexionActivity extends RealmActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connexion);
+
+        // Bind resources
+        ButterKnife.bind(this);
+
+        //set the activity and actionBar font
+        typeface(this);
 
     }
 
@@ -33,20 +44,25 @@ public class ConnexionActivity extends RealmActivity {
 
 
 
-    private class HttpRequestTask extends AsyncTask<Void, Void, ArrayList<Sale>> {
+    private class HttpRequestTask extends AsyncTask<Void, Void, ArrayList<WSSale>> {
         @Override
         /**
          * Method that execute the http task
          *
          * @param params parameters to use in background
          */
-        protected ArrayList<Sale> doInBackground(Void... params) {
+        protected ArrayList<WSSale> doInBackground(Void... params) {
             try {
-                final String url=AppData.formGetUrl(getString(R.string.REST_SERVER_URL),Integer.parseInt(getString(R.string.REST_SERVER_PORT)),getString(R.string.REST_REQUEST_SALES),new ArrayList<String>(){{add(getString(R.string.REST_FIELD_URL));add(getString(R.string.REST_FIELD_DATE_FROM));add(getString(R.string.REST_FIELD_DATE_TO));}},new ArrayList<String>(){{add(getString(R.string.DB_URL));add(getString(R.string.DB_NAME));add("2018-01-01");add("2018-01-02");}});
+                final String url=AppData.formGetUrl(getString(R.string.REST_SERVER_URL),Integer.parseInt(getString(R.string.REST_SERVER_PORT)),getString(R.string.REST_REQUEST_SALES),new ArrayList<String>(){{add(getString(R.string.REST_FIELD_URL));add(getString(R.string.REST_FIELD_DB_NAME));add(getString(R.string.REST_FIELD_DATE_FROM));add(getString(R.string.REST_FIELD_DATE_TO));}},new ArrayList<String>(){{add(getString(R.string.DB_URL));add(getString(R.string.DB_NAME));add("2018-01-01");add("2018-01-02");}});
+                Log.e("url",url);
+
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                ArrayList<Sale> sales = (ArrayList<Sale>) restTemplate.getForObject(url, ArrayList.class);
-                return sales;
+                ArrayList<WSSale> wssales = new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, WSSale[].class)));
+                /*ArrayList<Sale> sales = new ArrayList<>();
+                for (WSSale wssale:wssales)
+                    sales.add(new Sale(wssale));*/
+                return wssales;
             } catch (Exception e) {
                 Log.e("MainActivity", e.getMessage(), e);
             }
@@ -59,9 +75,13 @@ public class ConnexionActivity extends RealmActivity {
          *
          * @param greeting Object
          */
-        protected void onPostExecute(ArrayList<Sale> sales) {
+        protected void onPostExecute(ArrayList<WSSale> sales) {
             TextView greetingIdText = findViewById(R.id.txt);
-            greetingIdText.setText(sales.toString());
+            String builder="{";
+            for (WSSale sale:sales)
+                builder+="num:"+sale.getNumero()+",date"+sale.getDate().toString()+"\n";
+            builder+="}";
+            greetingIdText.setText(builder);
         }
 
     }

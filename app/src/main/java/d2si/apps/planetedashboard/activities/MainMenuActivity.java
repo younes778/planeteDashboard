@@ -8,6 +8,7 @@ import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import d2si.apps.planetedashboard.classes.AppData;
 import d2si.apps.planetedashboard.R;
@@ -47,19 +48,25 @@ public class MainMenuActivity extends RealmActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        // Bind resources
+        ButterKnife.bind(this);
+
+        //set the activity and actionBar font
+        typeface(this);
+
         // set the action bar title and font
         AppData.setActionBarTitle(this,R.string.app_name);
 
         // initialize the images with drawables
-        img_sales.setImageDrawable(new IconicsDrawable(this).icon(CommunityMaterial.Icon.cmd_tag_text_outline)
+        img_sales.setImageDrawable(new IconicsDrawable(this).icon(AppData.MENU_DRAWABLES.get(0))
                 .color(Color.WHITE));
-        img_stock.setImageDrawable(new IconicsDrawable(this).icon(CommunityMaterial.Icon.cmd_briefcase)
+        img_stock.setImageDrawable(new IconicsDrawable(this).icon(AppData.MENU_DRAWABLES.get(1))
                 .color(Color.WHITE));
-        img_purchase.setImageDrawable(new IconicsDrawable(this).icon(CommunityMaterial.Icon.cmd_shopping)
+        img_purchase.setImageDrawable(new IconicsDrawable(this).icon(AppData.MENU_DRAWABLES.get(2))
                 .color(Color.WHITE));
-        img_client.setImageDrawable(new IconicsDrawable(this).icon(CommunityMaterial.Icon.cmd_account)
+        img_client.setImageDrawable(new IconicsDrawable(this).icon(AppData.MENU_DRAWABLES.get(3))
                 .color(Color.WHITE));
-        img_providers.setImageDrawable(new IconicsDrawable(this).icon(CommunityMaterial.Icon.cmd_account_multiple)
+        img_providers.setImageDrawable(new IconicsDrawable(this).icon(AppData.MENU_DRAWABLES.get(4))
                 .color(Color.WHITE));
 
 

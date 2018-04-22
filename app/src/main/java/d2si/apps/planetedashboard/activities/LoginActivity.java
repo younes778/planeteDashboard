@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.balysv.materialripple.MaterialRippleLayout;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import d2si.apps.planetedashboard.classes.AppData;
 import d2si.apps.planetedashboard.R;
@@ -56,13 +57,19 @@ public class LoginActivity extends RealmActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Bind resources
+        ButterKnife.bind(this);
+
+        //set the activity and actionBar font
+        typeface(this);
+
         // set the action bar title and font
         AppData.setActionBarTitle(this,R.string.activity_login);
 
         //Test
         if (AppData.VERSION_TEST)
             //AppData.launchActivity(this,MainMenuActivity.class,true,null);
-            AppData.launchActivity(this,ConnexionActivity.class,true,null);
+            AppData.launchActivity(this,MainMenuActivity.class,true,null);
 
     }
 

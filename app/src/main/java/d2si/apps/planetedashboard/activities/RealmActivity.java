@@ -3,10 +3,8 @@ package d2si.apps.planetedashboard.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import butterknife.ButterKnife;
 import io.realm.Realm;
 
-import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
 /**
  * Realm Activity
@@ -29,11 +27,6 @@ public class RealmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mRealm = Realm.getDefaultInstance();
 
-        // Bind resources
-        ButterKnife.bind(this);
-
-        //set the activity and actionBar font
-        typeface(this);
     }
 
     @Override

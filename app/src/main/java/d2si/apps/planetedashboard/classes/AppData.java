@@ -10,6 +10,8 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.text.format.DateUtils;
 
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.iconics.typeface.IIcon;
 import com.norbsoft.typefacehelper.ActionBarHelper;
 import com.norbsoft.typefacehelper.TypefaceCollection;
 import com.norbsoft.typefacehelper.TypefaceHelper;
@@ -33,6 +35,16 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  * @author younessennadj
  */
 public class AppData {
+
+    public static ArrayList<IIcon> MENU_DRAWABLES = new ArrayList(){{
+        add(CommunityMaterial.Icon.cmd_tag_text_outline);
+        add(CommunityMaterial.Icon.cmd_package_variant_closed);
+        add(CommunityMaterial.Icon.cmd_cart_outline);
+        add(CommunityMaterial.Icon.cmd_account_outline);
+        add(CommunityMaterial.Icon.cmd_account_multiple_outline);
+        add(CommunityMaterial.Icon.cmd_logout_variant);
+        add(CommunityMaterial.Icon.cmd_tune_vertical);
+    }};
 
     public static boolean VERSION_TEST = true;
     public static String ACTIVITY_DATA="Data";

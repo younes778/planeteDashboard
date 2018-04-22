@@ -13,6 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
         <LinearLayout
@@ -27,7 +28,7 @@
                 app:mrl_rippleHover="true"
                 android:padding="20dp"
                 app:mrl_rippleRoundedCorners="2dp"
-                app:mrl_rippleBackground="@color/colorMenuBlue"
+                app:mrl_rippleBackground="@color/colorPrimary"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
@@ -70,7 +71,7 @@
                 app:mrl_rippleHover="true"
                 android:padding="20dp"
                 app:mrl_rippleRoundedCorners="2dp"
-                app:mrl_rippleBackground="@color/colorMenuGreen"
+                app:mrl_rippleBackground="@color/colorPrimary"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
@@ -113,7 +114,7 @@
                     app:mrl_rippleHover="true"
                     android:padding="20dp"
                     app:mrl_rippleRoundedCorners="2dp"
-                    app:mrl_rippleBackground="@color/colorMenuYellow"
+                    app:mrl_rippleBackground="@color/colorPrimary"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
@@ -156,7 +157,7 @@
                     app:mrl_rippleHover="true"
                     android:padding="20dp"
                     app:mrl_rippleRoundedCorners="2dp"
-                    app:mrl_rippleBackground="@color/colorMenuOrange"
+                    app:mrl_rippleBackground="@color/colorPrimary"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
@@ -198,7 +199,7 @@
                     app:mrl_rippleHover="true"
                     android:padding="20dp"
                     app:mrl_rippleRoundedCorners="2dp"
-                    app:mrl_rippleBackground="@color/colorMenuRed"
+                    app:mrl_rippleBackground="@color/colorPrimary"
                     android:layout_height="wrap_content">
 
                     <LinearLayout

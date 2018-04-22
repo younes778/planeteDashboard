@@ -1,92 +1,113 @@
 package d2si.apps.planetedashboard.data;
 
-import java.sql.Date;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.ArrayList;
 
-import io.realm.RealmList;
-import io.realm.RealmObject;
+import d2si.apps.planetedashboard.webservice.WSSale;
+import io.realm.*;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * Sale
- *
+ * <p>
  * Object that represents the sale
  *
  * @author younessennadj
  */
 
 public class Sale extends RealmObject {
-	@PrimaryKey
-	private String numero;
-	private Date date;
-	private RealmList<Ligne> lignes;
+    @PrimaryKey
+    private String numero;
+    private Date date;
+    private RealmList<Ligne> lignes= new RealmList<>();
+
+    /**
+     * Sale constructor
+     */
+    public Sale() {
+
+    }
 
     /**
      * Sale constructor
      *
+     * @param numero sale id
+     * @param date   date of the sale
+     * @param lignes lines of sale
      */
-    public Sale(){
-
+    public Sale(String numero, Date date, final RealmList<Ligne> lignes) {
+        this.numero = numero;
+        this.date = date;
+        this.lignes = lignes;
     }
 
-	/**
+    /**
      * Sale constructor
      *
-     * @param numero sale id
-     * @param date date of the sale
+     * @param sale webservice sale which has different architecture
      */
-	 public Sale(String numero, Date date,final ArrayList<Ligne> lignes) {
-		this.numero = numero;
-		this.date = date;
-		this.lignes  = new RealmList<Ligne>(){{addAll(lignes);}};
-	}
 
-	/**
+    public Sale(WSSale sale){
+        this.numero = sale.getNumero();
+        this.date = sale.getDate();
+        this.lignes = new RealmList<Ligne>();
+        //this.lignes.addAll(Arrays.asList(sale.getLignes()));
+    }
+
+    /**
      * Id getter
      *
      * @return sale id
      */
-	public String getNumero() {
-		return numero;
-	}
-	/**
+    public String getNumero() {
+        return numero;
+    }
+
+    /**
      * Id setter
      *
      * @param numero sale id
      */
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-	/**
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    /**
      * Date getter
      *
      * @return sale date
      */
-	public Date getDate() {
-		return date;
-	}
-	/**
+    public Date getDate() {
+        return date;
+    }
+
+    /**
      * Date setter
      *
      * @param date sale date
      */
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	/**
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    /**
      * Lignes getter
      *
      * @return lignes of the sale
      */
-	public RealmList<Ligne> getLignes() {
-		return lignes;
-	}
-	/**
-     * Ligne setter
+    public RealmList<Ligne> getLignes() {
+        return lignes;
+    }
+
+    /**
+     * Total getter of all ligne prices
      *
-     * @param lignes sale lignes
+     * @return Total price of differente lignes of Sale
      */
-	public void setLignes(final ArrayList<Ligne> lignes) {
-		this.lignes = new RealmList<Ligne>(){{addAll(lignes);}};
-	}
+    public float getTotal() {
+        float total = 0;
+        for (Ligne ligne:lignes) total+=ligne.getPrix();
+        return total;
+    }
 }

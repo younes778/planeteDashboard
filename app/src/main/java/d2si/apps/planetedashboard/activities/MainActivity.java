@@ -19,6 +19,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.classes.AppData;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.fragments.SalesDayFragment;
@@ -56,6 +57,12 @@ public class MainActivity extends RealmActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Bind resources
+        ButterKnife.bind(this);
+
+        //set the activity and actionBar font
+        typeface(this);
+
         // Get the actionBar toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -82,15 +89,15 @@ public class MainActivity extends RealmActivity{
                         .build()
                         )
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withIdentifier(1).withName(R.string.menu_sales).withTypeface(AppData.fontApp).withIcon(CommunityMaterial.Icon.cmd_tag_text_outline),
-                        new PrimaryDrawerItem().withIdentifier(2).withName(R.string.menu_stock).withTypeface(AppData.fontApp).withIcon(CommunityMaterial.Icon.cmd_briefcase),
-                        new PrimaryDrawerItem().withIdentifier(3).withName(R.string.menu_purchase).withTypeface(AppData.fontApp).withIcon(CommunityMaterial.Icon.cmd_shopping),
-                        new PrimaryDrawerItem().withIdentifier(4).withName(R.string.menu_client).withTypeface(AppData.fontApp).withIcon(CommunityMaterial.Icon.cmd_account),
-                        new PrimaryDrawerItem().withIdentifier(5).withName(R.string.menu_provider).withTypeface(AppData.fontApp).withIcon(CommunityMaterial.Icon.cmd_account_multiple),
+                        new PrimaryDrawerItem().withIdentifier(1).withName(R.string.menu_sales).withTypeface(AppData.fontApp).withIcon(AppData.MENU_DRAWABLES.get(0)),
+                        new PrimaryDrawerItem().withIdentifier(2).withName(R.string.menu_stock).withTypeface(AppData.fontApp).withIcon(AppData.MENU_DRAWABLES.get(1)),
+                        new PrimaryDrawerItem().withIdentifier(3).withName(R.string.menu_purchase).withTypeface(AppData.fontApp).withIcon(AppData.MENU_DRAWABLES.get(2)),
+                        new PrimaryDrawerItem().withIdentifier(4).withName(R.string.menu_client).withTypeface(AppData.fontApp).withIcon(AppData.MENU_DRAWABLES.get(3)),
+                        new PrimaryDrawerItem().withIdentifier(5).withName(R.string.menu_provider).withTypeface(AppData.fontApp).withIcon(AppData.MENU_DRAWABLES.get(4)),
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem().withName(R.string.menu_parameter).withTypeface(AppData.fontApp).withSelectable(false),
-                        new PrimaryDrawerItem().withIdentifier(6).withName(R.string.menu_logout).withTypeface(AppData.fontApp).withIcon(CommunityMaterial.Icon.cmd_logout_variant),
-                        new PrimaryDrawerItem().withIdentifier(7).withName(R.string.menu_setting).withTypeface(AppData.fontApp).withIcon(CommunityMaterial.Icon.cmd_settings)
+                        new PrimaryDrawerItem().withIdentifier(6).withName(R.string.menu_logout).withTypeface(AppData.fontApp).withIcon(AppData.MENU_DRAWABLES.get(5)),
+                        new PrimaryDrawerItem().withIdentifier(7).withName(R.string.menu_setting).withTypeface(AppData.fontApp).withIcon(AppData.MENU_DRAWABLES.get(6))
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
