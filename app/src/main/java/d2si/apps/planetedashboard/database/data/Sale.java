@@ -1,8 +1,6 @@
-package d2si.apps.planetedashboard.data;
+package d2si.apps.planetedashboard.database.data;
 
-import java.util.Arrays;
 import java.util.Date;
-import java.util.ArrayList;
 
 import d2si.apps.planetedashboard.webservice.WSLigne;
 import d2si.apps.planetedashboard.webservice.WSSale;

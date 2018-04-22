@@ -1,4 +1,4 @@
-package d2si.apps.planetedashboard.classes;
+package d2si.apps.planetedashboard.ui.data;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -28,9 +28,9 @@ import d2si.apps.planetedashboard.R;
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
 /**
- * App d2si.apps.planetedashboard.data class
+ * App d2si.apps.planetedashboard.database.data class
  *
- * Class regrouping the app static d2si.apps.planetedashboard.data and methods
+ * Class regrouping the app static d2si.apps.planetedashboard.database.data and methods
  *
  * @author younessennadj
  */
@@ -58,7 +58,7 @@ public class AppData {
     public static Typeface fontAppBold;
 
     /**
-     * Method that initialize the d2si.apps.planetedashboard.data resources
+     * Method that initialize the d2si.apps.planetedashboard.database.data resources
      *
      * @param context App actual context
      */
@@ -212,7 +212,7 @@ public class AppData {
      * @param caller activity caller
      * @param launched activity class that will be launched
      * @param finishing indicate whether finish the activity caller or not
-     * @param extra d2si.apps.planetedashboard.data to be transferred to the activity to be launched
+     * @param extra d2si.apps.planetedashboard.database.data to be transferred to the activity to be launched
      *
      */
     public static void launchActivity(AppCompatActivity caller,Class launched,boolean finishing,String extra){
@@ -223,7 +223,7 @@ public class AppData {
     }
 
     /**
-     * Method that will get the d2si.apps.planetedashboard.data put by the activity caller
+     * Method that will get the d2si.apps.planetedashboard.database.data put by the activity caller
      *
      * @param launched activity that will be launched
      *

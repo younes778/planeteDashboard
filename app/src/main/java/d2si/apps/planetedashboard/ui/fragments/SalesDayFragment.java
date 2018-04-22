@@ -1,4 +1,4 @@
-package d2si.apps.planetedashboard.fragments;
+package d2si.apps.planetedashboard.ui.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import d2si.apps.planetedashboard.classes.AppData;
+import d2si.apps.planetedashboard.ui.data.AppData;
 import d2si.apps.planetedashboard.R;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;

@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 
-import d2si.apps.planetedashboard.classes.AppData;
+import d2si.apps.planetedashboard.ui.data.AppData;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 

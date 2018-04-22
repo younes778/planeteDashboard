@@ -1,4 +1,4 @@
-package d2si.apps.planetedashboard.activities;
+package d2si.apps.planetedashboard.ui.activities;
 
 import android.os.Bundle;
 
@@ -7,7 +7,7 @@ import com.balysv.materialripple.MaterialRippleLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import d2si.apps.planetedashboard.classes.AppData;
+import d2si.apps.planetedashboard.ui.data.AppData;
 import d2si.apps.planetedashboard.R;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;

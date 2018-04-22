@@ -1,16 +1,15 @@
-package d2si.apps.planetedashboard.activities;
+package d2si.apps.planetedashboard.ui.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import d2si.apps.planetedashboard.classes.AppData;
+import d2si.apps.planetedashboard.ui.data.AppData;
 import d2si.apps.planetedashboard.R;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;

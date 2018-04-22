@@ -1,4 +1,4 @@
-package d2si.apps.planetedashboard.activities;
+package d2si.apps.planetedashboard.ui.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -20,11 +19,11 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import d2si.apps.planetedashboard.classes.AppData;
+import d2si.apps.planetedashboard.ui.data.AppData;
 import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.fragments.SalesDayFragment;
-import d2si.apps.planetedashboard.fragments.SalesMonthFragment;
-import d2si.apps.planetedashboard.fragments.SalesWeekFragment;
+import d2si.apps.planetedashboard.ui.fragments.SalesDayFragment;
+import d2si.apps.planetedashboard.ui.fragments.SalesMonthFragment;
+import d2si.apps.planetedashboard.ui.fragments.SalesWeekFragment;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 

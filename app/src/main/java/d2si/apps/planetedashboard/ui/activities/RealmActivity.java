@@ -1,4 +1,4 @@
-package d2si.apps.planetedashboard.activities;
+package d2si.apps.planetedashboard.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

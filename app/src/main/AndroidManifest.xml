@@ -17,7 +17,7 @@
 
         <!--                        Activities                          -->
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:label="@string/activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,16 +27,16 @@
         </activity>
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".activities.MainMenuActivity"
+            android:name=".ui.activities.MainMenuActivity"
             android:label="@string/app_name"/>
 
         <activity
-            android:name=".activities.ConnexionActivity"
+            android:name=".ui.activities.ConnexionActivity"
             android:label="@string/app_name"/>
     </application>
 

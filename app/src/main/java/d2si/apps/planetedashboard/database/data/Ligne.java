@@ -1,4 +1,4 @@
-package d2si.apps.planetedashboard.data;
+package d2si.apps.planetedashboard.database.data;
 
 
 import io.realm.RealmObject;

@@ -1,4 +1,4 @@
-package d2si.apps.planetedashboard.classes;
+package d2si.apps.planetedashboard.ui.data;
 
 import android.content.Context;
 
@@ -98,7 +98,7 @@ public class LineChartCustom  {
         chart.setPinchZoom(true);
     }
 
-    // Add d2si.apps.planetedashboard.data from custom global Map with a label to the d2si.apps.planetedashboard.data set of the chart
+    // Add d2si.apps.planetedashboard.database.data from custom global Map with a label to the d2si.apps.planetedashboard.database.data set of the chart
     public void addData(LinkedHashMap<String,List<Float>> entries,LINE_CHART_TYPE type){
 
         LineData lineData = new LineData();
@@ -125,7 +125,7 @@ public class LineChartCustom  {
             dataSet.setValueTextColor(AppData.CHART_COLORS.get(i));
             dataSet.setFillColor(AppData.CHART_COLORS.get(i));
 
-            // Customize the d2si.apps.planetedashboard.data according the type
+            // Customize the d2si.apps.planetedashboard.database.data according the type
 
             switch (type){
                 case CUBIC:
