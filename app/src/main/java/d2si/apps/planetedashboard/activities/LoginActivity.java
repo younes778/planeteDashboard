@@ -69,7 +69,7 @@ public class LoginActivity extends RealmActivity {
         //Test
         if (AppData.VERSION_TEST)
             //AppData.launchActivity(this,MainMenuActivity.class,true,null);
-            AppData.launchActivity(this,MainMenuActivity.class,true,null);
+            AppData.launchActivity(this,ConnexionActivity.class,true,null);
 
     }
 

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.ArrayList;
 
+import d2si.apps.planetedashboard.webservice.WSLigne;
 import d2si.apps.planetedashboard.webservice.WSSale;
 import io.realm.*;
 import io.realm.annotations.PrimaryKey;
@@ -52,6 +53,8 @@ public class Sale extends RealmObject {
         this.numero = sale.getNumero();
         this.date = sale.getDate();
         this.lignes = new RealmList<Ligne>();
+        for (WSLigne ligne:sale.getLignes())
+            this.lignes.add(new Ligne(ligne.getNumero(),ligne.getQte(),ligne.getPrix()));
         //this.lignes.addAll(Arrays.asList(sale.getLignes()));
     }
 
