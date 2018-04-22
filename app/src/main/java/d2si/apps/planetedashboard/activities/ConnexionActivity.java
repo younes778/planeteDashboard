@@ -11,9 +11,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
-import classes.AppData;
+import d2si.apps.planetedashboard.classes.AppData;
 import d2si.apps.planetedashboard.R;
-import data.Sale;
+import d2si.apps.planetedashboard.data.Sale;
 
 public class ConnexionActivity extends RealmActivity {
 
@@ -45,7 +45,7 @@ public class ConnexionActivity extends RealmActivity {
                 final String url=AppData.formGetUrl(getString(R.string.REST_SERVER_URL),Integer.parseInt(getString(R.string.REST_SERVER_PORT)),getString(R.string.REST_REQUEST_SALES),new ArrayList<String>(){{add(getString(R.string.REST_FIELD_URL));add(getString(R.string.REST_FIELD_DATE_FROM));add(getString(R.string.REST_FIELD_DATE_TO));}},new ArrayList<String>(){{add(getString(R.string.DB_URL));add(getString(R.string.DB_NAME));add("2018-01-01");add("2018-01-02");}});
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                ArrayList<Sale> sales = restTemplate.getForObject(url, ArrayList<Sale.class>);
+                ArrayList<Sale> sales = (ArrayList<Sale>) restTemplate.getForObject(url, ArrayList.class);
                 return sales;
             } catch (Exception e) {
                 Log.e("MainActivity", e.getMessage(), e);

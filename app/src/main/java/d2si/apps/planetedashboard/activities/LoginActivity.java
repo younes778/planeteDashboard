@@ -1,16 +1,12 @@
 package d2si.apps.planetedashboard.activities;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.balysv.materialripple.MaterialRippleLayout;
-import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import classes.AppData;
+import d2si.apps.planetedashboard.classes.AppData;
 import d2si.apps.planetedashboard.R;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;

@@ -1,4 +1,4 @@
-package data;
+package d2si.apps.planetedashboard.data;
 
 
 import io.realm.RealmObject;
@@ -17,7 +17,14 @@ public class Ligne extends RealmObject {
 	private String numero;
 	private int qte;
 	private float prix;
-	
+
+	/**
+	 * Ligne constructor
+	 *
+	 */
+	public Ligne(){
+
+	}
 	 /**
      * Ligne constructor
      *

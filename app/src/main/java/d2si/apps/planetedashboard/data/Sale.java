@@ -1,4 +1,4 @@
-package data;
+package d2si.apps.planetedashboard.data;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -20,7 +20,15 @@ public class Sale extends RealmObject {
 	private String numero;
 	private Date date;
 	private RealmList<Ligne> lignes;
-	
+
+    /**
+     * Sale constructor
+     *
+     */
+    public Sale(){
+
+    }
+
 	/**
      * Sale constructor
      *
