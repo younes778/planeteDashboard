@@ -19,7 +19,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import d2si.apps.planetedashboard.ui.data.AppData;
+import d2si.apps.planetedashboard.AppData;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.ui.fragments.SalesDayFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesMonthFragment;
@@ -55,6 +55,9 @@ public class MainActivity extends RealmActivity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // delete all database data for test
+        AppData.deleteAll();
 
         // Bind resources
         ButterKnife.bind(this);

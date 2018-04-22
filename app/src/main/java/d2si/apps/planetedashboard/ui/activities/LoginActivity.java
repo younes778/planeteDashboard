@@ -7,7 +7,7 @@ import com.balysv.materialripple.MaterialRippleLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import d2si.apps.planetedashboard.ui.data.AppData;
+import d2si.apps.planetedashboard.AppData;
 import d2si.apps.planetedashboard.R;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
@@ -68,8 +68,8 @@ public class LoginActivity extends RealmActivity {
 
         //Test
         if (AppData.VERSION_TEST)
-            //AppData.launchActivity(this,MainMenuActivity.class,true,null);
-            AppData.launchActivity(this,ConnexionActivity.class,true,null);
+            AppData.launchActivity(this,MainMenuActivity.class,true,null);
+            //AppData.launchActivity(this,ConnexionActivity.class,true,null);
 
     }
 

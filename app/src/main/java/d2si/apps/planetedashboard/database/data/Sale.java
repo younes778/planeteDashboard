@@ -2,8 +2,9 @@ package d2si.apps.planetedashboard.database.data;
 
 import java.util.Date;
 
-import d2si.apps.planetedashboard.webservice.WSLigne;
-import d2si.apps.planetedashboard.webservice.WSSale;
+import d2si.apps.planetedashboard.AppData;
+import d2si.apps.planetedashboard.webservice.data.WSLigne;
+import d2si.apps.planetedashboard.webservice.data.WSSale;
 import io.realm.*;
 import io.realm.annotations.PrimaryKey;
 
@@ -31,29 +32,16 @@ public class Sale extends RealmObject {
     /**
      * Sale constructor
      *
-     * @param numero sale id
-     * @param date   date of the sale
-     * @param lignes lines of sale
-     */
-    public Sale(String numero, Date date, final RealmList<Ligne> lignes) {
-        this.numero = numero;
-        this.date = date;
-        this.lignes = lignes;
-    }
-
-    /**
-     * Sale constructor
-     *
      * @param sale webservice sale which has different architecture
      */
 
     public Sale(WSSale sale){
+
         this.numero = sale.getNumero();
         this.date = sale.getDate();
         this.lignes = new RealmList<Ligne>();
         for (WSLigne ligne:sale.getLignes())
-            this.lignes.add(new Ligne(ligne.getNumero(),ligne.getQte(),ligne.getPrix()));
-        //this.lignes.addAll(Arrays.asList(sale.getLignes()));
+            this.lignes.add(new Ligne(this.numero+"_"+ligne.getNumero(),ligne.getQte(),ligne.getPrix()));
     }
 
     /**

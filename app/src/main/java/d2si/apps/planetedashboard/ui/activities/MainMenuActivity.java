@@ -6,11 +6,15 @@ import android.widget.ImageView;
 
 import com.mikepenz.iconics.IconicsDrawable;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import d2si.apps.planetedashboard.ui.data.AppData;
+import d2si.apps.planetedashboard.AppData;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.controller.SalesController;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -46,6 +50,16 @@ public class MainMenuActivity extends RealmActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.set(Calendar.DAY_OF_MONTH,1);
+        calendar1.set(Calendar.MONTH,0);
+        Date date1 = new Date(calendar1.getTimeInMillis());
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(Calendar.DAY_OF_MONTH,1);
+        calendar2.set(Calendar.MONTH,1);
+        Date date2 = new Date(calendar2.getTimeInMillis());
+        SalesController.updateSalesByDate(this,date1,date2);
 
         // Bind resources
         ButterKnife.bind(this);

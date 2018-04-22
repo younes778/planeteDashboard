@@ -12,12 +12,15 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import d2si.apps.planetedashboard.ui.data.AppData;
+import d2si.apps.planetedashboard.AppData;
+import d2si.apps.planetedashboard.database.controller.SalesController;
 import d2si.apps.planetedashboard.ui.data.LineChartCustom;
 import d2si.apps.planetedashboard.R;
 
@@ -55,7 +58,20 @@ public class SalesMonthFragment extends Fragment implements OnChartValueSelected
 
         // intialize for test
         LinkedHashMap<String,List<Float>> entries = new LinkedHashMap<>();
-        List<Float> thisMonthEntries = new ArrayList<Float>(){{add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(34f);add(20f);add(40f);add(44f);add(48f);add(29f);add(35f);add(60f);add(20f);add(34f);}};
+        List<Float> thisMonthEntries = new ArrayList<>();
+        for (int i=0;i<31;i++)
+        {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.MONTH,0);
+            calendar.set(Calendar.DAY_OF_MONTH,i+1);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            Date date = new Date(calendar.getTimeInMillis());
+            thisMonthEntries.add(SalesController.getSalesTotalByDay(date));
+        }
+
         List<Float> lastMonthEntries = new ArrayList<Float>(){{add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);add(50f);add(30f);add(20f);add(24f);add(28f);add(39f);add(45f);add(50f);add(30f);}};
         entries.put(AppData.getMonthFormatted(),thisMonthEntries);
         entries.put(AppData.getLastMonthFormatted(),lastMonthEntries);

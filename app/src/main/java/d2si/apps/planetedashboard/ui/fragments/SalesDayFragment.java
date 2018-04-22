@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import d2si.apps.planetedashboard.ui.data.AppData;
+import d2si.apps.planetedashboard.AppData;
 import d2si.apps.planetedashboard.R;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;

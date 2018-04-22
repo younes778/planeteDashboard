@@ -1,4 +1,4 @@
-package d2si.apps.planetedashboard.webservice;
+package d2si.apps.planetedashboard.webservice.data;
 
 import java.sql.Date;
 

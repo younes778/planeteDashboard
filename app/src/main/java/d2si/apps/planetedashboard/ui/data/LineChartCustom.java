@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import d2si.apps.planetedashboard.AppData;
 import d2si.apps.planetedashboard.R;
 
 // Customize the LineChart library with some general properties
