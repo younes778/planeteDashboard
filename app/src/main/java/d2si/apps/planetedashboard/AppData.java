@@ -17,6 +17,7 @@ import com.norbsoft.typefacehelper.TypefaceCollection;
 import com.norbsoft.typefacehelper.TypefaceHelper;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -205,8 +206,8 @@ public class AppData {
      *
      * @return  last month date formatted
      */
-    public static String getCurrencyFormatted(Context context,String value){
-        return context.getString(R.string.currency)+value;
+    public static String getCurrencyFormatted(Context context,float value){
+        return context.getResources().getString(R.string.currency,Float.valueOf(new DecimalFormat("#.##").format(value)));
     }
 
     /**
@@ -268,7 +269,7 @@ public class AppData {
      *
      * @param url Server url
      * @param port Server port
-     * @param  urlRequest the service requested
+     * @param urlRequest the service requested
      * @param fields Fields name to be filled to the get request
      * @param values Values of the fields of the get request
      * @return Urf formatted for a get
@@ -294,25 +295,15 @@ public class AppData {
         realm.beginTransaction();
         realm.copyToRealm(object); // Persist unmanaged objects
         realm.commitTransaction();
+        realm.close();
     }
 
-    // for test to be deleted
-    public static void addObjectToRealm(Sale sale){
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        Sale sales = realm.where(Sale.class).equalTo("numero", sale.getNumero()).findFirst();
-
-        if (sales == null)
-        realm.copyToRealm(sale); // Persist unmanaged objects
-
-        realm.commitTransaction();
-    }
 
     /**
      * Method that delete all database data
      *
      */
-    public static void deleteAll(){
+    public static void clearRealm(){
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
@@ -321,6 +312,17 @@ public class AppData {
 
         //commit realm changes
         realm.commitTransaction();
+        realm.close();
     }
+
+    /**
+     * Method that form data as needed for requests
+     *
+     */
+    public static String formDateSql(Date date){
+        return new SimpleDateFormat("yyyy-dd-MM").format(date);
+    }
+
+
 
 }

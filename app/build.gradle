@@ -79,5 +79,8 @@ dependencies {
     implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
 
+    // Material dialogs library
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
 
 }

@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.data.Sale;
@@ -18,8 +19,9 @@ import d2si.apps.planetedashboard.webservice.data.WSSale;
 public abstract class SalesGetter extends AsyncTask<Void, Void, ArrayList<Sale>> {
 
     private Context context;
-    private String dateFrom;
-    private String dateTo;
+    private Date dateFrom;
+    private Date dateTo;
+
 
     /**
      * Method that execute the http task
@@ -28,7 +30,7 @@ public abstract class SalesGetter extends AsyncTask<Void, Void, ArrayList<Sale>>
      * @param dateFrom sales from datefrom
      * @param dateTo sales to dateTo
      */
-    public SalesGetter(Context context, String dateFrom, String dateTo) {
+    public SalesGetter(Context context, Date dateFrom, Date dateTo) {
         this.context = context;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
@@ -43,7 +45,7 @@ public abstract class SalesGetter extends AsyncTask<Void, Void, ArrayList<Sale>>
     protected ArrayList<Sale> doInBackground(Void... params) {
         try {
             // form the url with the fields
-            final String url= AppData.formGetUrl(context.getString(R.string.REST_SERVER_URL),Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)),context.getString(R.string.REST_REQUEST_SALES_TEMPLATE),new ArrayList<String>(){{add(context.getString(R.string.REST_FIELD_URL));add(context.getString(R.string.REST_FIELD_DB_NAME));add(context.getString(R.string.REST_FIELD_DATE_FROM));add(context.getString(R.string.REST_FIELD_DATE_TO));}},new ArrayList<String>(){{add(context.getString(R.string.DB_URL));add(context.getString(R.string.DB_NAME));add(dateFrom);add(dateTo);}});
+            final String url= AppData.formGetUrl(context.getString(R.string.REST_SERVER_URL),Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)),context.getString(R.string.REST_REQUEST_SALES),new ArrayList<String>(){{add(context.getString(R.string.REST_FIELD_URL));add(context.getString(R.string.REST_FIELD_DB_NAME));add(context.getString(R.string.REST_FIELD_DATE_FROM));add(context.getString(R.string.REST_FIELD_DATE_TO));}},new ArrayList<String>(){{add(context.getString(R.string.DB_URL));add(context.getString(R.string.DB_NAME));add(AppData.formDateSql(dateFrom));add(AppData.formDateSql(dateTo));}});
 
             // use the rest template
             RestTemplate restTemplate = new RestTemplate();

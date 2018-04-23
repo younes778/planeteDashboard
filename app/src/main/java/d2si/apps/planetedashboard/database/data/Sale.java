@@ -96,7 +96,27 @@ public class Sale extends RealmObject {
      */
     public float getTotal() {
         float total = 0;
-        for (Ligne ligne:lignes) total+=ligne.getPrix();
+        for (Ligne ligne:lignes) total+=ligne.getPrix()*ligne.getQte();
         return total;
+    }
+
+    /**
+     * Qte Total getter of all ligne
+     *
+     * @return Qte total of differente lignes of Sale
+     */
+    public int getQteTotal() {
+        int total = 0;
+        for (Ligne ligne:lignes) total+=ligne.getQte();
+        return total;
+    }
+
+    /**
+     * average price getter of all ligne
+     *
+     * @return average price of differente lignes of Sale
+     */
+    public float calculateAveragePrice() {
+        return getTotal()/getQteTotal();
     }
 }

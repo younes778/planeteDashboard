@@ -65,7 +65,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tv_today_quantiy"
+                            android:id="@+id/tv_today_quantity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -187,7 +187,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
                         <TextView
-                            android:id="@+id/tv_yesterday_quantiy"
+                            android:id="@+id/tv_yesterday_quantity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"

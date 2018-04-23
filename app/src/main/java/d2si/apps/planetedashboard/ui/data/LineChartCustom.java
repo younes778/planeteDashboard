@@ -116,6 +116,7 @@ public class LineChartCustom  {
 
             //customize the dataSet
             dataSet.setDrawValues(false);
+
             dataSet.setLineWidth(AppData.CHART_WIDTH_1);
             dataSet.setCircleRadius(AppData.CHART_RADIUS_1);
             dataSet.setFormSize(AppData.CHART_TEXT_SIZE_1);
@@ -135,6 +136,8 @@ public class LineChartCustom  {
                     dataSet.setFillColor(AppData.CHART_COLORS.get(i));
                     dataSet.setFillAlpha(100);
                     dataSet.setDrawFilled(true);
+                    dataSet.setDrawCircleHole(false);
+                    dataSet.setDrawCircles(false);
             }
 
             //add the dataset to the Data

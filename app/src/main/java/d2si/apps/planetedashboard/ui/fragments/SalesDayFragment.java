@@ -7,10 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.AppData;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.controller.SalesController;
+import d2si.apps.planetedashboard.database.data.Sale;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -29,6 +34,14 @@ public class SalesDayFragment extends Fragment {
     @BindView(R.id.tv_yesterday) TextView tv_yesterday;
     @BindView(R.id.tv_today_date) TextView tv_today_date;
     @BindView(R.id.tv_yesterday_date) TextView tv_yesterday_date;
+    @BindView(R.id.tv_today_sales) TextView tv_today_sales;
+    @BindView(R.id.tv_today_quantity) TextView tv_today_quantity;
+    @BindView(R.id.tv_today_articles_number) TextView tv_today_articles_number;
+    @BindView(R.id.tv_today_average_price) TextView tv_today_average;
+    @BindView(R.id.tv_yesterday_sales) TextView tv_yesterday_sales;
+    @BindView(R.id.tv_yesterday_quantity) TextView tv_yesterday_quantity;
+    @BindView(R.id.tv_yesterday_articles_number) TextView tv_yesterday_articles_number;
+    @BindView(R.id.tv_yesterday_average_price) TextView tv_yesterday_average;
 
 
     @Override
@@ -52,10 +65,31 @@ public class SalesDayFragment extends Fragment {
         // set the bold font for some texts
         tv_today.setTypeface(AppData.fontAppBold);
         tv_yesterday.setTypeface(AppData.fontAppBold);
+        tv_today_sales.setTypeface(AppData.fontAppBold);
+        tv_yesterday_sales.setTypeface(AppData.fontAppBold);
 
         // set the texts
         tv_today_date.setText(AppData.getDayDateFormatted());
         tv_yesterday_date.setText(AppData.getYesterdayDateFormatted());
+
+
+        Calendar calendarToday = Calendar.getInstance();
+        calendarToday.set(Calendar.MONTH,1);
+        calendarToday.set(Calendar.DAY_OF_MONTH,26);
+        Date dateToday = new Date(calendarToday.getTimeInMillis());
+        tv_today_sales.setText(AppData.getCurrencyFormatted(getActivity(),SalesController.getSalesTotalByDay(dateToday)));
+        tv_today_average.setText(SalesController.getSalesAverageByDay(dateToday )+" ");
+        tv_today_quantity.setText(SalesController.getSalesQuantityByDay(dateToday)+"");
+        tv_today_articles_number.setText(SalesController.getSalesNoInvoiceByDay(dateToday)+"");
+
+        Calendar calendarYesterday = Calendar.getInstance();
+        calendarYesterday.set(Calendar.MONTH,1);
+        calendarYesterday.set(Calendar.DAY_OF_MONTH,25);
+        Date dateYesterday = new Date(calendarYesterday.getTimeInMillis());
+        tv_yesterday_sales.setText(AppData.getCurrencyFormatted(getActivity(),SalesController.getSalesTotalByDay(dateYesterday )));
+        tv_yesterday_average.setText(SalesController.getSalesAverageByDay(dateYesterday )+" ");
+        tv_yesterday_quantity.setText(SalesController.getSalesQuantityByDay(dateYesterday )+"");
+        tv_yesterday_articles_number.setText(SalesController.getSalesNoInvoiceByDay(dateYesterday )+"");
 
         return view;
     }

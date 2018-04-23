@@ -1,14 +1,23 @@
 package d2si.apps.planetedashboard.ui.activities;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import d2si.apps.planetedashboard.AppData;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.controller.SalesController;
+import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
+import d2si.apps.planetedashboard.webservice.httpgetter.SalesGetter;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
@@ -27,6 +36,7 @@ public class LoginActivity extends RealmActivity {
     @BindView(R.id.et_password) ExtendedEditText et_password;
     @BindView(R.id.field_password) TextFieldBoxes field_password;
     @BindView(R.id.btn_login) MaterialRippleLayout btn_login;
+    MaterialDialog dialog;
 
     /**
      * Method call when Login button clicked
@@ -43,8 +53,31 @@ public class LoginActivity extends RealmActivity {
             field_password.setError(getString(R.string.et_error_not_empty),false);
 
         // if all validated launch main activity
-        if (validateUser() && validatePassword())
-            AppData.launchActivity(this,MainMenuActivity.class,true,null);
+        if (validateUser() && validatePassword()) {
+            dialog = new MaterialDialog.Builder(this)
+                    .title(R.string.progress_updating_title)
+                    .content(R.string.progress_updating_content)
+                    .progress(true, 0)
+                    .cancelable(false)
+                    .show();
+
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.set(Calendar.DAY_OF_MONTH,1);
+            calendar1.set(Calendar.MONTH,0);
+            Date date1 = new Date(calendar1.getTimeInMillis());
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.set(Calendar.DAY_OF_MONTH,1);
+            calendar2.set(Calendar.MONTH,2);
+            Date date2 = new Date(calendar2.getTimeInMillis());
+
+            new DataGetter() {
+                @Override
+                public void onSalesUpdate() {
+                    dialog.dismiss();
+                    AppData.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
+                }
+            }.updateSalesByDate(this,date1,date2);
+        }
     }
 
     /**
@@ -67,9 +100,8 @@ public class LoginActivity extends RealmActivity {
         AppData.setActionBarTitle(this,R.string.activity_login);
 
         //Test
-        if (AppData.VERSION_TEST)
-            AppData.launchActivity(this,MainMenuActivity.class,true,null);
-            //AppData.launchActivity(this,ConnexionActivity.class,true,null);
+        //if (AppData.VERSION_TEST)
+          //  AppData.launchActivity(this,MainMenuActivity.class,true,null);
 
     }
 

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.iconics.IconicsDrawable;
 
 import java.util.Calendar;
@@ -50,16 +51,6 @@ public class MainMenuActivity extends RealmActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(Calendar.DAY_OF_MONTH,1);
-        calendar1.set(Calendar.MONTH,0);
-        Date date1 = new Date(calendar1.getTimeInMillis());
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.set(Calendar.DAY_OF_MONTH,1);
-        calendar2.set(Calendar.MONTH,1);
-        Date date2 = new Date(calendar2.getTimeInMillis());
-        SalesController.updateSalesByDate(this,date1,date2);
 
         // Bind resources
         ButterKnife.bind(this);
