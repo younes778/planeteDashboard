@@ -29,8 +29,8 @@ public class MyApplication extends Application {
         RealmConfiguration config = new RealmConfiguration.Builder().schemaVersion(getResources().getInteger(R.integer.db_local_version)).name("myrealm.realm").build();
         Realm.setDefaultConfiguration(config);
 
-        // init the AppData resources
-        AppData.init(getBaseContext());
+        // init the AppUtils resources
+        AppUtils.init(getBaseContext());
     }
 
     /**

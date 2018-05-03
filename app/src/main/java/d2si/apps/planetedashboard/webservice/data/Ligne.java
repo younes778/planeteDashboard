@@ -1,11 +1,8 @@
-package d2si.apps.planetedashboard.database.data;
+package d2si.apps.planetedashboard.webservice.data;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
-public class Ligne extends RealmObject {
+public class Ligne {
 
-	@PrimaryKey
 	private String lig_doc_numero;
 	private int lig_qte;
 	private float lig_p_net;

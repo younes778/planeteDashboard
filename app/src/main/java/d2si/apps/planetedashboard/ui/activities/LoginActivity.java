@@ -1,8 +1,8 @@
 package d2si.apps.planetedashboard.ui.activities;
 
-import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
@@ -13,11 +13,9 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import d2si.apps.planetedashboard.AppData;
+import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.database.controller.SalesController;
 import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
-import d2si.apps.planetedashboard.webservice.httpgetter.SalesGetter;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
@@ -55,8 +53,8 @@ public class LoginActivity extends RealmActivity {
         // if all validated launch main activity
         if (validateUser() && validatePassword()) {
             dialog = new MaterialDialog.Builder(this)
-                    .title(R.string.progress_updating_title)
-                    .content(R.string.progress_updating_content)
+                    .title(R.string.progress_login_title)
+                    .content(R.string.progress_login_content)
                     .progress(true, 0)
                     .cancelable(false)
                     .show();
@@ -64,19 +62,38 @@ public class LoginActivity extends RealmActivity {
             Calendar calendar1 = Calendar.getInstance();
             calendar1.set(Calendar.DAY_OF_MONTH,1);
             calendar1.set(Calendar.MONTH,0);
-            Date date1 = new Date(calendar1.getTimeInMillis());
+            final Date date1 = new Date(calendar1.getTimeInMillis());
             Calendar calendar2 = Calendar.getInstance();
             calendar2.set(Calendar.DAY_OF_MONTH,1);
             calendar2.set(Calendar.MONTH,2);
-            Date date2 = new Date(calendar2.getTimeInMillis());
+            final Date date2 = new Date(calendar2.getTimeInMillis());
 
-            new DataGetter() {
+            final DataGetter dataGetter = new DataGetter() {
                 @Override
                 public void onSalesUpdate() {
                     dialog.dismiss();
-                    AppData.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
+                    AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
                 }
-            }.updateSalesByDate(this,date1,date2);
+
+                @Override
+                public void onUserUpdate(Boolean user) {
+                    dialog.dismiss();
+                    if (user) {
+                        dialog = new MaterialDialog.Builder(LoginActivity.this)
+                                .title(R.string.progress_updating_title)
+                                .content(R.string.progress_updating_content)
+                                .progress(true, 0)
+                                .cancelable(false)
+                                .show();
+                        this.updateSalesByDate(LoginActivity.this, date1, date2);
+                    }
+                    else {
+                        Toast.makeText(getBaseContext(),R.string.error_login,Toast.LENGTH_SHORT).show();
+                    }
+                }
+            };
+
+            dataGetter.checkUserCrediants(getBaseContext(),et_user.getText().toString(),et_password.getText().toString());
         }
     }
 
@@ -97,11 +114,19 @@ public class LoginActivity extends RealmActivity {
         typeface(this);
 
         // set the action bar title and font
-        AppData.setActionBarTitle(this,R.string.activity_login);
+        AppUtils.setActionBarTitle(this,R.string.activity_login);
+
+        // Test if already logged
+        SharedPreferences pref = AppUtils.getSharedPreference(this);
+        Boolean isLogged=pref.getBoolean(getString(R.string.pref_is_connected), false);
+        if (isLogged) AppUtils.launchActivity(this,MainMenuActivity.class,true,null);
+
 
         //Test
-        //if (AppData.VERSION_TEST)
-          //  AppData.launchActivity(this,MainMenuActivity.class,true,null);
+        /*if (AppUtils.VERSION_TEST)
+            AppUtils.launchActivity(this,TestActivity.class,true,null);*/
+
+
 
     }
 

@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -24,9 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import d2si.apps.planetedashboard.database.data.Sale;
 import io.realm.Realm;
-import io.realm.RealmModel;
 import io.realm.RealmObject;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
@@ -38,7 +38,7 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  *
  * @author younessennadj
  */
-public class AppData {
+public class AppUtils {
 
     public static ArrayList<IIcon> MENU_DRAWABLES = new ArrayList(){{
         add(CommunityMaterial.Icon.cmd_tag_text_outline);
@@ -52,12 +52,7 @@ public class AppData {
 
     public static boolean VERSION_TEST = true;
     public static String ACTIVITY_DATA="Data";
-    public static String[] CHART_MONTHS_FORMAT= new String[31];
-    public static int CHART_RADIUS_1 = 4;
-    public static int CHART_WIDTH_1= 2;
-    public static int CHART_TEXT_SIZE_1= 15;
-    public static int CHART_TEXT_SIZE_2= 18;
-    public static List<Integer> CHART_COLORS= new ArrayList<>();
+    public static List<String> CHART_COLORS= new ArrayList<>();
     public static Typeface fontApp;
     public static Typeface fontAppBold;
 
@@ -69,7 +64,6 @@ public class AppData {
     public static void init(Context context){
         addChartColors(context);
         initializeFonts(context);
-        addChartMonthFormat();
     }
 
     /**
@@ -85,7 +79,7 @@ public class AppData {
 
         // initialize the default font
         TypefaceCollection typeface = new TypefaceCollection.Builder()
-                .set(Typeface.BOLD, AppData.fontApp)
+                .set(Typeface.BOLD, AppUtils.fontApp)
                 .create();
         TypefaceHelper.init(typeface);
 
@@ -97,22 +91,9 @@ public class AppData {
      * @param context App actual context
      */
     public static void addChartColors(Context context){
-        CHART_COLORS.add(context.getResources().getColor(R.color.colorPrimary));
-        CHART_COLORS.add(context.getResources().getColor(R.color.colorAccent));
-        CHART_COLORS.add(context.getResources().getColor(R.color.colorPrimaryDark));
-    }
-
-    /**
-     * Method that add specific format to the Chart Month {1,15,30}
-     *
-     */
-    public static void addChartMonthFormat(){
-        for (int i=0;i<CHART_MONTHS_FORMAT.length;i++)
-            CHART_MONTHS_FORMAT[i]="";
-
-        CHART_MONTHS_FORMAT[0]="01";
-        CHART_MONTHS_FORMAT[14]="15";
-        CHART_MONTHS_FORMAT[30]="31";
+        CHART_COLORS.add("#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorPrimary)).substring(2));
+        CHART_COLORS.add("#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorAccent)).substring(2));
+        CHART_COLORS.add("#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorPrimaryDark)).substring(2));
     }
 
     /**
@@ -206,8 +187,10 @@ public class AppData {
      *
      * @return  last month date formatted
      */
-    public static String getCurrencyFormatted(Context context,float value){
-        return context.getResources().getString(R.string.currency,Float.valueOf(new DecimalFormat("#.##").format(value)));
+    public static String getCurrencyFormatted(Context context,float value,boolean withCurrency){
+        if (withCurrency)
+        return context.getString(R.string.currency,context.getResources().getString(R.string.current_currency),Float.valueOf(new DecimalFormat("#.##").format(value)));
+        else return new DecimalFormat("#.##").format(value);
     }
 
     /**
@@ -321,6 +304,22 @@ public class AppData {
      */
     public static String formDateSql(Date date){
         return new SimpleDateFormat("yyyy-dd-MM").format(date);
+    }
+
+    /**
+     * Method that get the shared preference
+     *
+     * @param context actual context
+     *
+     */
+
+    public static SharedPreferences getSharedPreference(Context context){
+        return  context.getSharedPreferences(
+                "Pref", Context.MODE_PRIVATE);
+    }
+
+    public static SharedPreferences.Editor getSharedPreferenceEdito(Context context){
+        return context.getSharedPreferences("Pref", Context.MODE_PRIVATE).edit();
     }
 
 

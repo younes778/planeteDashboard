@@ -2,25 +2,32 @@
 
     <!--                App Configuration           -->
     <!--                Rest Server Data            -->
-    <string name="REST_SERVER_URL">http://192.168.1.2</string>
+    <string name="REST_SERVER_URL">http://192.168.1.3</string>
     <string name="REST_SERVER_PORT">8080</string>
     <string name="REST_REQUEST_SALES">sales</string>
+    <string name="REST_REQUEST_ARTICLES">articles</string>
+    <string name="REST_REQUEST_LIGNES">lignes</string>
+    <string name="REST_REQUEST_TIERS">tiers</string>
+    <string name="REST_REQUEST_REPRESENTANT">representants</string>
+    <string name="REST_REQUEST_USER">user</string>
     <string name="REST_REQUEST_SALES_TEMPLATE">salestemplate</string>
     <string name="REST_FIELD_URL">url</string>
     <string name="REST_FIELD_DB_NAME">dbName</string>
     <string name="REST_FIELD_DATE_FROM">dateFrom</string>
     <string name="REST_FIELD_DATE_TO">dateTo</string>
+    <string name="REST_FIELD_USER">user</string>
+    <string name="REST_FIELD_PASSWORD">password</string>
 
     <!--                DataBase Data               -->
-    <string name="DB_URL">192.168.1.5</string>
+    <string name="DB_URL">d2si.ddns.net</string>
     <string name="DB_NAME">SOMAFEPLANETE</string>
 
-
     <!--                App d2si.apps.planetedashboard.database.data                -->
-    <integer name="db_local_version">1</integer>
+    <integer name="db_local_version">2</integer>
     <string name="app_name">PLANETE <b>DASHBOARD</b></string>
     <string name="activity_login">LOGIN</string>
-    <string name="currency"><b>DZ</b> %1$s</string>
+    <string name="current_currency">DZ</string>
+    <string name="currency"><b>%1$s</b> %2$s</string>
     <string name="app_copyright">© 2018 <b>DSSI</b></string>
 
 
@@ -35,6 +42,7 @@
     <string name="menu_setting"><b>SETTINGS</b></string>
     <string name="menu_parameter"><b>PARAMETERS</b></string>
 
+
     <!--                   Chart               -->
     <string-array name="days_shors">
         <item name="sunday_short">SU</item>
@@ -46,10 +54,12 @@
         <item name="saturday_short">SA</item>
     </string-array>
 
+
     <!--                    Tab Host            -->
     <string name="tab_day">DAY</string>
     <string name="tab_week">WEEK</string>
     <string name="tab_month">MONTH</string>
+    <string name="tab_year">YEAR</string>
 
 
     <!--                Text Views                -->
@@ -70,7 +80,29 @@
     <string name="btn_login"><b>Login</b></string>
 
     <!--            Progress                -->
+    <string name="progress_login_title">Login</string>
+    <string name="progress_login_content">Connecting ......</string>
     <string name="progress_updating_title">Refresh data</string>
     <string name="progress_updating_content">Updating ......</string>
+
+    <!--           Shared Preferences       -->
+    <string name="pref_is_connected">isConnected</string>
+
+    <!--                Dialogs             -->
+    <string name="dialog_logout_title">Log out</string>
+    <string name="dialog_logout_content">Do you want to log out?</string>
+
+
+    <string name="dialog_confirm">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+
+    <!--            Errors              -->
+    <string name="error_login">Unable to login!</string>
+
+    <!--            Menus               -->
+    <string name="filter_none">Filter: None</string>
+    <string name="filter_item">Filter by Item</string>
+    <string name="filter_client">Filter by Client</string>
+    <string name="filter_representant">Filter by Representant</string>
 
 </resources>

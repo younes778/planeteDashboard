@@ -60,7 +60,7 @@ dependencies {
     implementation 'com.mikepenz:ionicons-typeface:2.0.1.4@aar'
 
     // Graph libraries
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.github.AnyChart:AnyChart-Android:0.1.9'
 
     // Font library
     implementation 'com.norbsoft.typefacehelper:library:0.9.0'

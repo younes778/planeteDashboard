@@ -4,18 +4,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.iconics.IconicsDrawable;
-
-import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import d2si.apps.planetedashboard.AppData;
+import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.database.controller.SalesController;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -39,7 +34,7 @@ public class MainMenuActivity extends RealmActivity {
      *
      */
     @OnClick(R.id.btn_sales) void sales() {
-        AppData.launchActivity(this,MainActivity.class,false,String.valueOf(MainActivity.FRAGMENT_SALES));
+        AppUtils.launchActivity(this,MainActivity.class,false,String.valueOf(MainActivity.FRAGMENT_SALES));
     }
 
     /**
@@ -59,18 +54,18 @@ public class MainMenuActivity extends RealmActivity {
         typeface(this);
 
         // set the action bar title and font
-        AppData.setActionBarTitle(this,R.string.app_name);
+        AppUtils.setActionBarTitle(this,R.string.app_name);
 
         // initialize the images with drawables
-        img_sales.setImageDrawable(new IconicsDrawable(this).icon(AppData.MENU_DRAWABLES.get(0))
+        img_sales.setImageDrawable(new IconicsDrawable(this).icon(AppUtils.MENU_DRAWABLES.get(0))
                 .color(Color.WHITE));
-        img_stock.setImageDrawable(new IconicsDrawable(this).icon(AppData.MENU_DRAWABLES.get(1))
+        img_stock.setImageDrawable(new IconicsDrawable(this).icon(AppUtils.MENU_DRAWABLES.get(1))
                 .color(Color.WHITE));
-        img_purchase.setImageDrawable(new IconicsDrawable(this).icon(AppData.MENU_DRAWABLES.get(2))
+        img_purchase.setImageDrawable(new IconicsDrawable(this).icon(AppUtils.MENU_DRAWABLES.get(2))
                 .color(Color.WHITE));
-        img_client.setImageDrawable(new IconicsDrawable(this).icon(AppData.MENU_DRAWABLES.get(3))
+        img_client.setImageDrawable(new IconicsDrawable(this).icon(AppUtils.MENU_DRAWABLES.get(3))
                 .color(Color.WHITE));
-        img_providers.setImageDrawable(new IconicsDrawable(this).icon(AppData.MENU_DRAWABLES.get(4))
+        img_providers.setImageDrawable(new IconicsDrawable(this).icon(AppUtils.MENU_DRAWABLES.get(4))
                 .color(Color.WHITE));
 
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/filter_none"
+        android:title="@string/filter_none"
+        app:showAsAction="never" />
+    <item android:id="@+id/filter_item"
+        android:title="@string/filter_item"
+        app:showAsAction="never" />
+    <item android:id="@+id/filter_client"
+        android:title="@string/filter_client"
+        app:showAsAction="never" />
+    <item android:id="@+id/filter_representant"
+        android:title="@string/filter_representant"
+        app:showAsAction="never" />
+</menu>

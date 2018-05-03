@@ -2,44 +2,37 @@ package d2si.apps.planetedashboard.ui.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.anychart.anychart.AnyChartView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import d2si.apps.planetedashboard.AppData;
-import d2si.apps.planetedashboard.database.controller.SalesController;
-import d2si.apps.planetedashboard.database.data.Sale;
-import d2si.apps.planetedashboard.ui.data.LineChartCustom;
+import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
-import io.realm.Realm;
-import io.realm.RealmResults;
+import d2si.apps.planetedashboard.database.controller.SalesController;
+import d2si.apps.planetedashboard.ui.data.CustomLineChart;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
 /**
  * Sales Fragment by month
- *
+ * <p>
  * Fragment that represents the sales by month
  *
  * @author younessennadj
  */
-public class SalesMonthFragment extends Fragment implements OnChartValueSelectedListener {
+public class SalesMonthFragment extends Fragment {
 
-    @BindView(R.id.chart) LineChart chart;
+    @BindView(R.id.chart)
+    AnyChartView chart;
     private View view;
 
     @Override
@@ -53,65 +46,43 @@ public class SalesMonthFragment extends Fragment implements OnChartValueSelected
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_chart_line, container, false);
-        ButterKnife.bind(this,view);
+        view = inflater.inflate(R.layout.fragment_chart, container, false);
+        ButterKnife.bind(this, view);
 
-        // Chart Value selected listener
-        chart.setOnChartValueSelectedListener(this);
+        ArrayList<String> legend = new ArrayList<>();
+        // List data titles
+        ArrayList<String> setTitles = new ArrayList<>();
+        // List data
+        ArrayList<ArrayList<Float>> data = new ArrayList<>();
 
 
-        // intialize for test
-        LinkedHashMap<String,List<Float>> entries = new LinkedHashMap<>();
-        List<Float> thisMonthEntries = new ArrayList<>();
-        for (int i=0;i<31;i++)
-        {
+        // fill data titles
+        setTitles.add(AppUtils.getMonthFormatted());
+        setTitles.add(AppUtils.getLastMonthFormatted());
+
+        // fill data and labels
+        for (int i = 0; i < 31; i++) {
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.MONTH,1);
-            calendar.set(Calendar.DAY_OF_MONTH,i+1);
-            Date date = new Date(calendar.getTimeInMillis());
-            thisMonthEntries.add(SalesController.getSalesTotalByDay(date));
+            calendar.set(Calendar.MONTH, 1);
+            calendar.set(Calendar.DAY_OF_MONTH, i + 1);
+            final Date dateFrom = new Date(calendar.getTimeInMillis());
+            calendar.set(Calendar.MONTH, 0);
+            final Date dateTo = new Date(calendar.getTimeInMillis());
+
+            legend.add((i+1)+"");
+
+            data.add(new ArrayList<Float>() {{
+                add(SalesController.getSalesTotalByDay(dateFrom));
+                add(SalesController.getSalesTotalByDay(dateTo));
+            }});
         }
 
-        List<Float> lastMonthEntries = new ArrayList<>();
-        for (int i=0;i<31;i++)
-        {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.MONTH,0);
-            calendar.set(Calendar.DAY_OF_MONTH,i+1);
-            Date date = new Date(calendar.getTimeInMillis());
-            lastMonthEntries.add(SalesController.getSalesTotalByDay(date));
-        }
-
-
-
-        entries.put(AppData.getMonthFormatted(),thisMonthEntries);
-        entries.put(AppData.getLastMonthFormatted(),lastMonthEntries);
-        new LineChartCustom(getActivity(),chart,AppData.CHART_MONTHS_FORMAT,entries,LineChartCustom.LINE_CHART_TYPE.CUBIC);
+        new CustomLineChart(chart, legend, data, setTitles);
 
         // initialize the font
         typeface(view);
         typeface(chart);
 
         return view;
-    }
-
-    @Override
-    /**
-     * Method that react when valuer selected
-     *
-     * @param e Value entry
-     * @param h Value highlighted
-     */
-    public void onValueSelected(Entry e, Highlight h) {
-
-    }
-
-    @Override
-    /**
-     * Method that react when nothing is selected
-     *
-     */
-    public void onNothingSelected() {
-
     }
 }
