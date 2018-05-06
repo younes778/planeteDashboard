@@ -126,9 +126,11 @@ public class MainActivity extends RealmActivity{
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         navDrawer.closeDrawer();
                         if (position==1) {
-                            setupTabs(FRAGMENT_SALES);
+                            fragment_to_launch=0;
+                            setupTabs(fragment_to_launch);
                         }
                         if (position==8){
+                            navDrawer.setSelection(fragment_to_launch+1);
                             new MaterialDialog.Builder(MainActivity.this)
                                     .title(R.string.dialog_logout_title)
                                     .content(R.string.dialog_logout_content)
