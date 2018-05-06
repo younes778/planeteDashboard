@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -14,6 +16,7 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -26,6 +29,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +37,7 @@ import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.controller.SalesController;
 import d2si.apps.planetedashboard.database.data.Article;
+import d2si.apps.planetedashboard.ui.adapters.ChoiceRecyclerAdapter;
 import d2si.apps.planetedashboard.ui.fragments.SalesDayFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesMonthFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesWeekFragment;
@@ -244,7 +249,52 @@ public class MainActivity extends RealmActivity{
                 setupTabs(0);
                 return true;
             case R.id.filter_item:
+
                 final ArrayList<Article> articles = SalesController.getSalesArticles();
+
+                MaterialDialog dialog = new MaterialDialog.Builder(this)
+                        .title(R.string.dialog_filter_title)
+                        .customView(R.layout.dialog_filter,false)
+                        .autoDismiss(false)
+                        .positiveText(R.string.dialog_confirm)
+                        .negativeText(R.string.dialog_cancel)
+                        .neutralText(R.string.dialog_select_all)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                                dialog.dismiss();
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                            }
+                        })
+                        .show();
+
+                View dialogView = dialog.getCustomView();
+                typeface(dialogView);
+                RecyclerView choiceList = dialogView.findViewById(R.id.recycler_choice);
+                MaterialSpinner showSpinner = dialogView.findViewById(R.id.spinner_show);
+                MaterialSpinner familySpinner = dialogView.findViewById(R.id.spinner_family);
+
+                showSpinner.setItems(Arrays.asList(getResources().getStringArray(R.array.dialog_filter_array_show)));
+                familySpinner.setItems(Arrays.asList(getResources().getStringArray(R.array.dialog_filter_array_show)));
+
+                choiceList.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+                choiceList.setAdapter(new ChoiceRecyclerAdapter(getBaseContext(),SalesController.getArticlesName(articles)));
+
+
+
+                /*
                 MaterialDialog dialog = new MaterialDialog.Builder(this)
                         .title(R.string.dialog_filter_title)
                         .typeface(AppUtils.fontAppBold,AppUtils.fontApp)
@@ -289,7 +339,7 @@ public class MainActivity extends RealmActivity{
                                 else dialog.clearSelectedIndices();
                             }
                         })
-                        .show();
+                        .show();*/
                 return true;
             case R.id.filter_client:
                 new MaterialDialog.Builder(this)

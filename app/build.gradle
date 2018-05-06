@@ -82,5 +82,7 @@ dependencies {
     // Material dialogs library
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
+    // Material Spinner
+    implementation 'com.jaredrummler:material-spinner:1.2.5'
 
 }

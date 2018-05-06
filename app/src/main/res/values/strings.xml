@@ -93,11 +93,19 @@
     <!--                Dialogs             -->
     <string name="dialog_logout_title">Log out</string>
     <string name="dialog_filter_title">Filter by</string>
+
     <string name="dialog_logout_content">Do you want to log out?</string>
+    <string name="dialog_filter_show"><b>Show</b></string>
+    <string name="dialog_filter_family"><b>Family</b></string>
 
     <string name="dialog_confirm">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_select_all">Select All</string>
+
+    <string-array name="dialog_filter_array_show">
+        <item>Label</item>
+        <item>Id</item>
+    </string-array>
 
     <!--            Errors              -->
     <string name="error_login">Unable to login!</string>
