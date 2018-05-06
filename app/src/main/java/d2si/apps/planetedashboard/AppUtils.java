@@ -30,6 +30,7 @@ import io.realm.Realm;
 import io.realm.RealmObject;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
+import static java.lang.Float.NaN;
 
 /**
  * App d2si.apps.planetedashboard.database.data class

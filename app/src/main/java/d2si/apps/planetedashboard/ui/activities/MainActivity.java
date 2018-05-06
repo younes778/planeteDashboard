@@ -24,14 +24,18 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.controller.SalesController;
 import d2si.apps.planetedashboard.ui.fragments.SalesDayFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesMonthFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesWeekFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesYearFragment;
+import io.realm.RealmObject;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -227,16 +231,81 @@ public class MainActivity extends RealmActivity{
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.filter_none:
-
+                SalesController.filter = SalesController.FILTER.NONE;
+                SalesController.filters = null;
+                setupTabs(0);
                 return true;
             case R.id.filter_item:
-
+                new MaterialDialog.Builder(this)
+                        .title(R.string.dialog_filter_title)
+                        .items(SalesController.getArticlesName(SalesController.getSalesArticles()))
+                        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                            @Override
+                            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                               if (which==null || which.length==0) {
+                                   SalesController.filter = SalesController.FILTER.NONE;
+                                   SalesController.filters = null;
+                                   setupTabs(0);
+                               }
+                               else {
+                                   SalesController.filter = SalesController.FILTER.ITEM;
+                                   SalesController.filters = SalesController.getSubArticles(SalesController.getSalesArticles(),which);
+                                   setupTabs(0);
+                               }
+                                return true;
+                            }
+                        })
+                        .positiveText(R.string.dialog_confirm)
+                        .negativeText(R.string.dialog_cancel)
+                        .show();
                 return true;
             case R.id.filter_client:
-
+                new MaterialDialog.Builder(this)
+                        .title(R.string.dialog_filter_title)
+                        .items(SalesController.getTiersName(SalesController.getSalesClients()))
+                        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                            @Override
+                            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                                if (which==null || which.length==0) {
+                                    SalesController.filter = SalesController.FILTER.NONE;
+                                    SalesController.filters = null;
+                                    setupTabs(0);
+                                }
+                                else {
+                                    SalesController.filter = SalesController.FILTER.CLIENT;
+                                    SalesController.filters = SalesController.getSubTiers(SalesController.getSalesClients(),which);
+                                    setupTabs(0);
+                                }
+                                return true;
+                            }
+                        })
+                        .positiveText(R.string.dialog_confirm)
+                        .negativeText(R.string.dialog_cancel)
+                        .show();
                 return true;
             case R.id.filter_representant:
-
+                new MaterialDialog.Builder(this)
+                        .title(R.string.dialog_filter_title)
+                        .items(SalesController.getRepresentantName(SalesController.getSalesRepresentants()))
+                        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
+                            @Override
+                            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                                if (which==null || which.length==0) {
+                                    SalesController.filter = SalesController.FILTER.NONE;
+                                    SalesController.filters = null;
+                                    setupTabs(0);
+                                }
+                                else {
+                                    SalesController.filter = SalesController.FILTER.REPRESENTANT;
+                                    SalesController.filters = SalesController.getSubRepresentant(SalesController.getSalesRepresentants(),which);
+                                    setupTabs(0);
+                                }
+                                return true;
+                            }
+                        })
+                        .positiveText(R.string.dialog_confirm)
+                        .negativeText(R.string.dialog_cancel)
+                        .show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

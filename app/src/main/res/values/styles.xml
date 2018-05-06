@@ -27,6 +27,7 @@
         <item name="md_negative_color">@color/colorPrimary</item>
         <item name="md_neutral_color">@color/colorPrimary</item>
         <item name="md_widget_color">@color/colorPrimary</item>
+        <item name="md_dark_theme">false</item>
 
     </style>
 

@@ -90,6 +90,7 @@
 
     <!--                Dialogs             -->
     <string name="dialog_logout_title">Log out</string>
+    <string name="dialog_filter_title">Filter by</string>
     <string name="dialog_logout_content">Do you want to log out?</string>
 
 
