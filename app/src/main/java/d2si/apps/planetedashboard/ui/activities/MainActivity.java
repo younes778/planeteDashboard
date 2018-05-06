@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.controller.SalesController;
+import d2si.apps.planetedashboard.database.data.Article;
 import d2si.apps.planetedashboard.ui.fragments.SalesDayFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesMonthFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesWeekFragment;
@@ -236,27 +238,51 @@ public class MainActivity extends RealmActivity{
                 setupTabs(0);
                 return true;
             case R.id.filter_item:
-                new MaterialDialog.Builder(this)
+                final ArrayList<Article> articles = SalesController.getSalesArticles();
+                MaterialDialog dialog = new MaterialDialog.Builder(this)
                         .title(R.string.dialog_filter_title)
-                        .items(SalesController.getArticlesName(SalesController.getSalesArticles()))
+                        .typeface(AppUtils.fontAppBold,AppUtils.fontApp)
+                        .items(SalesController.getArticlesName(articles))
                         .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                               if (which==null || which.length==0) {
-                                   SalesController.filter = SalesController.FILTER.NONE;
-                                   SalesController.filters = null;
-                                   setupTabs(0);
-                               }
-                               else {
-                                   SalesController.filter = SalesController.FILTER.ITEM;
-                                   SalesController.filters = SalesController.getSubArticles(SalesController.getSalesArticles(),which);
-                                   setupTabs(0);
-                               }
                                 return true;
                             }
                         })
+                        .autoDismiss(false)
                         .positiveText(R.string.dialog_confirm)
                         .negativeText(R.string.dialog_cancel)
+                        .neutralText(R.string.dialog_select_all)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                if (dialog.getSelectedIndices().length==0) {
+                                    SalesController.filter = SalesController.FILTER.NONE;
+                                    SalesController.filters = null;
+                                    setupTabs(0);
+                                }
+                                else {
+                                    SalesController.filter = SalesController.FILTER.ITEM;
+                                    SalesController.filters = SalesController.getSubArticles(articles,dialog.getSelectedIndices());
+                                    setupTabs(0);
+                                }
+                                dialog.dismiss();
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                if (dialog.getSelectedIndices().length != articles.size())
+                                dialog.selectAllIndices();
+                                else dialog.clearSelectedIndices();
+                            }
+                        })
                         .show();
                 return true;
             case R.id.filter_client:
@@ -266,7 +292,7 @@ public class MainActivity extends RealmActivity{
                         .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                                if (which==null || which.length==0) {
+                                if (which.length==0) {
                                     SalesController.filter = SalesController.FILTER.NONE;
                                     SalesController.filters = null;
                                     setupTabs(0);
@@ -290,7 +316,7 @@ public class MainActivity extends RealmActivity{
                         .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
                             @Override
                             public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                                if (which==null || which.length==0) {
+                                if (which.length==0) {
                                     SalesController.filter = SalesController.FILTER.NONE;
                                     SalesController.filters = null;
                                     setupTabs(0);
@@ -310,6 +336,14 @@ public class MainActivity extends RealmActivity{
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            AppUtils.launchActivity(MainActivity.this,MainMenuActivity.class,true,null);
+        }
+        return true;
     }
 
 }

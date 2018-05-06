@@ -93,9 +93,9 @@
     <string name="dialog_filter_title">Filter by</string>
     <string name="dialog_logout_content">Do you want to log out?</string>
 
-
     <string name="dialog_confirm">OK</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_select_all">Select All</string>
 
     <!--            Errors              -->
     <string name="error_login">Unable to login!</string>

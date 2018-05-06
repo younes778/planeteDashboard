@@ -34,7 +34,7 @@ public class MainMenuActivity extends RealmActivity {
      *
      */
     @OnClick(R.id.btn_sales) void sales() {
-        AppUtils.launchActivity(this,MainActivity.class,false,String.valueOf(MainActivity.FRAGMENT_SALES));
+        AppUtils.launchActivity(this,MainActivity.class,true,String.valueOf(MainActivity.FRAGMENT_SALES));
     }
 
     /**
