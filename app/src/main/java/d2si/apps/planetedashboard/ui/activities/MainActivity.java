@@ -96,6 +96,10 @@ public class MainActivity extends RealmActivity{
         // Initialize Nav drawer
         new DrawerBuilder().withActivity(this).build();
 
+        // Get user name
+        SharedPreferences pref = AppUtils.getSharedPreference(this);
+        String userName = pref.getString(getString(R.string.pref_user), "Client D2SI");
+
         // Add Items to the nav drawer
         navDrawer = new DrawerBuilder()
                 .withActivity(this)
@@ -105,7 +109,7 @@ public class MainActivity extends RealmActivity{
                         .withHeaderBackground(R.drawable.nav_drawer_background)
                         .withAlternativeProfileHeaderSwitching(false)
                         .addProfiles(
-                                new ProfileDrawerItem().withName("Client D2SI").withIcon(new IconicsDrawable(this)
+                                new ProfileDrawerItem().withName(userName).withIcon(new IconicsDrawable(this)
                                         .icon(MaterialDesignIconic.Icon.gmi_account_circle)
                                         .color(Color.WHITE))).withCurrentProfileHiddenInList(true).withDividerBelowHeader(false).withAlternativeProfileHeaderSwitching(false).withOnlyMainProfileImageVisible(true).withSelectionListEnabled(false)
                         .build()

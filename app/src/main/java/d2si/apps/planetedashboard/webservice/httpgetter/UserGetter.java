@@ -76,19 +76,4 @@ public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
      */
     public abstract void onPost(Boolean login);
 
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
