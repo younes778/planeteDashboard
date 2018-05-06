@@ -27,6 +27,8 @@ public class MyApplication extends Application {
         // init the Database Realm
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder().schemaVersion(getResources().getInteger(R.integer.db_local_version)).name("myrealm.realm").build();
+        // For test delete configuration
+        //Realm.deleteRealm(config);
         Realm.setDefaultConfiguration(config);
 
         // init the AppUtils resources

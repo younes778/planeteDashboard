@@ -54,7 +54,7 @@ public abstract class ArticlesGetter extends AsyncTask<Void, Void, ArrayList<Art
             ArrayList<Article> salesDB=new ArrayList<>();
             ArrayList<d2si.apps.planetedashboard.webservice.data.Article> articles = new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, d2si.apps.planetedashboard.webservice.data.Article[].class)));
             for (d2si.apps.planetedashboard.webservice.data.Article article:articles) {
-                       salesDB.add(new Article(article.getArt_code(),article.getArt_lib()));
+                       salesDB.add(new Article(article.getArt_code(),article.getArt_lib(),article.getFar_lib()));
             }
             return salesDB;
         } catch (Exception e) {

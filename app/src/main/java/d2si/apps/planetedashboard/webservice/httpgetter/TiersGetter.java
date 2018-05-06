@@ -55,7 +55,7 @@ public abstract class TiersGetter extends AsyncTask<Void, Void, ArrayList<Tiers>
             ArrayList<Tiers> salesDB=new ArrayList<>();
             ArrayList<d2si.apps.planetedashboard.webservice.data.Tiers> tiers = new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, d2si.apps.planetedashboard.webservice.data.Tiers[].class)));
             for (d2si.apps.planetedashboard.webservice.data.Tiers tier:tiers) {
-                        salesDB.add(new Tiers(tier.getPcf_code(),tier.getPcf_type(),tier.getPcf_rs(),tier.getPcf_rue(),tier.getPcf_comp(),tier.getPcf_cp(),tier.getPcf_ville(),tier.getPay_code(),tier.getPcf_tel1(),tier.getPcf_tel2(),tier.getPcf_fax(),tier.getPcf_email(),tier.getPcf_url()));
+                        salesDB.add(new Tiers(tier.getPcf_code(),tier.getPcf_type(),tier.getPcf_rs(),tier.getPcf_rue(),tier.getPcf_comp(),tier.getPcf_cp(),tier.getPcf_ville(),tier.getPay_code(),tier.getPcf_tel1(),tier.getPcf_tel2(),tier.getPcf_fax(),tier.getPcf_email(),tier.getPcf_url(),tier.getFat_lib()));
             }
             return salesDB;
         } catch (Exception e) {

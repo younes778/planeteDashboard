@@ -23,7 +23,7 @@
     <string name="DB_NAME">SOMAFEPLANETE</string>
 
     <!--                App d2si.apps.planetedashboard.database.data                -->
-    <integer name="db_local_version">2</integer>
+    <integer name="db_local_version">3</integer>
     <string name="app_name">PLANETE <b>DASHBOARD</b></string>
     <string name="activity_login">LOGIN</string>
     <string name="current_currency">DZ</string>

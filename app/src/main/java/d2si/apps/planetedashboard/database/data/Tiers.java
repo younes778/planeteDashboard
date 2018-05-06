@@ -18,11 +18,12 @@ public class Tiers extends RealmObject {
 	private String pcf_fax;
 	private String pcf_email;
 	private String pcf_url;
+	private String fat_lib;
 
 	public Tiers() {
 	}
 
-	public Tiers(String pcf_code, String pcf_type, String pcf_rs, String pcf_rue, String pcf_comp, String pcf_cp, String pcf_ville, String pay_code, String pcf_tel1, String pcf_tel2, String pcf_fax, String pcf_email, String pcf_url) {
+	public Tiers(String pcf_code, String pcf_type, String pcf_rs, String pcf_rue, String pcf_comp, String pcf_cp, String pcf_ville, String pay_code, String pcf_tel1, String pcf_tel2, String pcf_fax, String pcf_email, String pcf_url, String fat_lib) {
 		this.pcf_code = pcf_code;
 		this.pcf_type = pcf_type;
 		this.pcf_rs = pcf_rs;
@@ -36,6 +37,15 @@ public class Tiers extends RealmObject {
 		this.pcf_fax = pcf_fax;
 		this.pcf_email = pcf_email;
 		this.pcf_url = pcf_url;
+		this.fat_lib = fat_lib;
+	}
+
+	public String getFat_lib() {
+		return fat_lib;
+	}
+
+	public void setFat_lib(String fat_lib) {
+		this.fat_lib = fat_lib;
 	}
 
 	public String getPcf_code() {
