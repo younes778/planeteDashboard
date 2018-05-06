@@ -52,48 +52,63 @@ public class LoginActivity extends RealmActivity {
 
         // if all validated launch main activity
         if (validateUser() && validatePassword()) {
-            dialog = new MaterialDialog.Builder(this)
-                    .title(R.string.progress_login_title)
-                    .content(R.string.progress_login_content)
-                    .progress(true, 0)
-                    .cancelable(false)
-                    .show();
+            SharedPreferences pref = AppUtils.getSharedPreference(this);
+            String user = pref.getString(getString(R.string.pref_user), "");
+            String password = pref.getString(getString(R.string.pref_password), "");
 
-            Calendar calendar1 = Calendar.getInstance();
-            calendar1.set(Calendar.DAY_OF_MONTH,1);
-            calendar1.set(Calendar.MONTH,0);
-            final Date date1 = new Date(calendar1.getTimeInMillis());
-            Calendar calendar2 = Calendar.getInstance();
-            calendar2.set(Calendar.DAY_OF_MONTH,1);
-            calendar2.set(Calendar.MONTH,2);
-            final Date date2 = new Date(calendar2.getTimeInMillis());
+            // check if it is the last user then we don't need to update data
+            if (user.equalsIgnoreCase(et_user.getText().toString()) && password.equals(et_password.getText().toString())) {
+                SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(this);
+                // save in preferences the connected user
+                editor.putBoolean(getString(R.string.pref_is_connected), true);
+                editor.apply();
+                AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
 
-            final DataGetter dataGetter = new DataGetter() {
-                @Override
-                public void onSalesUpdate() {
-                    dialog.dismiss();
-                    AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
-                }
+            }
+            else { // it is a new user therefor we need to update the data
+                dialog = new MaterialDialog.Builder(this)
+                        .title(R.string.progress_login_title)
+                        .content(R.string.progress_login_content)
+                        .progress(true, 0)
+                        .cancelable(false)
+                        .show();
 
-                @Override
-                public void onUserUpdate(Boolean user) {
-                    dialog.dismiss();
-                    if (user) {
-                        dialog = new MaterialDialog.Builder(LoginActivity.this)
-                                .title(R.string.progress_updating_title)
-                                .content(R.string.progress_updating_content)
-                                .progress(true, 0)
-                                .cancelable(false)
-                                .show();
-                        this.updateSalesByDate(LoginActivity.this, date1, date2);
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.set(Calendar.DAY_OF_MONTH, 1);
+                calendar1.set(Calendar.MONTH, 0);
+                final Date date1 = new Date(calendar1.getTimeInMillis());
+                Calendar calendar2 = Calendar.getInstance();
+                calendar2.set(Calendar.DAY_OF_MONTH, 1);
+                calendar2.set(Calendar.MONTH, 2);
+                final Date date2 = new Date(calendar2.getTimeInMillis());
+
+                final DataGetter dataGetter = new DataGetter() {
+                    @Override
+                    public void onSalesUpdate() {
+                        dialog.dismiss();
+                        AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
                     }
-                    else {
-                        Toast.makeText(getBaseContext(),R.string.error_login,Toast.LENGTH_SHORT).show();
-                    }
-                }
-            };
 
-            dataGetter.checkUserCrediants(getBaseContext(),et_user.getText().toString(),et_password.getText().toString());
+                    @Override
+                    public void onUserUpdate(Boolean user) {
+                        dialog.dismiss();
+                        if (user) {
+
+                            dialog = new MaterialDialog.Builder(LoginActivity.this)
+                                    .title(R.string.progress_updating_title)
+                                    .content(R.string.progress_updating_content)
+                                    .progress(true, 0)
+                                    .cancelable(false)
+                                    .show();
+                            this.updateSalesByDate(LoginActivity.this, date1, date2);
+                        } else {
+                            Toast.makeText(getBaseContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                };
+
+                dataGetter.checkUserCrediants(getBaseContext(), et_user.getText().toString(), et_password.getText().toString());
+            }
         }
     }
 

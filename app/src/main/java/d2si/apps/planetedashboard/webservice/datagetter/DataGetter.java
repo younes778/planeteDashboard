@@ -25,16 +25,19 @@ public abstract class DataGetter {
     public abstract void onSalesUpdate();
     public abstract void onUserUpdate(Boolean isConected);
 
-    public void checkUserCrediants(final Context context, String user, String password) {
+    public void checkUserCrediants(final Context context, final String user, final String password) {
         new UserGetter(context, user, password) {
             @Override
-            public void onPost(Boolean user) {
-                if (user) {
+            public void onPost(Boolean isConnected) {
+                if (isConnected) {
                     SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(context);
+                    // save in preferences the connected user
                     editor.putBoolean(context.getString(R.string.pref_is_connected), true);
+                    editor.putString(context.getString(R.string.pref_user),user);
+                    editor.putString(context.getString(R.string.pref_password),password);
                     editor.apply();
                 }
-                onUserUpdate(user);
+                onUserUpdate(isConnected);
             }
         }.execute();
     }
