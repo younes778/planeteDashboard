@@ -13,10 +13,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -35,13 +36,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.controller.ArticlesController;
+import d2si.apps.planetedashboard.database.controller.ClientsController;
 import d2si.apps.planetedashboard.database.controller.SalesController;
 import d2si.apps.planetedashboard.database.data.Article;
+import d2si.apps.planetedashboard.database.data.Tiers;
 import d2si.apps.planetedashboard.ui.adapters.ChoiceRecyclerAdapter;
+import d2si.apps.planetedashboard.ui.data.FilterCheckBox;
 import d2si.apps.planetedashboard.ui.fragments.SalesDayFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesMonthFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesWeekFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesYearFragment;
+import fr.ganfra.materialspinner.MaterialSpinner;
 import io.realm.RealmObject;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
@@ -65,6 +71,15 @@ public class MainActivity extends RealmActivity{
     private Drawer navDrawer;
     private Toolbar toolbar;
     private int fragment_to_launch;
+
+    private ArrayList<FilterCheckBox> dataToShow;
+    private ArrayList<Article> articles;
+    private ArrayList<Tiers> clients;
+    private ArrayList<String> families;
+    private ChoiceRecyclerAdapter choiceRecyclerAdapter;
+    private RecyclerView choiceList;
+    private MaterialSpinner showSpinner;
+    private MaterialSpinner familySpinner;
 
     @Override
     /**
@@ -239,22 +254,24 @@ public class MainActivity extends RealmActivity{
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.filter_none:
+    public void setupFilter(SalesController.FILTER filter){
+
+        switch (filter){
+            case NONE:
                 SalesController.filter = SalesController.FILTER.NONE;
                 SalesController.filters = null;
                 setupTabs(0);
-                return true;
-            case R.id.filter_item:
+                break;
+            case ITEM: {
+                articles = ArticlesController.getAllArticles();
+                dataToShow = FilterCheckBox.getCheckBoxListFromText(ArticlesController.getArticlesLabel(articles));
+                families = ArticlesController.getArticlesFamilies();
+                choiceRecyclerAdapter = new ChoiceRecyclerAdapter(getBaseContext(), dataToShow);
 
-                final ArrayList<Article> articles = SalesController.getSalesArticles();
 
                 MaterialDialog dialog = new MaterialDialog.Builder(this)
                         .title(R.string.dialog_filter_title)
-                        .customView(R.layout.dialog_filter,false)
+                        .customView(R.layout.dialog_filter, false)
                         .autoDismiss(false)
                         .positiveText(R.string.dialog_confirm)
                         .negativeText(R.string.dialog_cancel)
@@ -262,7 +279,9 @@ public class MainActivity extends RealmActivity{
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
+                                SalesController.filter = SalesController.FILTER.ITEM;
+                                SalesController.filters = ArticlesController.getArticlesSubList(articles, FilterCheckBox.getItemSelected(dataToShow));
+                                setupTabs(0);
                                 dialog.dismiss();
                             }
                         })
@@ -275,36 +294,71 @@ public class MainActivity extends RealmActivity{
                         .onNeutral(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
+                                FilterCheckBox.selectAll(dataToShow);
+                                updateRecycler();
                             }
                         })
                         .show();
 
                 View dialogView = dialog.getCustomView();
                 typeface(dialogView);
-                RecyclerView choiceList = dialogView.findViewById(R.id.recycler_choice);
-                MaterialSpinner showSpinner = dialogView.findViewById(R.id.spinner_show);
-                MaterialSpinner familySpinner = dialogView.findViewById(R.id.spinner_family);
+                choiceList = dialogView.findViewById(R.id.recycler_choice);
 
-                showSpinner.setItems(Arrays.asList(getResources().getStringArray(R.array.dialog_filter_array_show)));
-                familySpinner.setItems(Arrays.asList(getResources().getStringArray(R.array.dialog_filter_array_show)));
+                // setup show spinner
+                showSpinner = dialogView.findViewById(R.id.spinner_show);
+                final ArrayAdapter<String> showAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, getResources().getStringArray(R.array.spinner_filter_array_show));
+                showSpinner.setAdapter(showAdapter);
+
+                // setup family spinner
+                familySpinner = dialogView.findViewById(R.id.spinner_family);
+                ArrayAdapter<String> familyAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, families);
+                familySpinner.setAdapter(familyAdapter);
+
+                showSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        updateDataByCategory(showSpinner.getSelectedItemPosition(), SalesController.FILTER.ITEM);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                familySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (i == -1) {
+                            articles = ArticlesController.getAllArticles();
+                        } else {
+                            articles = ArticlesController.getArticlebyFamily(ArticlesController.getAllArticles(), families.get(i));
+                        }
+
+                        updateDataByCategory(showSpinner.getSelectedItemPosition(), SalesController.FILTER.ITEM);
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
 
                 choiceList.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-                choiceList.setAdapter(new ChoiceRecyclerAdapter(getBaseContext(),SalesController.getArticlesName(articles)));
+                choiceList.setAdapter(choiceRecyclerAdapter);
+            }
+                break;
+            case CLIENT: {
+                clients = ClientsController.getAllClients();
+                dataToShow = FilterCheckBox.getCheckBoxListFromText(ClientsController.getClientsLabel(clients));
+                families = ClientsController.getClientsFamilies();
+                choiceRecyclerAdapter = new ChoiceRecyclerAdapter(getBaseContext(), dataToShow);
 
 
-
-                /*
                 MaterialDialog dialog = new MaterialDialog.Builder(this)
                         .title(R.string.dialog_filter_title)
-                        .typeface(AppUtils.fontAppBold,AppUtils.fontApp)
-                        .items(SalesController.getArticlesName(articles))
-                        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                                return true;
-                            }
-                        })
+                        .customView(R.layout.dialog_filter, false)
                         .autoDismiss(false)
                         .positiveText(R.string.dialog_confirm)
                         .negativeText(R.string.dialog_cancel)
@@ -312,16 +366,9 @@ public class MainActivity extends RealmActivity{
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                if (dialog.getSelectedIndices().length==0) {
-                                    SalesController.filter = SalesController.FILTER.NONE;
-                                    SalesController.filters = null;
-                                    setupTabs(0);
-                                }
-                                else {
-                                    SalesController.filter = SalesController.FILTER.ITEM;
-                                    SalesController.filters = SalesController.getSubArticles(articles,dialog.getSelectedIndices());
-                                    setupTabs(0);
-                                }
+                                SalesController.filter = SalesController.FILTER.CLIENT;
+                                SalesController.filters = ClientsController.getClientsSubList(clients, FilterCheckBox.getItemSelected(dataToShow));
+                                setupTabs(0);
                                 dialog.dismiss();
                             }
                         })
@@ -334,36 +381,101 @@ public class MainActivity extends RealmActivity{
                         .onNeutral(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                if (dialog.getSelectedIndices().length != articles.size())
-                                dialog.selectAllIndices();
-                                else dialog.clearSelectedIndices();
+                                FilterCheckBox.selectAll(dataToShow);
+                                updateRecycler();
                             }
                         })
-                        .show();*/
-                return true;
-            case R.id.filter_client:
-                new MaterialDialog.Builder(this)
-                        .title(R.string.dialog_filter_title)
-                        .items(SalesController.getTiersName(SalesController.getSalesClients()))
-                        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                                if (which.length==0) {
-                                    SalesController.filter = SalesController.FILTER.NONE;
-                                    SalesController.filters = null;
-                                    setupTabs(0);
-                                }
-                                else {
-                                    SalesController.filter = SalesController.FILTER.CLIENT;
-                                    SalesController.filters = SalesController.getSubTiers(SalesController.getSalesClients(),which);
-                                    setupTabs(0);
-                                }
-                                return true;
-                            }
-                        })
-                        .positiveText(R.string.dialog_confirm)
-                        .negativeText(R.string.dialog_cancel)
                         .show();
+
+                View dialogView = dialog.getCustomView();
+                typeface(dialogView);
+                choiceList = dialogView.findViewById(R.id.recycler_choice);
+
+                // setup show spinner
+                showSpinner = dialogView.findViewById(R.id.spinner_show);
+                final ArrayAdapter<String> showAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, getResources().getStringArray(R.array.spinner_filter_array_show));
+                showSpinner.setAdapter(showAdapter);
+
+                // setup family spinner
+                familySpinner = dialogView.findViewById(R.id.spinner_family);
+                ArrayAdapter<String> familyAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, families);
+                familySpinner.setAdapter(familyAdapter);
+
+                showSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        updateDataByCategory(showSpinner.getSelectedItemPosition(), SalesController.FILTER.CLIENT);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                familySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (i == -1) {
+                            clients = ClientsController.getAllClients();
+                        } else {
+                            clients = ClientsController.getClientsbyFamily(ClientsController.getAllClients(), families.get(i));
+                        }
+
+                        updateDataByCategory(showSpinner.getSelectedItemPosition(), SalesController.FILTER.CLIENT);
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                choiceList.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+                choiceList.setAdapter(choiceRecyclerAdapter);
+            }
+                break;
+        }
+    }
+
+    private void updateDataByCategory(int showPosition, SalesController.FILTER filter){
+        if (showPosition==2)
+        {
+            if (filter== SalesController.FILTER.ITEM)
+                dataToShow = FilterCheckBox.getCheckBoxListFromText(ArticlesController.getArticlesId(articles));
+
+            if (filter== SalesController.FILTER.CLIENT)
+                dataToShow = FilterCheckBox.getCheckBoxListFromText(ClientsController.getClientsId(clients));
+
+        } else {
+            if (filter== SalesController.FILTER.ITEM)
+                 dataToShow = FilterCheckBox.getCheckBoxListFromText(ArticlesController.getArticlesLabel(articles));
+
+            if (filter== SalesController.FILTER.CLIENT)
+                dataToShow = FilterCheckBox.getCheckBoxListFromText(ClientsController.getClientsLabel(clients));
+        }
+        updateRecycler();
+    }
+
+    private void updateRecycler(){
+        choiceRecyclerAdapter = new ChoiceRecyclerAdapter(getBaseContext(),dataToShow);
+        choiceList.setAdapter(choiceRecyclerAdapter);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.filter_none:
+                setupFilter(SalesController.FILTER.NONE);
+                return true;
+            case R.id.filter_item:
+                setupFilter(SalesController.FILTER.ITEM);
+                return true;
+
+            case R.id.filter_client:
+                setupFilter(SalesController.FILTER.CLIENT);
                 return true;
             case R.id.filter_representant:
                 new MaterialDialog.Builder(this)

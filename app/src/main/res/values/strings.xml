@@ -101,11 +101,17 @@
     <string name="dialog_confirm">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_select_all">Select All</string>
+    
 
-    <string-array name="dialog_filter_array_show">
+    <!--                Spinners            -->
+    <string-array name="spinner_filter_array_show">
         <item>Label</item>
         <item>Id</item>
     </string-array>
+    
+    <string name="spinner_title_show">Show by</string>
+    <string name="spinner_title_family">Family</string>
+    
 
     <!--            Errors              -->
     <string name="error_login">Unable to login!</string>

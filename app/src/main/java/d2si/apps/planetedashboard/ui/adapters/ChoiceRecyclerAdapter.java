@@ -14,6 +14,7 @@ import java.util.List;
 
 
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.ui.data.FilterCheckBox;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -26,12 +27,12 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  */
 
 public class ChoiceRecyclerAdapter extends RecyclerView.Adapter {
-    private List<String> mDataSet = new ArrayList<>();
+    private List<FilterCheckBox> mDataSet = new ArrayList<>();
     private LayoutInflater mInflater;
     private Context mContext;
 
 
-    public ChoiceRecyclerAdapter(Context context, List<String> dataSet) {
+    public ChoiceRecyclerAdapter(Context context, List<FilterCheckBox> dataSet) {
         mContext = context;
         mDataSet = dataSet;
         mInflater = LayoutInflater.from(context);
@@ -52,7 +53,7 @@ public class ChoiceRecyclerAdapter extends RecyclerView.Adapter {
         final ViewHolder holder = (ViewHolder) h;
 
         if (mDataSet != null && 0 <= position && position < mDataSet.size()) {
-            final String data = mDataSet.get(position);
+            final FilterCheckBox data = mDataSet.get(position);
 
             // Bind your gnb.apps.salesdashboard.data here
             holder.bind(data);
@@ -75,8 +76,9 @@ public class ChoiceRecyclerAdapter extends RecyclerView.Adapter {
 
         }
 
-        public void bind(final String data) {
-            checkChoice.setText(data);
+        public void bind(final FilterCheckBox data) {
+            checkChoice.setText(data.getText());
+            checkChoice.setChecked(data.getCheck());
 
         }
     }

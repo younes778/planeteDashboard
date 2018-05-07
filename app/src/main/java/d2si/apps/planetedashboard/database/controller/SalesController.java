@@ -132,55 +132,11 @@ public abstract class SalesController {
         return getSalesTotalByDay(date)/getSalesQuantityByDay(date);
     }
 
-    public static ArrayList<Article> getSalesArticles(){
-        ArrayList<Article> result = new ArrayList<>();
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Article> articles = realm.where(Article.class).findAll();
-        for (Article article:articles) {
-            result.add(article);
-        }
-        realm.close();
-        return result;
-    }
+    // To be moved
 
-    public static ArrayList<String> getArticlesName(ArrayList<Article> articles){
-        ArrayList<String> articlesName = new ArrayList<>();
-        for (Article article:articles)
-            articlesName.add(article.getArt_lib());
-        return articlesName;
-    }
 
-    public static ArrayList<RealmObject> getSubArticles(ArrayList<Article> articles, Integer[] which){
-        ArrayList<RealmObject> filters = new ArrayList<>();
-        for (int i=0;i<which.length;i++)
-            filters.add(articles.get(which[i]));
-        return filters;
-    }
 
-    public static ArrayList<Tiers> getSalesClients(){
-        ArrayList<Tiers> result = new ArrayList<>();
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Tiers> tiers = realm.where(Tiers.class).equalTo("pcf_type","C").findAll();
-        for (Tiers tier:tiers) {
-            result.add(tier);
-        }
-        realm.close();
-        return result;
-    }
 
-    public static ArrayList<String> getTiersName(ArrayList<Tiers> tiers){
-        ArrayList<String> tiersName = new ArrayList<>();
-        for (Tiers tier:tiers)
-            tiersName.add(tier.getPcf_rs());
-        return tiersName;
-    }
-
-    public static ArrayList<RealmObject> getSubTiers(ArrayList<Tiers> tiers, Integer[] which){
-        ArrayList<RealmObject> filters = new ArrayList<>();
-        for (int i=0;i<which.length;i++)
-            filters.add(tiers.get(which[i]));
-        return filters;
-    }
 
     public static ArrayList<Representant> getSalesRepresentants(){
         ArrayList<Representant> result = new ArrayList<>();

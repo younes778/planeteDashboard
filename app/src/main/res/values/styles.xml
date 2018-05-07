@@ -33,8 +33,6 @@
         <item name="md_dark_theme">false</item>
 
         <!--                Material spinner            -->
-        <item name="ms_text_color">@color/colorAccent</item>
-        <item name="ms_arrow_tint">@color/colorAccent</item>
 
     </style>
 

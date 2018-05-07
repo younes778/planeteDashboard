@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:orientation="vertical">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
     <LinearLayout
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -18,17 +20,27 @@
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/dialog_filter_show"
-                android:textColor="@color/colorAccent"
-                style="@style/Base.TextAppearance.AppCompat.Medium"
-                />
-            <com.jaredrummler.materialspinner.MaterialSpinner
+
+            <fr.ganfra.materialspinner.MaterialSpinner
                 android:id="@+id/spinner_show"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:popupBackground="@color/colorTextPrimary"
+                app:ms_arrowColor="@color/colorAccent"
+                app:ms_arrowSize="16dp"
+                app:ms_baseColor="@color/colorAccent"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="true"
+                app:ms_floatingLabelColor="@color/colorAccent"
+                app:ms_floatingLabelText="@string/spinner_title_show"
+                app:ms_highlightColor="@color/colorPrimary"
+                app:ms_hint="@string/spinner_title_show"
+                app:ms_hintColor="@color/colorTextSecondary"
+                app:ms_multiline="false"
+                app:ms_thickness="1dp"
+                app:ms_typeface="fonts/AppFont.ttf"
+                tools:listitem="@layout/spinner_item" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -39,17 +51,27 @@
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/dialog_filter_family"
-                android:textColor="@color/colorAccent"
-                style="@style/Base.TextAppearance.AppCompat.Medium"
-                />
-            <com.jaredrummler.materialspinner.MaterialSpinner
+
+            <fr.ganfra.materialspinner.MaterialSpinner
                 android:id="@+id/spinner_family"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:popupBackground="@color/colorTextPrimary"
+                app:ms_arrowColor="@color/colorAccent"
+                app:ms_arrowSize="16dp"
+                app:ms_baseColor="@color/colorAccent"
+                app:ms_enableErrorLabel="false"
+                app:ms_enableFloatingLabel="true"
+                app:ms_floatingLabelColor="@color/colorAccent"
+                app:ms_floatingLabelText="@string/spinner_title_family"
+                app:ms_highlightColor="@color/colorPrimary"
+                app:ms_hint="@string/spinner_title_family"
+                app:ms_hintColor="@color/colorTextSecondary"
+                app:ms_multiline="false"
+                app:ms_thickness="1dp"
+                app:ms_typeface="fonts/AppFont.ttf"
+                tools:listitem="@layout/spinner_item" />
         </LinearLayout>
 
     </LinearLayout>
