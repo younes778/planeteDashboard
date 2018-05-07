@@ -132,38 +132,6 @@ public abstract class SalesController {
         return getSalesTotalByDay(date)/getSalesQuantityByDay(date);
     }
 
-    // To be moved
-
-
-
-
-
-    public static ArrayList<Representant> getSalesRepresentants(){
-        ArrayList<Representant> result = new ArrayList<>();
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Representant> representants = realm.where(Representant.class).findAll();
-        for (Representant representant:representants) {
-            result.add(representant);
-        }
-        realm.close();
-        return result;
-    }
-
-
-    public static ArrayList<String> getRepresentantName(ArrayList<Representant> representants){
-        ArrayList<String> representantName = new ArrayList<>();
-        for (Representant representant:representants)
-            representantName.add(representant.getRep_nom());
-        return representantName;
-    }
-
-    public static ArrayList<RealmObject> getSubRepresentant(ArrayList<Representant> representants, Integer[] which){
-        ArrayList<RealmObject> filters = new ArrayList<>();
-        for (int i=0;i<which.length;i++)
-            filters.add(representants.get(which[i]));
-        return filters;
-    }
-
     private static boolean isArticleExist(ArrayList<RealmObject> articles,String id){
         for (int i=0;i<articles.size();i++){
             if (((Article) articles.get(i)).getArt_code().equalsIgnoreCase(id)) return true;

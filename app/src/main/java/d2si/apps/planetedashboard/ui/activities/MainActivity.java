@@ -38,8 +38,10 @@ import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.controller.ArticlesController;
 import d2si.apps.planetedashboard.database.controller.ClientsController;
+import d2si.apps.planetedashboard.database.controller.RepresentantController;
 import d2si.apps.planetedashboard.database.controller.SalesController;
 import d2si.apps.planetedashboard.database.data.Article;
+import d2si.apps.planetedashboard.database.data.Representant;
 import d2si.apps.planetedashboard.database.data.Tiers;
 import d2si.apps.planetedashboard.ui.adapters.ChoiceRecyclerAdapter;
 import d2si.apps.planetedashboard.ui.data.FilterCheckBox;
@@ -75,6 +77,7 @@ public class MainActivity extends RealmActivity{
     private ArrayList<FilterCheckBox> dataToShow;
     private ArrayList<Article> articles;
     private ArrayList<Tiers> clients;
+    private ArrayList<Representant> representants;
     private ArrayList<String> families;
     private ChoiceRecyclerAdapter choiceRecyclerAdapter;
     private RecyclerView choiceList;
@@ -436,6 +439,73 @@ public class MainActivity extends RealmActivity{
                 choiceList.setAdapter(choiceRecyclerAdapter);
             }
                 break;
+            case REPRESENTANT: {
+                representants = RepresentantController.getAllRepresentants();
+                dataToShow = FilterCheckBox.getCheckBoxListFromText(RepresentantController.getRepresentantsLabel(representants));
+                choiceRecyclerAdapter = new ChoiceRecyclerAdapter(getBaseContext(), dataToShow);
+
+
+                MaterialDialog dialog = new MaterialDialog.Builder(this)
+                        .title(R.string.dialog_filter_title)
+                        .customView(R.layout.dialog_filter, false)
+                        .autoDismiss(false)
+                        .positiveText(R.string.dialog_confirm)
+                        .negativeText(R.string.dialog_cancel)
+                        .neutralText(R.string.dialog_select_all)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                SalesController.filter = SalesController.FILTER.REPRESENTANT;
+                                SalesController.filters = RepresentantController.getRepresentantSubList(representants, FilterCheckBox.getItemSelected(dataToShow));
+                                setupTabs(0);
+                                dialog.dismiss();
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                FilterCheckBox.selectAll(dataToShow);
+                                updateRecycler();
+                            }
+                        })
+                        .show();
+
+                View dialogView = dialog.getCustomView();
+                typeface(dialogView);
+                choiceList = dialogView.findViewById(R.id.recycler_choice);
+
+                // setup show spinner
+                showSpinner = dialogView.findViewById(R.id.spinner_show);
+                final ArrayAdapter<String> showAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, getResources().getStringArray(R.array.spinner_filter_array_show));
+                showSpinner.setAdapter(showAdapter);
+
+                // setup families
+                dialogView.findViewById(R.id.ln_family).setVisibility(View.GONE);
+
+
+                showSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        updateDataByCategory(showSpinner.getSelectedItemPosition(), SalesController.FILTER.REPRESENTANT);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+
+                choiceList.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+                choiceList.setAdapter(choiceRecyclerAdapter);
+            }
+            break;
         }
     }
 
@@ -448,12 +518,19 @@ public class MainActivity extends RealmActivity{
             if (filter== SalesController.FILTER.CLIENT)
                 dataToShow = FilterCheckBox.getCheckBoxListFromText(ClientsController.getClientsId(clients));
 
+            if (filter== SalesController.FILTER.REPRESENTANT)
+                dataToShow = FilterCheckBox.getCheckBoxListFromText(RepresentantController.getRepresentantsId(representants));
+
         } else {
             if (filter== SalesController.FILTER.ITEM)
                  dataToShow = FilterCheckBox.getCheckBoxListFromText(ArticlesController.getArticlesLabel(articles));
 
             if (filter== SalesController.FILTER.CLIENT)
                 dataToShow = FilterCheckBox.getCheckBoxListFromText(ClientsController.getClientsLabel(clients));
+
+            if (filter== SalesController.FILTER.REPRESENTANT)
+                dataToShow = FilterCheckBox.getCheckBoxListFromText(RepresentantController.getRepresentantsLabel(representants));
+
         }
         updateRecycler();
     }
@@ -478,28 +555,7 @@ public class MainActivity extends RealmActivity{
                 setupFilter(SalesController.FILTER.CLIENT);
                 return true;
             case R.id.filter_representant:
-                new MaterialDialog.Builder(this)
-                        .title(R.string.dialog_filter_title)
-                        .items(SalesController.getRepresentantName(SalesController.getSalesRepresentants()))
-                        .itemsCallbackMultiChoice(null, new MaterialDialog.ListCallbackMultiChoice() {
-                            @Override
-                            public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
-                                if (which.length==0) {
-                                    SalesController.filter = SalesController.FILTER.NONE;
-                                    SalesController.filters = null;
-                                    setupTabs(0);
-                                }
-                                else {
-                                    SalesController.filter = SalesController.FILTER.REPRESENTANT;
-                                    SalesController.filters = SalesController.getSubRepresentant(SalesController.getSalesRepresentants(),which);
-                                    setupTabs(0);
-                                }
-                                return true;
-                            }
-                        })
-                        .positiveText(R.string.dialog_confirm)
-                        .negativeText(R.string.dialog_cancel)
-                        .show();
+                setupFilter(SalesController.FILTER.REPRESENTANT);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
