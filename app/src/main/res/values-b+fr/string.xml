@@ -1,0 +1,94 @@
+<resources>
+
+
+    <!--                App d2si.apps.planetedashboard.database.data                -->
+    <string name="activity_login">CONNEXION</string>
+
+
+
+    <!--                    Menu                 -->
+    <string name="menu_sales"><b>VENTES</b></string>
+    <string name="menu_stock"><b>STOCK</b></string>
+    <string name="menu_purchase"><b>ACHATS</b></string>
+    <string name="menu_client"><b>CLIENTS</b></string>
+    <string name="menu_provider"><b>FOURNISSEURS</b></string>
+    <string name="menu_logout"><b>DECONNECTER</b></string>
+    <string name="menu_setting"><b>PARAMETRES</b></string>
+    <string name="menu_parameter"><b>CONFIGURATION</b></string>
+
+
+    <!--                   Chart               -->
+    <string-array name="days_shors">
+        <item name="sunday_short">DI</item>
+        <item name="monday_short">LU</item>
+        <item name="tuesday_short">MA</item>
+        <item name="wednesday_short">ME</item>
+        <item name="thursday_short">JE</item>
+        <item name="friday_short">VE</item>
+        <item name="saturday_short">SA</item>
+    </string-array>
+
+
+    <!--                    Tab Host            -->
+    <string name="tab_day">JOUR</string>
+    <string name="tab_week">SEMAINE</string>
+    <string name="tab_month">MOIS</string>
+    <string name="tab_year">ANNEE</string>
+
+
+    <!--                Text Views                -->
+    <string name="tv_today"><b>Aujourd\'hui</b></string>
+    <string name="tv_yesterday"><b>Hier</b></string>
+    <string name="tv_quantity_sold">Qty.vendu</string>
+    <string name="tv_articles_number">No.ventes</string>
+    <string name="tv_average_price">prix.moyen</string>
+
+    <!--                Edit Texts                -->
+    <string name="et_user">Utilisateur</string>
+    <string name="et_user_helper">Introduisez le nom d\'utilisateur</string>
+    <string name="et_password">Mot de passe</string>
+    <string name="et_password_helper">Introduisez le mot de passe</string>
+    <string name="et_error_not_empty">Field must not be empty</string>
+
+    <!--                 Buttons                   -->
+    <string name="btn_login"><b>Connecter</b></string>
+
+    <!--            Progress                -->
+    <string name="progress_login_title">Connexion</string>
+    <string name="progress_login_content">Connexion ......</string>
+    <string name="progress_updating_title">Mise à jour des données</string>
+    <string name="progress_updating_content">Mise à jour ......</string>
+
+    <!--                Dialogs             -->
+    <string name="dialog_logout_title">Déconnecter</string>
+    <string name="dialog_filter_title">Filtrer par</string>
+
+    <string name="dialog_logout_content">Voulez-vous vous déconnecter?</string>
+    <string name="dialog_filter_show"><b>Afficher</b></string>
+    <string name="dialog_filter_family"><b>Famille</b></string>
+
+    <string name="dialog_confirm">OK</string>
+    <string name="dialog_cancel">Annuler</string>
+    <string name="dialog_select_all">Selectionner tout</string>
+
+
+    <!--                Spinners            -->
+    <string-array name="spinner_filter_array_show">
+        <item>libellé</item>
+        <item>Code</item>
+    </string-array>
+
+    <string name="spinner_title_show">Afficher par</string>
+    <string name="spinner_title_family">Famille</string>
+
+
+    <!--            Errors              -->
+    <string name="error_login">Impossible de se connecter!</string>
+
+    <!--            Menus               -->
+    <string name="filter_none">Filtrer: Aucun</string>
+    <string name="filter_item">Filtrer par Article</string>
+    <string name="filter_client">Filtrer par Client</string>
+    <string name="filter_representant">Filtrer par Representant</string>
+
+</resources>

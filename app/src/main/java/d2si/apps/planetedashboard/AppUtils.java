@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.typeface.IIcon;
@@ -18,13 +19,17 @@ import com.norbsoft.typefacehelper.ActionBarHelper;
 import com.norbsoft.typefacehelper.TypefaceCollection;
 import com.norbsoft.typefacehelper.TypefaceHelper;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -189,8 +194,9 @@ public class AppUtils {
      * @return  last month date formatted
      */
     public static String getCurrencyFormatted(Context context,float value,boolean withCurrency){
+
         if (withCurrency)
-        return context.getString(R.string.currency,context.getResources().getString(R.string.current_currency),Float.valueOf(new DecimalFormat("#.##").format(value)));
+        return context.getString(R.string.currency,context.getResources().getString(R.string.current_currency),new DecimalFormat("#.##").format(value));
         else return new DecimalFormat("#.##").format(value);
     }
 

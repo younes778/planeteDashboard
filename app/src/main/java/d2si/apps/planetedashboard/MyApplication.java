@@ -2,8 +2,11 @@ package d2si.apps.planetedashboard;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 
 import com.mikepenz.iconics.context.IconicsContextWrapper;
+
+import java.util.Locale;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -31,8 +34,10 @@ public class MyApplication extends Application {
         //Realm.deleteRealm(config);
         Realm.setDefaultConfiguration(config);
 
+
         // init the AppUtils resources
         AppUtils.init(getBaseContext());
+
     }
 
     /**
