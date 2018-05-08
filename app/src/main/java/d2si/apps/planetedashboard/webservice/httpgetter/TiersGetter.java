@@ -15,7 +15,11 @@ import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.data.Ligne;
 import d2si.apps.planetedashboard.database.data.Tiers;
-
+/**
+ * class that represents tiers getter
+ *
+ * @author younessennadj
+ */
 public abstract class TiersGetter extends AsyncTask<Void, Void, ArrayList<Tiers>> {
 
     private Context context;

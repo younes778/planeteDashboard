@@ -15,6 +15,11 @@ import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.data.Article;
 
+/**
+ * class that represents articles getter
+ *
+ * @author younessennadj
+ */
 public abstract class ArticlesGetter extends AsyncTask<Void, Void, ArrayList<Article>> {
 
     private Context context;
@@ -67,7 +72,7 @@ public abstract class ArticlesGetter extends AsyncTask<Void, Void, ArrayList<Art
     /**
      * Method that execute the http task
      *
-     * @param sales return from the web service
+     * @param articles return from the web service
      */
     protected void onPostExecute(ArrayList<Article> articles){
             onPost(articles);
@@ -76,8 +81,8 @@ public abstract class ArticlesGetter extends AsyncTask<Void, Void, ArrayList<Art
     /**
      * Method that execute on task finished
      *
-     * @param sales return from the web service
+     * @param articles return from the web service
      */
-    public abstract void onPost(ArrayList<Article> sales);
+    public abstract void onPost(ArrayList<Article> articles);
 
 }

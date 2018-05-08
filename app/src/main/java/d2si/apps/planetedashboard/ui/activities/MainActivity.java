@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -31,7 +30,6 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -54,18 +52,17 @@ import d2si.apps.planetedashboard.ui.fragments.SalesWeekFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesYearFragment;
 import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
 import fr.ganfra.materialspinner.MaterialSpinner;
-import io.realm.RealmObject;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
 /**
  * Main Activity
- *
+ * <p>
  * Activity that represents the main functions given by the app including the menu drawer
  *
  * @author younessennadj
  */
-public class MainActivity extends RealmActivity{
+public class MainActivity extends RealmActivity {
 
     public static final int FRAGMENT_SALES = 0;
     public static final int FRAGMENT_STOCK = 1;
@@ -73,7 +70,8 @@ public class MainActivity extends RealmActivity{
     public static final int FRAGMENT_CLIENT = 3;
     public static final int FRAGMENT_PROVIDER = 4;
 
-    @BindView(R.id.tabs) TabLayout tabLayout;
+    @BindView(R.id.tabs)
+    TabLayout tabLayout;
     private Drawer navDrawer;
     private Toolbar toolbar;
     private int fragment_to_launch;
@@ -111,7 +109,7 @@ public class MainActivity extends RealmActivity{
         setSupportActionBar(toolbar);
 
         // inti fragment with the Main menu with the tabs
-        fragment_to_launch= Integer.parseInt(AppUtils.getDataFromLaunchedActivity(this));
+        fragment_to_launch = Integer.parseInt(AppUtils.getDataFromLaunchedActivity(this));
         setupTabs(fragment_to_launch);
 
         // setup the nav drawer
@@ -120,7 +118,7 @@ public class MainActivity extends RealmActivity{
 
     }
 
-    private void setupNavDrawer(){
+    private void setupNavDrawer() {
         // Initialize Nav drawer
         new DrawerBuilder().withActivity(this).build();
 
@@ -159,12 +157,12 @@ public class MainActivity extends RealmActivity{
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         navDrawer.closeDrawer();
                         switch (position) {
-                            case 1:
-                                fragment_to_launch=0;
+                            case 1: // sales fragment
+                                fragment_to_launch = 0;
                                 setupTabs(fragment_to_launch);
                                 break;
-                            case 8:
-                                navDrawer.setSelection(fragment_to_launch+1);
+                            case 8: // logout
+                                navDrawer.setSelection(fragment_to_launch + 1);
                                 new MaterialDialog.Builder(MainActivity.this)
                                         .title(R.string.dialog_logout_title)
                                         .content(R.string.dialog_logout_content)
@@ -177,14 +175,13 @@ public class MainActivity extends RealmActivity{
                                                 SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(MainActivity.this);
                                                 editor.putBoolean(getString(R.string.pref_is_connected), false);
                                                 editor.apply();
-                                                AppUtils.launchActivity(MainActivity.this,LoginActivity.class,true,null);
+                                                AppUtils.launchActivity(MainActivity.this, LoginActivity.class, true, null);
                                             }
                                         })
                                         .show();
                                 break;
-                            case 10:
-
-                                navDrawer.setSelection(fragment_to_launch+1);
+                            case 10: // sync data
+                                navDrawer.setSelection(fragment_to_launch + 1);
                                 dialog = new MaterialDialog.Builder(MainActivity.this)
                                         .title(R.string.progress_updating_title)
                                         .content(R.string.progress_updating_content)
@@ -195,10 +192,10 @@ public class MainActivity extends RealmActivity{
                                 Calendar calendar = Calendar.getInstance();
                                 calendar.set(Calendar.DAY_OF_MONTH, 16);
                                 calendar.set(Calendar.MONTH, 1);
-                                calendar.set(Calendar.HOUR,0);
-                                calendar.set(Calendar.SECOND,0);
-                                calendar.set(Calendar.MINUTE,0);
-                                calendar.set(Calendar.MILLISECOND,0);
+                                calendar.set(Calendar.HOUR, 0);
+                                calendar.set(Calendar.SECOND, 0);
+                                calendar.set(Calendar.MINUTE, 0);
+                                calendar.set(Calendar.MILLISECOND, 0);
                                 final Date date1 = new Date(calendar.getTimeInMillis());
 
                                 final DataGetter dataGetter = new DataGetter() {
@@ -219,7 +216,7 @@ public class MainActivity extends RealmActivity{
                                     }
                                 };
 
-                                dataGetter.updateSalesByDate(getBaseContext(),date1);
+                                dataGetter.updateSalesByDate(getBaseContext(), date1);
                                 break;
 
                         }
@@ -239,13 +236,13 @@ public class MainActivity extends RealmActivity{
      *
      * @param fragment The fragment that the tabs will be loaded for
      */
-    private void setupTabs(int fragment){
-        switch (fragment){
+    private void setupTabs(int fragment) {
+        switch (fragment) {
             case FRAGMENT_SALES:
-                AppUtils.loadFragment(this,new SalesDayFragment());
+                AppUtils.loadFragment(this, new SalesDayFragment());
 
                 // initialize the action bar title font
-                AppUtils.setActionBarTitle(this,R.string.menu_sales);
+                AppUtils.setActionBarTitle(this, R.string.menu_sales);
 
                 //remove all tabs first
                 tabLayout.removeAllTabs();
@@ -264,18 +261,18 @@ public class MainActivity extends RealmActivity{
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
                         // load the right fragment when select
-                        switch (tab.getPosition()){
+                        switch (tab.getPosition()) {
                             case 0:
-                                AppUtils.loadFragment(MainActivity.this,new SalesDayFragment());
+                                AppUtils.loadFragment(MainActivity.this, new SalesDayFragment());
                                 break;
                             case 1:
-                                AppUtils.loadFragment(MainActivity.this,new SalesWeekFragment());
+                                AppUtils.loadFragment(MainActivity.this, new SalesWeekFragment());
                                 break;
                             case 2:
-                                AppUtils.loadFragment(MainActivity.this,new SalesMonthFragment());
+                                AppUtils.loadFragment(MainActivity.this, new SalesMonthFragment());
                                 break;
                             case 3:
-                                AppUtils.loadFragment(MainActivity.this,new SalesYearFragment());
+                                AppUtils.loadFragment(MainActivity.this, new SalesYearFragment());
                                 break;
 
                         }
@@ -300,21 +297,31 @@ public class MainActivity extends RealmActivity{
     }
 
     @Override
+    /**
+     * Method that create the menu
+     *
+     * @param menu the menu created
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_filter, menu);
         return true;
     }
 
-    public void setupFilter(SalesController.FILTER filter){
+    /**
+     * Method that setup the filter
+     *
+     * @param filter the filter type
+     */
+    public void setupFilter(SalesController.FILTER filter) {
 
-        switch (filter){
-            case NONE:
+        switch (filter) {
+            case NONE: // if none apply no filter
                 SalesController.filter = SalesController.FILTER.NONE;
                 SalesController.filters = null;
                 setupTabs(0);
                 break;
-            case ITEM: {
+            case ITEM: {// if item setup articles ,spinner show (Label,Id) and spinner familly and the select all function
                 articles = ArticlesController.getAllArticles();
                 dataToShow = FilterCheckBox.getCheckBoxListFromText(ArticlesController.getArticlesLabel(articles));
                 families = ArticlesController.getArticlesFamilies();
@@ -400,8 +407,8 @@ public class MainActivity extends RealmActivity{
                 choiceList.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                 choiceList.setAdapter(choiceRecyclerAdapter);
             }
-                break;
-            case CLIENT: {
+            break;
+            case CLIENT: { // if client setup tiers ,spinner show (Label,Id) and spinner familly and the select all function
                 clients = ClientsController.getAllClients();
                 dataToShow = FilterCheckBox.getCheckBoxListFromText(ClientsController.getClientsLabel(clients));
                 families = ClientsController.getClientsFamilies();
@@ -487,8 +494,8 @@ public class MainActivity extends RealmActivity{
                 choiceList.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                 choiceList.setAdapter(choiceRecyclerAdapter);
             }
-                break;
-            case REPRESENTANT: {
+            break;
+            case REPRESENTANT: {// if item setup articles , spinner familly and the select all function
                 representants = RepresentantController.getAllRepresentants();
                 dataToShow = FilterCheckBox.getCheckBoxListFromText(RepresentantController.getRepresentantsLabel(representants));
                 choiceRecyclerAdapter = new ChoiceRecyclerAdapter(getBaseContext(), dataToShow);
@@ -558,38 +565,51 @@ public class MainActivity extends RealmActivity{
         }
     }
 
-    private void updateDataByCategory(int showPosition, SalesController.FILTER filter){
-        if (showPosition==2)
-        {
-            if (filter== SalesController.FILTER.ITEM)
+    /**
+     * Method that update data to show according to the spinner show and the filter
+     *
+     * @param showPosition show label or id
+     * @param filter       the actual filter applied
+     */
+    private void updateDataByCategory(int showPosition, SalesController.FILTER filter) {
+        if (showPosition == 2) {
+            if (filter == SalesController.FILTER.ITEM)
                 dataToShow = FilterCheckBox.getCheckBoxListFromText(ArticlesController.getArticlesId(articles));
 
-            if (filter== SalesController.FILTER.CLIENT)
+            if (filter == SalesController.FILTER.CLIENT)
                 dataToShow = FilterCheckBox.getCheckBoxListFromText(ClientsController.getClientsId(clients));
 
-            if (filter== SalesController.FILTER.REPRESENTANT)
+            if (filter == SalesController.FILTER.REPRESENTANT)
                 dataToShow = FilterCheckBox.getCheckBoxListFromText(RepresentantController.getRepresentantsId(representants));
 
         } else {
-            if (filter== SalesController.FILTER.ITEM)
-                 dataToShow = FilterCheckBox.getCheckBoxListFromText(ArticlesController.getArticlesLabel(articles));
+            if (filter == SalesController.FILTER.ITEM)
+                dataToShow = FilterCheckBox.getCheckBoxListFromText(ArticlesController.getArticlesLabel(articles));
 
-            if (filter== SalesController.FILTER.CLIENT)
+            if (filter == SalesController.FILTER.CLIENT)
                 dataToShow = FilterCheckBox.getCheckBoxListFromText(ClientsController.getClientsLabel(clients));
 
-            if (filter== SalesController.FILTER.REPRESENTANT)
+            if (filter == SalesController.FILTER.REPRESENTANT)
                 dataToShow = FilterCheckBox.getCheckBoxListFromText(RepresentantController.getRepresentantsLabel(representants));
 
         }
         updateRecycler();
     }
 
-    private void updateRecycler(){
-        choiceRecyclerAdapter = new ChoiceRecyclerAdapter(getBaseContext(),dataToShow);
+    /**
+     * Method that update the recycler setting the adapter with data to show
+     */
+    private void updateRecycler() {
+        choiceRecyclerAdapter = new ChoiceRecyclerAdapter(getBaseContext(), dataToShow);
         choiceList.setAdapter(choiceRecyclerAdapter);
     }
 
     @Override
+    /**
+     * Method that executre the callback of a menu item selected
+     *
+     * @param item the menu item selected
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
@@ -612,9 +632,12 @@ public class MainActivity extends RealmActivity{
     }
 
     @Override
+    /**
+     * Method that on button back clicked
+     */
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            AppUtils.launchActivity(MainActivity.this,MainMenuActivity.class,true,null);
+            AppUtils.launchActivity(MainActivity.this, MainMenuActivity.class, true, null);
         }
         return true;
     }

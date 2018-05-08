@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 
+/**
+ * class that represents user getter
+ *
+ * @author younessennadj
+ */
 public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
 
     private Context context;
@@ -22,8 +27,8 @@ public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
     /**
      * Method that execute the http task
      *
-     * @param context app actual context
-     * @param user database user
+     * @param context  app actual context
+     * @param user     database user
      * @param password database user password
      */
     public UserGetter(Context context, String user, String password) {
@@ -31,8 +36,6 @@ public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
         this.user = user;
         this.password = password;
     }
-
-
 
 
     @Override
@@ -44,7 +47,17 @@ public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
     protected Boolean doInBackground(final Void... params) {
         try {
             // form the url with the fields
-            final String url= AppUtils.formGetUrl(context.getString(R.string.REST_SERVER_URL),Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)),context.getString(R.string.REST_REQUEST_USER),new ArrayList<String>(){{add(context.getString(R.string.REST_FIELD_URL));add(context.getString(R.string.REST_FIELD_DB_NAME));add(context.getString(R.string.REST_FIELD_USER));add(context.getString(R.string.REST_FIELD_PASSWORD));}},new ArrayList<String>(){{add(context.getString(R.string.DB_URL));add(context.getString(R.string.DB_NAME));add(user);add(password);}});
+            final String url = AppUtils.formGetUrl(context.getString(R.string.REST_SERVER_URL), Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)), context.getString(R.string.REST_REQUEST_USER), new ArrayList<String>() {{
+                add(context.getString(R.string.REST_FIELD_URL));
+                add(context.getString(R.string.REST_FIELD_DB_NAME));
+                add(context.getString(R.string.REST_FIELD_USER));
+                add(context.getString(R.string.REST_FIELD_PASSWORD));
+            }}, new ArrayList<String>() {{
+                add(context.getString(R.string.DB_URL));
+                add(context.getString(R.string.DB_NAME));
+                add(user);
+                add(password);
+            }});
 
             // use the rest template
             RestTemplate restTemplate = new RestTemplate();
@@ -63,10 +76,10 @@ public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
     /**
      * Method that execute the http task
      *
-     * @param sales sales return from the web service
+     * @param login return from the web service
      */
-    protected void onPostExecute(Boolean login){
-            onPost(login);
+    protected void onPostExecute(Boolean login) {
+        onPost(login);
     }
 
     /**

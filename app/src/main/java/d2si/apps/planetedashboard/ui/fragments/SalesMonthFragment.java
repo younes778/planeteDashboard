@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.anychart.anychart.AnyChartView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -69,7 +68,7 @@ public class SalesMonthFragment extends Fragment {
             calendar.set(Calendar.MONTH, 0);
             final Date dateTo = new Date(calendar.getTimeInMillis());
 
-            legend.add((i+1)+"");
+            legend.add((i + 1) + "");
 
             data.add(new ArrayList<Float>() {{
                 add(SalesController.getSalesTotalByDay(dateFrom));

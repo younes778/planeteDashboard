@@ -4,19 +4,13 @@ import com.anychart.anychart.AnyChart;
 import com.anychart.anychart.AnyChartView;
 import com.anychart.anychart.Cartesian;
 import com.anychart.anychart.CartesianSeriesLine;
-import com.anychart.anychart.CoreAxesLinear;
 import com.anychart.anychart.DataEntry;
 import com.anychart.anychart.EnumsAnchor;
-import com.anychart.anychart.HoverMode;
-import com.anychart.anychart.LabelsOverlapMode;
 import com.anychart.anychart.Mapping;
 import com.anychart.anychart.MarkerType;
 import com.anychart.anychart.Orientation;
-import com.anychart.anychart.ScaleStackMode;
-import com.anychart.anychart.SeriesBar;
 import com.anychart.anychart.Set;
 import com.anychart.anychart.Stroke;
-import com.anychart.anychart.TooltipDisplayMode;
 import com.anychart.anychart.TooltipPositionMode;
 import com.anychart.anychart.ValueDataEntry;
 
@@ -25,11 +19,24 @@ import java.util.List;
 
 import d2si.apps.planetedashboard.AppUtils;
 
+/**
+ * class that represent a custom line chart
+ *
+ * @author younessennadj
+ */
 public class CustomLineChart {
 
     private AnyChartView chart;
     private Cartesian barChart;
 
+    /**
+     * constructor
+     *
+     * @param chart      the chart object
+     * @param legend     legen names
+     * @param entries    data to show
+     * @param dataTitles series titles
+     */
     public CustomLineChart(AnyChartView chart, List<String> legend, ArrayList<ArrayList<Float>> entries, List<String> dataTitles) {
         this.chart = chart;
         customizeChart();
@@ -52,7 +59,7 @@ public class CustomLineChart {
         barChart.getCrosshair().setEnabled(true);
         barChart.getCrosshair()
                 .setYLabel(true)
-                .setYStroke((Stroke) null, null, null , null, null);
+                .setYStroke((Stroke) null, null, null, null, null);
 
         barChart.getTooltip().setPositionMode(TooltipPositionMode.POINT);
 
@@ -84,7 +91,7 @@ public class CustomLineChart {
             Mapping mappingData;
             if (i == 0)
                 mappingData = set.mapAs("{ x: 'x', value: 'value' }");
-            else mappingData = set.mapAs("{ x: 'x', value: 'value" + (i+1) + "' }");
+            else mappingData = set.mapAs("{ x: 'x', value: 'value" + (i + 1) + "' }");
 
             CartesianSeriesLine series = barChart.line(mappingData);
             series.setName(dataTitles.get(i) + "")
@@ -99,7 +106,7 @@ public class CustomLineChart {
                     .setOffsetX(5d)
                     .setOffsetY(5d);
 
-            series.setStroke(AppUtils.CHART_COLORS.get(i),3,null,null,null);
+            series.setStroke(AppUtils.CHART_COLORS.get(i), 3, null, null, null);
 
 
         }

@@ -1,23 +1,18 @@
 package d2si.apps.planetedashboard.database.controller;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import d2si.apps.planetedashboard.AppUtils;
-import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.database.data.Article;
 import io.realm.RealmObject;
 
-public abstract class DataBaseHandler extends AsyncTask<Void, Void,Void> {
+/**
+ * class that copy data get from server to  database in an asynchronous task
+ *
+ * @author younessennadj
+ */
+public abstract class DataBaseHandler extends AsyncTask<Void, Void, Void> {
 
     private List<List<? extends RealmObject>> objectsToCopy;
 
@@ -37,7 +32,7 @@ public abstract class DataBaseHandler extends AsyncTask<Void, Void,Void> {
      *
      * @param params parameters to use in background
      */
-    protected Void doInBackground(Void ... params) {
+    protected Void doInBackground(Void... params) {
         AppUtils.addObjectToRealm(objectsToCopy);
         return null;
     }
@@ -47,13 +42,12 @@ public abstract class DataBaseHandler extends AsyncTask<Void, Void,Void> {
      * Method that execute the http task
      *
      */
-    protected void onPostExecute(Void v){
+    protected void onPostExecute(Void v) {
         onPost();
     }
 
     /**
      * Method that execute on task finished
-     *
      */
     public abstract void onPost();
 

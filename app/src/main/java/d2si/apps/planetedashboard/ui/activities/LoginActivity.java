@@ -23,24 +23,29 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
 /**
  * Activity Login Page
- *
+ * <p>
  * This activity is used to login the user
  *
  * @author younessennadj
  */
 public class LoginActivity extends RealmActivity {
-    @BindView(R.id.et_user) ExtendedEditText et_user;
-    @BindView(R.id.field_user) TextFieldBoxes field_user;
-    @BindView(R.id.et_password) ExtendedEditText et_password;
-    @BindView(R.id.field_password) TextFieldBoxes field_password;
-    @BindView(R.id.btn_login) MaterialRippleLayout btn_login;
+    @BindView(R.id.et_user)
+    ExtendedEditText et_user;
+    @BindView(R.id.field_user)
+    TextFieldBoxes field_user;
+    @BindView(R.id.et_password)
+    ExtendedEditText et_password;
+    @BindView(R.id.field_password)
+    TextFieldBoxes field_password;
+    @BindView(R.id.btn_login)
+    MaterialRippleLayout btn_login;
     private MaterialDialog dialog;
 
     /**
      * Method call when Login button clicked
-     *
      */
-    @OnClick(R.id.btn_login) void login() {
+    @OnClick(R.id.btn_login)
+    void login() {
 
         // Validate user
         if (!validateUser())
@@ -48,7 +53,7 @@ public class LoginActivity extends RealmActivity {
 
         // Validate Password
         if (!validatePassword())
-            field_password.setError(getString(R.string.et_error_not_empty),false);
+            field_password.setError(getString(R.string.et_error_not_empty), false);
 
         // if all validated launch main activity
         if (validateUser() && validatePassword()) {
@@ -64,8 +69,7 @@ public class LoginActivity extends RealmActivity {
                 editor.apply();
                 AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
 
-            }
-            else { // it is a new user therefor we need to update the data
+            } else { // it is a new user therefor we need to update the data
                 dialog = new MaterialDialog.Builder(this)
                         .title(R.string.progress_login_title)
                         .content(R.string.progress_login_content)
@@ -134,12 +138,12 @@ public class LoginActivity extends RealmActivity {
         typeface(this);
 
         // set the action bar title and font
-        AppUtils.setActionBarTitle(this,R.string.activity_login);
+        AppUtils.setActionBarTitle(this, R.string.activity_login);
 
         // Test if already logged
         SharedPreferences pref = AppUtils.getSharedPreference(this);
-        Boolean isLogged=pref.getBoolean(getString(R.string.pref_is_connected), false);
-        if (isLogged) AppUtils.launchActivity(this,MainMenuActivity.class,true,null);
+        Boolean isLogged = pref.getBoolean(getString(R.string.pref_is_connected), false);
+        if (isLogged) AppUtils.launchActivity(this, MainMenuActivity.class, true, null);
 
 
         //Test
@@ -147,27 +151,23 @@ public class LoginActivity extends RealmActivity {
             AppUtils.launchActivity(this,TestActivity.class,true,null);*/
 
 
-
     }
 
     /**
      * Method call to validate the user syntax
-     *
      */
-    private boolean validateUser(){
+    private boolean validateUser() {
         // check field not empty
         return !et_user.getText().toString().equals("");
     }
 
     /**
      * Method call to validate the password syntax
-     *
      */
-    private boolean validatePassword(){
+    private boolean validatePassword() {
         // check field not empty
         return !et_password.getText().toString().equals("");
     }
-
 
 
 }

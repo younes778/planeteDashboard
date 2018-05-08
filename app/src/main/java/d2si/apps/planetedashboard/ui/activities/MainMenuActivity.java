@@ -16,25 +16,30 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
 /**
  * Main menu Activity
- *
+ * <p>
  * Activity that represents the main menu options
  *
  * @author younessennadj
  */
 public class MainMenuActivity extends RealmActivity {
 
-    @BindView(R.id.img_sales) ImageView img_sales;
-    @BindView(R.id.img_stock) ImageView img_stock;
-    @BindView(R.id.img_purchase) ImageView img_purchase;
-    @BindView(R.id.img_client) ImageView img_client;
-    @BindView(R.id.img_providers) ImageView img_providers;
+    @BindView(R.id.img_sales)
+    ImageView img_sales;
+    @BindView(R.id.img_stock)
+    ImageView img_stock;
+    @BindView(R.id.img_purchase)
+    ImageView img_purchase;
+    @BindView(R.id.img_client)
+    ImageView img_client;
+    @BindView(R.id.img_providers)
+    ImageView img_providers;
 
     /**
      * Method call when Sales button clicked
-     *
      */
-    @OnClick(R.id.btn_sales) void sales() {
-        AppUtils.launchActivity(this,MainActivity.class,true,String.valueOf(MainActivity.FRAGMENT_SALES));
+    @OnClick(R.id.btn_sales)
+    void sales() {
+        AppUtils.launchActivity(this, MainActivity.class, true, String.valueOf(MainActivity.FRAGMENT_SALES));
     }
 
     /**
@@ -54,7 +59,7 @@ public class MainMenuActivity extends RealmActivity {
         typeface(this);
 
         // set the action bar title and font
-        AppUtils.setActionBarTitle(this,R.string.app_name);
+        AppUtils.setActionBarTitle(this, R.string.app_name);
 
         // initialize the images with drawables
         img_sales.setImageDrawable(new IconicsDrawable(this).icon(AppUtils.MENU_DRAWABLES.get(0))

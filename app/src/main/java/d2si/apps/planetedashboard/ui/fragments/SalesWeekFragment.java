@@ -24,12 +24,12 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
 /**
  * Sales Fragment by week
- *
+ * <p>
  * Fragment that represents the sales by week
  *
  * @author younessennadj
  */
-public class SalesWeekFragment extends Fragment  {
+public class SalesWeekFragment extends Fragment {
 
     @BindView(R.id.chart)
     AnyChartView chart;
@@ -47,7 +47,7 @@ public class SalesWeekFragment extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_chart, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
         // List data titles
         ArrayList<String> setTitles = new ArrayList<>();
@@ -60,19 +60,21 @@ public class SalesWeekFragment extends Fragment  {
         setTitles.add(AppUtils.getLastWeekDateFormatted(getActivity()));
 
         // fill data and labels
-        for (int i=7;i<14;i++)
-        {
+        for (int i = 7; i < 14; i++) {
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.MONTH,1);
-            calendar.set(Calendar.DAY_OF_MONTH,i+1);
+            calendar.set(Calendar.MONTH, 1);
+            calendar.set(Calendar.DAY_OF_MONTH, i + 1);
             final Date dateFrom = new Date(calendar.getTimeInMillis());
-            calendar.set(Calendar.MONTH,0);
+            calendar.set(Calendar.MONTH, 0);
             final Date dateTo = new Date(calendar.getTimeInMillis());
 
-            data.add(new ArrayList<Float>(){{add(SalesController.getSalesTotalByDay(dateFrom));add(SalesController.getSalesTotalByDay(dateTo));}});
+            data.add(new ArrayList<Float>() {{
+                add(SalesController.getSalesTotalByDay(dateFrom));
+                add(SalesController.getSalesTotalByDay(dateTo));
+            }});
         }
 
-        new CustomLineChart(chart, Arrays.asList(getResources().getStringArray(R.array.days_shors)),data,setTitles);
+        new CustomLineChart(chart, Arrays.asList(getResources().getStringArray(R.array.days_shors)), data, setTitles);
         // initialize the font
         typeface(view);
         typeface(chart);

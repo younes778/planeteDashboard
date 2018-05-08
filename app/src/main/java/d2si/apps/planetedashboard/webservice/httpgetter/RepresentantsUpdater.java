@@ -14,7 +14,11 @@ import java.util.Date;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.data.Representant;
-
+/**
+ * class that represents representants updater
+ *
+ * @author younessennadj
+ */
 public abstract class RepresentantsUpdater extends AsyncTask<Void, Void, ArrayList<Representant>> {
 
     private Context context;
@@ -64,7 +68,7 @@ public abstract class RepresentantsUpdater extends AsyncTask<Void, Void, ArrayLi
     /**
      * Method that execute the http task
      *
-     * @param sales return from the web service
+     * @param representants return from the web service
      */
     protected void onPostExecute(ArrayList<Representant> representants){
             onPost(representants);

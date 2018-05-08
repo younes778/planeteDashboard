@@ -14,7 +14,11 @@ import java.util.Date;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.data.Document;
-
+/**
+ * class that represents sales updater
+ *
+ * @author younessennadj
+ */
 public abstract class SalesUpdater extends AsyncTask<Void, Void, ArrayList<Document>> {
 
     private Context context;

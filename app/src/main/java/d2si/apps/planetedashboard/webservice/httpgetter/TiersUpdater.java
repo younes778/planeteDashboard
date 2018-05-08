@@ -14,7 +14,11 @@ import java.util.Date;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.data.Tiers;
-
+/**
+ * class that represents tiers updater
+ *
+ * @author younessennadj
+ */
 public abstract class TiersUpdater extends AsyncTask<Void, Void, ArrayList<Tiers>> {
 
     private Context context;

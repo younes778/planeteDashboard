@@ -5,14 +5,18 @@ import android.os.AsyncTask;
 import java.util.ArrayList;
 import java.util.List;
 
-import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.database.data.Document;
 import d2si.apps.planetedashboard.database.data.Ligne;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 
-public abstract class DataBaseUpdater extends AsyncTask<Void, Void,Void> {
+/**
+ * class that copy data updated from server to  database in an asynchronous task
+ *
+ * @author younessennadj
+ */
+public abstract class DataBaseUpdater extends AsyncTask<Void, Void, Void> {
 
     private List<List<? extends RealmObject>> objectsToCopy;
 
@@ -32,22 +36,22 @@ public abstract class DataBaseUpdater extends AsyncTask<Void, Void,Void> {
      *
      * @param params parameters to use in background
      */
-    protected Void doInBackground(Void ... params) {
+    protected Void doInBackground(Void... params) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
-        for (int i=0;i<objectsToCopy.size();i++)
-        {
-            if (i==0)
-            {
-                for (Document document:(ArrayList<Document>) objectsToCopy.get(i)){
+        // copy all data or upadate when get from server
+        // Exception is made for lines if a document has changed
+        // all lines must be deleted and copied to database
+        for (int i = 0; i < objectsToCopy.size(); i++) {
+            if (i == 0) {
+                for (Document document : (ArrayList<Document>) objectsToCopy.get(i)) {
                     realm.copyToRealmOrUpdate(document);
                     RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
                     lignes.deleteAllFromRealm();
                 }
-            }
-            else {
-                for (RealmObject object:objectsToCopy.get(i))
+            } else {
+                for (RealmObject object : objectsToCopy.get(i))
                     realm.copyToRealmOrUpdate(object);
             }
         }
@@ -63,13 +67,12 @@ public abstract class DataBaseUpdater extends AsyncTask<Void, Void,Void> {
      * Method that execute the http task
      *
      */
-    protected void onPostExecute(Void v){
+    protected void onPostExecute(Void v) {
         onPost();
     }
 
     /**
      * Method that execute on task finished
-     *
      */
     public abstract void onPost();
 

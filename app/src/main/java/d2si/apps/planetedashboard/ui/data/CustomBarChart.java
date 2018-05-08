@@ -22,11 +22,24 @@ import java.util.List;
 
 import d2si.apps.planetedashboard.AppUtils;
 
+/**
+ * class that represent a custom bar chart
+ *
+ * @author younessennadj
+ */
 public class CustomBarChart {
 
     private AnyChartView chart;
     private Cartesian barChart;
 
+    /**
+     * constructor
+     *
+     * @param chart      the chart object
+     * @param legend     legen names
+     * @param entries    data to show
+     * @param dataTitles series titles
+     */
     public CustomBarChart(AnyChartView chart, List<String> legend, ArrayList<ArrayList<Float>> entries, List<String> dataTitles) {
         this.chart = chart;
         customizeChart();
@@ -94,7 +107,7 @@ public class CustomBarChart {
             Mapping mappingData;
             if (i == 0)
                 mappingData = set.mapAs("{ x: 'x', value: 'value' }");
-            else mappingData = set.mapAs("{ x: 'x', value: 'value" + (i+1) + "' }");
+            else mappingData = set.mapAs("{ x: 'x', value: 'value" + (i + 1) + "' }");
 
             SeriesBar series = barChart.bar(mappingData);
             series.setName(dataTitles.get(i) + "")

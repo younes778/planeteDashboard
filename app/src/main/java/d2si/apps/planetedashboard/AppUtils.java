@@ -3,15 +3,14 @@ package d2si.apps.planetedashboard;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.content.Context;
-import android.graphics.Typeface;
 import android.text.format.DateUtils;
-import android.util.Log;
 
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.typeface.IIcon;
@@ -19,36 +18,29 @@ import com.norbsoft.typefacehelper.ActionBarHelper;
 import com.norbsoft.typefacehelper.TypefaceCollection;
 import com.norbsoft.typefacehelper.TypefaceHelper;
 
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-import d2si.apps.planetedashboard.database.data.Ligne;
 import io.realm.Realm;
 import io.realm.RealmObject;
-import io.realm.RealmResults;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
-import static java.lang.Float.NaN;
 
 /**
  * App d2si.apps.planetedashboard.database.data class
- *
+ * <p>
  * Class regrouping the app static d2si.apps.planetedashboard.database.data and methods
  *
  * @author younessennadj
  */
 public class AppUtils {
 
-    public static ArrayList<IIcon> MENU_DRAWABLES = new ArrayList(){{
+    public static ArrayList<IIcon> MENU_DRAWABLES = new ArrayList() {{
         add(CommunityMaterial.Icon.cmd_tag_text_outline);
         add(CommunityMaterial.Icon.cmd_package_variant_closed);
         add(CommunityMaterial.Icon.cmd_cart_outline);
@@ -60,8 +52,8 @@ public class AppUtils {
     }};
 
     public static boolean VERSION_TEST = true;
-    public static String ACTIVITY_DATA="Data";
-    public static List<String> CHART_COLORS= new ArrayList<>();
+    public static String ACTIVITY_DATA = "Data";
+    public static List<String> CHART_COLORS = new ArrayList<>();
     public static Typeface fontApp;
     public static Typeface fontAppBold;
 
@@ -70,7 +62,7 @@ public class AppUtils {
      *
      * @param context App actual context
      */
-    public static void init(Context context){
+    public static void init(Context context) {
         addChartColors(context);
         initializeFonts(context);
     }
@@ -80,7 +72,7 @@ public class AppUtils {
      *
      * @param context App actual context
      */
-    public static void initializeFonts(Context context){
+    public static void initializeFonts(Context context) {
 
         // init fonts from assests
         fontApp = Typeface.createFromAsset(context.getAssets(), "fonts/AppFont.ttf");
@@ -99,7 +91,7 @@ public class AppUtils {
      *
      * @param context App actual context
      */
-    public static void addChartColors(Context context){
+    public static void addChartColors(Context context) {
         CHART_COLORS.add("#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorPrimary)).substring(2));
         CHART_COLORS.add("#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorAccent)).substring(2));
         CHART_COLORS.add("#" + Integer.toHexString(ContextCompat.getColor(context, R.color.colorPrimaryDark)).substring(2));
@@ -111,18 +103,18 @@ public class AppUtils {
      * @param activity actual activity
      * @param resource actionbar title resource
      */
-    public static void setActionBarTitle(Activity activity, int resource){
+    public static void setActionBarTitle(Activity activity, int resource) {
         ActionBarHelper.setTitle(
                 ((AppCompatActivity) activity).getSupportActionBar(),
-                typeface(activity,resource));
+                typeface(activity, resource));
     }
 
     /**
      * Method that return today date formatted 'DayName, month day,year'
      *
-     * @return  today date formatted
+     * @return today date formatted
      */
-    public static String getDayDateFormatted(){
+    public static String getDayDateFormatted() {
         Date date = new Date();
         return DateFormat.getDateInstance(DateFormat.FULL).format(date);
     }
@@ -130,11 +122,11 @@ public class AppUtils {
     /**
      * Method that return yesterday date formatted 'DayName, month day,year'
      *
-     * @return  yesterday date formatted
+     * @return yesterday date formatted
      */
-    public static String getYesterdayDateFormatted(){
+    public static String getYesterdayDateFormatted() {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH,calendar.get(Calendar.DAY_OF_MONTH)-1);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - 1);
         Date date = new Date(calendar.getTimeInMillis());
         return DateFormat.getDateInstance(DateFormat.FULL).format(date);
     }
@@ -143,36 +135,34 @@ public class AppUtils {
      * Method that return this week date formatted 'month day1-day7'
      *
      * @param context App actual context
-     *
-     * @return  this week date formatted
+     * @return this week date formatted
      */
-    public static String getWeekDateFormatted(Context context){
+    public static String getWeekDateFormatted(Context context) {
         Calendar calLastWeek = Calendar.getInstance();
-        calLastWeek.set(Calendar.DAY_OF_YEAR,calLastWeek.get(Calendar.DAY_OF_YEAR)-7);
-        return  DateUtils.formatDateRange(context, calLastWeek.getTimeInMillis(),Calendar.getInstance().getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE);
+        calLastWeek.set(Calendar.DAY_OF_YEAR, calLastWeek.get(Calendar.DAY_OF_YEAR) - 7);
+        return DateUtils.formatDateRange(context, calLastWeek.getTimeInMillis(), Calendar.getInstance().getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE);
     }
 
     /**
      * Method that return last week date formatted 'month day1-day7'
      *
      * @param context App actual context
-     *
-     * @return  last week date formatted
+     * @return last week date formatted
      */
-    public static String getLastWeekDateFormatted(Context context){
+    public static String getLastWeekDateFormatted(Context context) {
         Calendar calLastWeek = Calendar.getInstance();
-        calLastWeek.set(Calendar.DAY_OF_YEAR,calLastWeek.get(Calendar.DAY_OF_YEAR)-8);
+        calLastWeek.set(Calendar.DAY_OF_YEAR, calLastWeek.get(Calendar.DAY_OF_YEAR) - 8);
         Calendar calLast2Weeks = Calendar.getInstance();
-        calLast2Weeks.set(Calendar.DAY_OF_YEAR,calLastWeek.get(Calendar.DAY_OF_YEAR)-7);
-        return  DateUtils.formatDateRange(context, calLast2Weeks.getTimeInMillis(),calLastWeek.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE);
+        calLast2Weeks.set(Calendar.DAY_OF_YEAR, calLastWeek.get(Calendar.DAY_OF_YEAR) - 7);
+        return DateUtils.formatDateRange(context, calLast2Weeks.getTimeInMillis(), calLastWeek.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE);
     }
 
     /**
      * Method that return this month date formatted 'month'
      *
-     * @return  this month date formatted
+     * @return this month date formatted
      */
-    public static String getMonthFormatted(){
+    public static String getMonthFormatted() {
         Calendar cal = Calendar.getInstance();
         return new SimpleDateFormat("MMMM").format(cal.getTime());
     }
@@ -180,11 +170,11 @@ public class AppUtils {
     /**
      * Method that return last month date formatted 'month day1-day7'
      *
-     * @return  last month date formatted
+     * @return last month date formatted
      */
-    public static String getLastMonthFormatted(){
+    public static String getLastMonthFormatted() {
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.MONTH,cal.get(Calendar.MONTH)-1);
+        cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) - 1);
         return new SimpleDateFormat("MMMM").format(cal.getTime());
     }
 
@@ -192,29 +182,27 @@ public class AppUtils {
      * Method that return money value formatted with the currency symbol
      *
      * @param context App actual context
-     * @param value money value
-     *
-     * @return  last month date formatted
+     * @param value   money value
+     * @return last month date formatted
      */
-    public static String getCurrencyFormatted(Context context,float value,boolean withCurrency){
+    public static String getCurrencyFormatted(Context context, float value, boolean withCurrency) {
 
         if (withCurrency)
-        return context.getString(R.string.currency,context.getResources().getString(R.string.current_currency),new DecimalFormat("#.##").format(value));
+            return context.getString(R.string.currency, context.getResources().getString(R.string.current_currency), new DecimalFormat("#.##").format(value));
         else return new DecimalFormat("#.##").format(value);
     }
 
     /**
      * Method that launch activity launched from activity caller
      *
-     * @param caller activity caller
-     * @param launched activity class that will be launched
+     * @param caller    activity caller
+     * @param launched  activity class that will be launched
      * @param finishing indicate whether finish the activity caller or not
-     * @param extra d2si.apps.planetedashboard.database.data to be transferred to the activity to be launched
-     *
+     * @param extra     d2si.apps.planetedashboard.database.data to be transferred to the activity to be launched
      */
-    public static void launchActivity(AppCompatActivity caller,Class launched,boolean finishing,String extra){
-        Intent activityLauncher = new Intent(caller,launched);
-        activityLauncher.putExtra(ACTIVITY_DATA,extra);
+    public static void launchActivity(AppCompatActivity caller, Class launched, boolean finishing, String extra) {
+        Intent activityLauncher = new Intent(caller, launched);
+        activityLauncher.putExtra(ACTIVITY_DATA, extra);
         caller.startActivity(activityLauncher);
         if (finishing) caller.finish();
     }
@@ -223,17 +211,15 @@ public class AppUtils {
      * Method that will get the d2si.apps.planetedashboard.database.data put by the activity caller
      *
      * @param launched activity that will be launched
-     *
      * @return the Data passed from activity to the launched activity
      */
-    public static String getDataFromLaunchedActivity(AppCompatActivity launched){
-        Intent activityIntent= launched.getIntent();
+    public static String getDataFromLaunchedActivity(AppCompatActivity launched) {
+        Intent activityIntent = launched.getIntent();
         Bundle b = activityIntent.getExtras();
-        String result=null;
+        String result = null;
 
-        if(b!=null)
-        {
-            result =(String) b.get(ACTIVITY_DATA);
+        if (b != null) {
+            result = (String) b.get(ACTIVITY_DATA);
         }
 
         return result;
@@ -245,7 +231,7 @@ public class AppUtils {
      * @param activity the activity to load on
      * @param fragment The fragment to load
      */
-    public static void loadFragment(Activity activity, Fragment fragment){
+    public static void loadFragment(Activity activity, Fragment fragment) {
 
         // create a FragmentManager
         FragmentManager fm = activity.getFragmentManager();
@@ -260,20 +246,20 @@ public class AppUtils {
     /**
      * Method that form Url of a get request with format "ServerUrl:port/urlRequest?field1=value1&field2=value2..."
      *
-     * @param url Server url
-     * @param port Server port
+     * @param url        Server url
+     * @param port       Server port
      * @param urlRequest the service requested
-     * @param fields Fields name to be filled to the get request
-     * @param values Values of the fields of the get request
+     * @param fields     Fields name to be filled to the get request
+     * @param values     Values of the fields of the get request
      * @return Urf formatted for a get
      */
-    public static String formGetUrl(String url,int port,String urlRequest,ArrayList<String> fields,ArrayList<String> values){
-        String res=url+":"+port+"/"+urlRequest;
-        if (fields!=null)
-            for (int i=0;i<fields.size();i++){
-            if (i==0) res=res+"?";
-            res=res+fields.get(i)+"="+values.get(i);
-            if (i!=fields.size()-1) res=res+"&";
+    public static String formGetUrl(String url, int port, String urlRequest, ArrayList<String> fields, ArrayList<String> values) {
+        String res = url + ":" + port + "/" + urlRequest;
+        if (fields != null)
+            for (int i = 0; i < fields.size(); i++) {
+                if (i == 0) res = res + "?";
+                res = res + fields.get(i) + "=" + values.get(i);
+                if (i != fields.size() - 1) res = res + "&";
             }
         return res;
     }
@@ -283,12 +269,12 @@ public class AppUtils {
      *
      * @param objects objects to add
      */
-    public static void addObjectToRealm(List<List<? extends RealmObject>> objects){
+    public static void addObjectToRealm(List<List<? extends RealmObject>> objects) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
-        for (int i=0;i<objects.size();i++)
-            for (RealmObject object:objects.get(i))
+        for (int i = 0; i < objects.size(); i++)
+            for (RealmObject object : objects.get(i))
                 realm.copyToRealm(object); // Persist unmanaged objects
 
         realm.commitTransaction();
@@ -298,9 +284,8 @@ public class AppUtils {
 
     /**
      * Method that delete all database data
-     *
      */
-    public static void clearRealm(){
+    public static void clearRealm() {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
@@ -314,17 +299,15 @@ public class AppUtils {
 
     /**
      * Method that form data as needed for requests
-     *
      */
-    public static String formDateSql(Date date){
+    public static String formDateSql(Date date) {
         return new SimpleDateFormat("yyyy-dd-MM").format(date);
     }
 
     /**
      * Method that form data as needed for requests
-     *
      */
-    public static String formDateTimeSql(Date date){
+    public static String formDateTimeSql(Date date) {
         return new SimpleDateFormat("yyyy-dd-MM HH:mm:ss").format(date);
     }
 
@@ -332,18 +315,23 @@ public class AppUtils {
      * Method that get the shared preference
      *
      * @param context actual context
-     *
+     * @return shared preferences of the app
      */
 
-    public static SharedPreferences getSharedPreference(Context context){
-        return  context.getSharedPreferences(
+    public static SharedPreferences getSharedPreference(Context context) {
+        return context.getSharedPreferences(
                 "Pref", Context.MODE_PRIVATE);
     }
 
-    public static SharedPreferences.Editor getSharedPreferenceEdito(Context context){
+    /**
+     * Method that get the editor shared preference
+     *
+     * @param context actual context
+     * @return shared preferences editor of the app
+     */
+    public static SharedPreferences.Editor getSharedPreferenceEdito(Context context) {
         return context.getSharedPreferences("Pref", Context.MODE_PRIVATE).edit();
     }
-
 
 
 }

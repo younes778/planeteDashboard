@@ -8,7 +8,7 @@ import io.realm.Realm;
 
 /**
  * Realm Activity
- *
+ * <p>
  * Activity that extends from the database library
  *
  * @author younessennadj
