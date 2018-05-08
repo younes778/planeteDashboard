@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -31,6 +32,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +52,7 @@ import d2si.apps.planetedashboard.ui.fragments.SalesDayFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesMonthFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesWeekFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesYearFragment;
+import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import io.realm.RealmObject;
 
@@ -83,6 +87,7 @@ public class MainActivity extends RealmActivity{
     private RecyclerView choiceList;
     private MaterialSpinner showSpinner;
     private MaterialSpinner familySpinner;
+    private MaterialDialog dialog;
 
     @Override
     /**
@@ -178,7 +183,45 @@ public class MainActivity extends RealmActivity{
                                         .show();
                                 break;
                             case 10:
+
                                 navDrawer.setSelection(fragment_to_launch+1);
+                                dialog = new MaterialDialog.Builder(MainActivity.this)
+                                        .title(R.string.progress_updating_title)
+                                        .content(R.string.progress_updating_content)
+                                        .progress(true, 0)
+                                        .cancelable(false)
+                                        .show();
+
+                                Calendar calendar = Calendar.getInstance();
+                                calendar.set(Calendar.DAY_OF_MONTH, 16);
+                                calendar.set(Calendar.MONTH, 1);
+                                calendar.set(Calendar.HOUR,0);
+                                calendar.set(Calendar.SECOND,0);
+                                calendar.set(Calendar.MINUTE,0);
+                                calendar.set(Calendar.MILLISECOND,0);
+                                final Date date1 = new Date(calendar.getTimeInMillis());
+
+                                final DataGetter dataGetter = new DataGetter() {
+                                    @Override
+                                    public void onSalesUpdate() {
+                                        dialog.dismiss();
+                                        setupTabs(fragment_to_launch);
+                                    }
+
+                                    @Override
+                                    public void onSalesGet() {
+
+                                    }
+
+                                    @Override
+                                    public void onUserUpdate(Boolean user) {
+
+                                    }
+                                };
+
+                                dataGetter.updateSalesByDate(getBaseContext(),date1);
+                                break;
+
                         }
 
                         return true;

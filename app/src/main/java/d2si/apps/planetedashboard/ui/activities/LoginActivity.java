@@ -34,7 +34,7 @@ public class LoginActivity extends RealmActivity {
     @BindView(R.id.et_password) ExtendedEditText et_password;
     @BindView(R.id.field_password) TextFieldBoxes field_password;
     @BindView(R.id.btn_login) MaterialRippleLayout btn_login;
-    MaterialDialog dialog;
+    private MaterialDialog dialog;
 
     /**
      * Method call when Login button clicked
@@ -85,6 +85,11 @@ public class LoginActivity extends RealmActivity {
                 final DataGetter dataGetter = new DataGetter() {
                     @Override
                     public void onSalesUpdate() {
+
+                    }
+
+                    @Override
+                    public void onSalesGet() {
                         dialog.dismiss();
                         AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
                     }
@@ -100,7 +105,7 @@ public class LoginActivity extends RealmActivity {
                                     .progress(true, 0)
                                     .cancelable(false)
                                     .show();
-                            this.updateSalesByDate(LoginActivity.this, date1, date2);
+                            this.getSalesByDate(LoginActivity.this, date1, date2);
                         } else {
                             Toast.makeText(getBaseContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
                         }

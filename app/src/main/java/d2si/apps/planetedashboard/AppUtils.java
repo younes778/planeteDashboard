@@ -31,8 +31,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import d2si.apps.planetedashboard.database.data.Ligne;
 import io.realm.Realm;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 import static java.lang.Float.NaN;
