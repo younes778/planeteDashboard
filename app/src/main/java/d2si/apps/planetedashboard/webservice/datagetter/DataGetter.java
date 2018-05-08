@@ -2,12 +2,15 @@ package d2si.apps.planetedashboard.webservice.datagetter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.controller.DataCopier;
 import d2si.apps.planetedashboard.database.data.Article;
 import d2si.apps.planetedashboard.database.data.Document;
 import d2si.apps.planetedashboard.database.data.Ligne;
@@ -19,11 +22,13 @@ import d2si.apps.planetedashboard.webservice.httpgetter.RepresentantsGetter;
 import d2si.apps.planetedashboard.webservice.httpgetter.SalesGetter;
 import d2si.apps.planetedashboard.webservice.httpgetter.TiersGetter;
 import d2si.apps.planetedashboard.webservice.httpgetter.UserGetter;
+import io.realm.RealmObject;
 
 public abstract class DataGetter {
 
     public abstract void onSalesUpdate();
     public abstract void onUserUpdate(Boolean isConected);
+    private List<List<? extends RealmObject>> objectsToCopy;
 
     public void checkUserCrediants(final Context context, final String user, final String password) {
         new UserGetter(context, user, password) {
@@ -50,39 +55,39 @@ public abstract class DataGetter {
         new SalesGetter(context, dateFrom, dateTo) {
             @Override
             public void onPost(ArrayList<Document> sales) {
+                objectsToCopy = new ArrayList<>();
 
-                for (Document sale:sales)
-                    AppUtils.addObjectToRealm(sale);
+                objectsToCopy.add(new ArrayList<RealmObject>(sales));
 
                 new ArticlesGetter(context, dateFrom, dateTo) {
                     @Override
                     public void onPost(ArrayList<Article> articles) {
 
-                        for (Article article:articles)
-                            AppUtils.addObjectToRealm(article);
+                        objectsToCopy.add(new ArrayList<RealmObject>(articles));
 
                         new LignesGetter(context, dateFrom, dateTo) {
                             @Override
                             public void onPost(ArrayList<Ligne> lignes) {
 
-                                for (Ligne ligne:lignes)
-                                    AppUtils.addObjectToRealm(ligne);
+                                objectsToCopy.add(new ArrayList<RealmObject>(lignes));
 
                                 new TiersGetter(context, dateFrom, dateTo) {
                                     @Override
                                     public void onPost(ArrayList<Tiers> tiers) {
 
-                                        for (Tiers tier:tiers)
-                                            AppUtils.addObjectToRealm(tier);
+                                        objectsToCopy.add(new ArrayList<RealmObject>(tiers));
 
                                         new RepresentantsGetter(context, dateFrom, dateTo) {
                                             @Override
                                             public void onPost(ArrayList<Representant> representants) {
 
-                                                for (Representant representant:representants)
-                                                    AppUtils.addObjectToRealm(representant);
-
-                                                onSalesUpdate();
+                                                objectsToCopy.add(new ArrayList<RealmObject>(representants));
+                                                new DataCopier(objectsToCopy) {
+                                                    @Override
+                                                    public void onPost() {
+                                                        onSalesUpdate();
+                                                    }
+                                                }.execute();
 
                                             }
                                         }.execute();

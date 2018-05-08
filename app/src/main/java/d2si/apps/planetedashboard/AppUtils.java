@@ -278,12 +278,16 @@ public class AppUtils {
     /**
      * Method that add object to database
      *
-     * @param object object to add
+     * @param objects objects to add
      */
-    public static void addObjectToRealm(RealmObject object){
+    public static void addObjectToRealm(List<List<? extends RealmObject>> objects){
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.copyToRealm(object); // Persist unmanaged objects
+
+        for (int i=0;i<objects.size();i++)
+            for (RealmObject object:objects.get(i))
+                realm.copyToRealm(object); // Persist unmanaged objects
+
         realm.commitTransaction();
         realm.close();
     }
