@@ -146,35 +146,41 @@ public class MainActivity extends RealmActivity{
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem().withName(R.string.menu_parameter).withTypeface(AppUtils.fontApp).withSelectable(false),
                         new PrimaryDrawerItem().withIdentifier(6).withName(R.string.menu_logout).withTypeface(AppUtils.fontApp).withIcon(AppUtils.MENU_DRAWABLES.get(5)),
-                        new PrimaryDrawerItem().withIdentifier(7).withName(R.string.menu_setting).withTypeface(AppUtils.fontApp).withIcon(AppUtils.MENU_DRAWABLES.get(6))
+                        new PrimaryDrawerItem().withIdentifier(7).withName(R.string.menu_setting).withTypeface(AppUtils.fontApp).withIcon(AppUtils.MENU_DRAWABLES.get(6)),
+                        new PrimaryDrawerItem().withIdentifier(8).withName(R.string.menu_sync).withTypeface(AppUtils.fontApp).withIcon(AppUtils.MENU_DRAWABLES.get(7))
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         navDrawer.closeDrawer();
-                        if (position==1) {
-                            fragment_to_launch=0;
-                            setupTabs(fragment_to_launch);
+                        switch (position) {
+                            case 1:
+                                fragment_to_launch=0;
+                                setupTabs(fragment_to_launch);
+                                break;
+                            case 8:
+                                navDrawer.setSelection(fragment_to_launch+1);
+                                new MaterialDialog.Builder(MainActivity.this)
+                                        .title(R.string.dialog_logout_title)
+                                        .content(R.string.dialog_logout_content)
+                                        .positiveText(R.string.dialog_confirm)
+                                        .negativeText(R.string.dialog_cancel)
+                                        .cancelable(false)
+                                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                            @Override
+                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(MainActivity.this);
+                                                editor.putBoolean(getString(R.string.pref_is_connected), false);
+                                                editor.apply();
+                                                AppUtils.launchActivity(MainActivity.this,LoginActivity.class,true,null);
+                                            }
+                                        })
+                                        .show();
+                                break;
+                            case 10:
+                                navDrawer.setSelection(fragment_to_launch+1);
                         }
-                        if (position==8){
-                            navDrawer.setSelection(fragment_to_launch+1);
-                            new MaterialDialog.Builder(MainActivity.this)
-                                    .title(R.string.dialog_logout_title)
-                                    .content(R.string.dialog_logout_content)
-                                    .positiveText(R.string.dialog_confirm)
-                                    .negativeText(R.string.dialog_cancel)
-                                    .cancelable(false)
-                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                        @Override
-                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                            SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(MainActivity.this);
-                                            editor.putBoolean(getString(R.string.pref_is_connected), false);
-                                            editor.apply();
-                                            AppUtils.launchActivity(MainActivity.this,LoginActivity.class,true,null);
-                                        }
-                                    })
-                                    .show();
-                        }
+
                         return true;
                     }
                 })

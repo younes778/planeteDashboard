@@ -78,8 +78,8 @@ public class LoginActivity extends RealmActivity {
                 calendar1.set(Calendar.MONTH, 0);
                 final Date date1 = new Date(calendar1.getTimeInMillis());
                 Calendar calendar2 = Calendar.getInstance();
-                calendar2.set(Calendar.DAY_OF_MONTH, 1);
-                calendar2.set(Calendar.MONTH, 2);
+                calendar2.set(Calendar.DAY_OF_MONTH, 15);
+                calendar2.set(Calendar.MONTH, 1);
                 final Date date2 = new Date(calendar2.getTimeInMillis());
 
                 final DataGetter dataGetter = new DataGetter() {

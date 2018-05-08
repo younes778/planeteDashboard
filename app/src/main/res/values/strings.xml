@@ -49,6 +49,7 @@
     <string name="menu_logout"><b>LOG OUT</b></string>
     <string name="menu_setting"><b>SETTINGS</b></string>
     <string name="menu_parameter"><b>PARAMETERS</b></string>
+    <string name="menu_sync"><b>SYNC</b></string>
 
 
     <!--                   Chart               -->

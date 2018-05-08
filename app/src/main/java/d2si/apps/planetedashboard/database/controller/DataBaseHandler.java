@@ -17,7 +17,7 @@ import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.data.Article;
 import io.realm.RealmObject;
 
-public abstract class DataCopier extends AsyncTask<Void, Void,Void> {
+public abstract class DataBaseHandler extends AsyncTask<Void, Void,Void> {
 
     private List<List<? extends RealmObject>> objectsToCopy;
 
@@ -27,7 +27,7 @@ public abstract class DataCopier extends AsyncTask<Void, Void,Void> {
      *
      * @param objectsToCopy objects to be copied to database
      */
-    public DataCopier(List<List<? extends RealmObject>> objectsToCopy) {
+    public DataBaseHandler(List<List<? extends RealmObject>> objectsToCopy) {
         this.objectsToCopy = objectsToCopy;
     }
 

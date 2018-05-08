@@ -54,6 +54,7 @@ public class AppUtils {
         add(CommunityMaterial.Icon.cmd_account_multiple_outline);
         add(CommunityMaterial.Icon.cmd_logout_variant);
         add(CommunityMaterial.Icon.cmd_tune_vertical);
+        add(CommunityMaterial.Icon.cmd_sync);
     }};
 
     public static boolean VERSION_TEST = true;
@@ -315,6 +316,14 @@ public class AppUtils {
      */
     public static String formDateSql(Date date){
         return new SimpleDateFormat("yyyy-dd-MM").format(date);
+    }
+
+    /**
+     * Method that form data as needed for requests
+     *
+     */
+    public static String formDateTimeSql(Date date){
+        return new SimpleDateFormat("yyyy-dd-MM HH:mm:ss").format(date);
     }
 
     /**

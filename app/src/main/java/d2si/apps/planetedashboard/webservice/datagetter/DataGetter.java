@@ -2,7 +2,6 @@ package d2si.apps.planetedashboard.webservice.datagetter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,7 +9,7 @@ import java.util.List;
 
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.database.controller.DataCopier;
+import d2si.apps.planetedashboard.database.controller.DataBaseHandler;
 import d2si.apps.planetedashboard.database.data.Article;
 import d2si.apps.planetedashboard.database.data.Document;
 import d2si.apps.planetedashboard.database.data.Ligne;
@@ -82,7 +81,7 @@ public abstract class DataGetter {
                                             public void onPost(ArrayList<Representant> representants) {
 
                                                 objectsToCopy.add(new ArrayList<RealmObject>(representants));
-                                                new DataCopier(objectsToCopy) {
+                                                new DataBaseHandler(objectsToCopy) {
                                                     @Override
                                                     public void onPost() {
                                                         onSalesUpdate();
