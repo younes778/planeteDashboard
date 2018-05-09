@@ -147,8 +147,8 @@ public class LoginActivity extends RealmActivity {
 
 
         //Test
-        /*if (AppUtils.VERSION_TEST)
-            AppUtils.launchActivity(this,TestActivity.class,true,null);*/
+        if (AppUtils.VERSION_TEST)
+            AppUtils.launchActivity(this,SettingsActivity.class,true,null);
 
 
     }

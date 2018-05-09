@@ -32,8 +32,11 @@
         <item name="md_regular_font">AppFont.ttf</item>
         <item name="md_dark_theme">false</item>
 
-        <!--                Material spinner            -->
+    </style>
 
+    <style name="PreferenceTheme" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
 
@@ -49,7 +52,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 

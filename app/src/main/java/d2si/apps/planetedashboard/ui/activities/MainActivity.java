@@ -180,6 +180,10 @@ public class MainActivity extends RealmActivity {
                                         })
                                         .show();
                                 break;
+                            case 9: // settings
+                                navDrawer.setSelection(fragment_to_launch + 1);
+                                AppUtils.launchActivity(MainActivity.this,SettingsActivity.class,false,null);
+                                break;
                             case 10: // sync data
                                 navDrawer.setSelection(fragment_to_launch + 1);
                                 dialog = new MaterialDialog.Builder(MainActivity.this)
@@ -197,7 +201,7 @@ public class MainActivity extends RealmActivity {
                                 calendar.set(Calendar.MINUTE, 0);
                                 calendar.set(Calendar.MILLISECOND, 0);
                                 final Date date1 = new Date(calendar.getTimeInMillis());
-
+                                // update data
                                 final DataGetter dataGetter = new DataGetter() {
                                     @Override
                                     public void onSalesUpdate() {

@@ -34,6 +34,7 @@
     <integer name="db_local_version">3</integer>
     <string name="app_name">PLANETE <b>DASHBOARD</b></string>
     <string name="activity_login">LOGIN</string>
+    <string name="activity_settings">Settings</string>
     <string name="current_currency">DZ</string>
     <string name="currency"><b>%1$s</b> %2$s</string>
     <string name="app_copyright">© 2018 <b>DSSI</b></string>
@@ -95,6 +96,29 @@
     <string name="progress_updating_content">Updating ......</string>
 
     <!--           Shared Preferences       -->
+    <string name="pref_title">Preferences</string>
+    <string name="pref_title_sync">Synchronization</string>
+    <string name="pref_title_server">Server Name</string>
+    <string name="pref_title_database">Database Name</string>
+    <string name="pref_title_sync_auto">Auto sync</string>
+    <string name="pref_title_sync_delay">Sync Delay</string>
+    <string name="pref_title_last_sync">Last sync</string>
+
+    <string name="pref_key">pref</string>
+    <string name="pref_key_server">server</string>
+    <string name="pref_key_database">database</string>
+    <string name="pref_key_sync_auto">autoSync</string>
+    <string name="pref_key_sync_delay">delay</string>
+    <string name="pref_key_last_sync">lastSync</string>
+
+    <string name="pref_summary_server">The server containing the database</string>
+    <string name="pref_summary_database">Name of the database containing the ERP</string>
+    <string name="pref_summary_sync_auto">Tell if the synchronization is automatically done</string>
+    <string name="pref_summary_sync_delay">The frequency of syncing data from server</string>
+    <string name="pref_summary_last_sync">Date &amp; time of the last sync</string>
+
+    <integer name="pref_default_sync_delay">60</integer>
+
     <string name="pref_is_connected">isConnected</string>
     <string name="pref_user">user</string>
     <string name="pref_password">password</string>
