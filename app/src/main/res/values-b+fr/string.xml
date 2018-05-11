@@ -3,8 +3,7 @@
 
     <!--                App d2si.apps.planetedashboard.database.data                -->
     <string name="activity_login">CONNEXION</string>
-
-
+    <string name="activity_settings">PREFERENCES</string>
 
     <!--                    Menu                 -->
     <string name="menu_sales"><b>VENTES</b></string>
@@ -17,7 +16,6 @@
     <string name="menu_parameter"><b>CONFIGURATION</b></string>
     <string name="menu_sync"><b>SYNCHRONISER</b></string>
 
-
     <!--                   Chart               -->
     <string-array name="days_shors">
         <item name="sunday_short">DI</item>
@@ -29,13 +27,11 @@
         <item name="saturday_short">SA</item>
     </string-array>
 
-
     <!--                    Tab Host            -->
     <string name="tab_day">JOUR</string>
     <string name="tab_week">SEMAINE</string>
     <string name="tab_month">MOIS</string>
     <string name="tab_year">ANNEE</string>
-
 
     <!--                Text Views                -->
     <string name="tv_today"><b>Aujourd\'hui</b></string>
@@ -82,7 +78,6 @@
     <string name="spinner_title_show">Afficher par</string>
     <string name="spinner_title_family">Famille</string>
 
-
     <!--            Errors              -->
     <string name="error_login">Impossible de se connecter!</string>
 
@@ -91,5 +86,20 @@
     <string name="filter_item">Filtrer par Article</string>
     <string name="filter_client">Filtrer par Client</string>
     <string name="filter_representant">Filtrer par Representant</string>
+
+    <!--            Preferences         -->
+    <string name="pref_title">Préférences</string>
+    <string name="pref_title_sync">Synchronisation</string>
+    <string name="pref_title_server">Nom de serveur</string>
+    <string name="pref_title_database">Nom de la base de données</string>
+    <string name="pref_title_sync_auto">Auto synchronisation</string>
+    <string name="pref_title_sync_delay">Délai de synchornisation</string>
+    <string name="pref_title_last_sync">Dernière synchronisation</string>
+
+    <string name="pref_summary_server">Le serveur contenant la base de données</string>
+    <string name="pref_summary_database">Nom de la base de données contenante des données</string>
+    <string name="pref_summary_sync_auto">définir si la synchronisation devrait se faire automatiquement</string>
+    <string name="pref_summary_sync_delay">La fréquence de synchronisation à partir de serveur</string>
+    <string name="pref_summary_last_sync">Date &amp; temps de la dernière synchronisation</string>
 
 </resources>

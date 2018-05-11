@@ -140,16 +140,6 @@ public class LoginActivity extends RealmActivity {
         // set the action bar title and font
         AppUtils.setActionBarTitle(this, R.string.activity_login);
 
-        // Test if already logged
-        SharedPreferences pref = AppUtils.getSharedPreference(this);
-        Boolean isLogged = pref.getBoolean(getString(R.string.pref_is_connected), false);
-        if (isLogged) AppUtils.launchActivity(this, MainMenuActivity.class, true, null);
-
-
-        //Test
-        if (AppUtils.VERSION_TEST)
-            AppUtils.launchActivity(this,SettingsActivity.class,true,null);
-
 
     }
 

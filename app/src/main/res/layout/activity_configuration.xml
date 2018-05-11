@@ -56,7 +56,7 @@
             android:padding="20dp"
             android:textColor="@color/colorTextPrimary"
             android:background="@color/colorPrimary"
-            android:text="@string/app_name" />
+            android:text="@string/tv_configuration" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,10 +67,10 @@
 
             <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
 
-                android:id="@+id/field_user"
+                android:id="@+id/field_server"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:labelText="@string/et_user"
+                app:labelText="@string/et_server"
                 app:secondaryColor="@color/colorPrimary"
                 app:primaryColor="@color/colorPrimary"
                 app:errorColor="@color/colorError"
@@ -81,7 +81,7 @@
                 >
 
                 <studio.carbonylgroup.textfieldboxes.ExtendedEditText
-                    android:id="@+id/et_user"
+                    android:id="@+id/et_server"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -90,10 +90,10 @@
             </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
             <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
-                android:id="@+id/field_password"
+                android:id="@+id/field_database"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:labelText="@string/et_password"
+                app:labelText="@string/et_database"
                 app:secondaryColor="@color/colorPrimary"
                 app:primaryColor="@color/colorPrimary"
                 app:errorColor="@color/colorError"
@@ -104,17 +104,16 @@
                 >
 
                 <studio.carbonylgroup.textfieldboxes.ExtendedEditText
-                    android:id="@+id/et_password"
+                    android:id="@+id/et_database"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:inputType="textPassword"
                     />
 
             </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
             <com.balysv.materialripple.MaterialRippleLayout
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_connectivity_test"
                 android:layout_width="match_parent"
                 app:mrl_rippleHover="true"
                 app:mrl_rippleBackground="@color/colorPrimary"
@@ -127,7 +126,7 @@
                     android:layout_width="match_parent"
                     android:enabled="true"
                     android:layout_height="wrap_content"
-                    android:text="@string/btn_login"
+                    android:text="@string/btn_connectivity_test"
                     android:textColor="@color/colorTextPrimary"
                     android:layout_gravity="center"/>
 

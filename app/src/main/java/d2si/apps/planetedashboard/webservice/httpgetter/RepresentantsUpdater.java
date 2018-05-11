@@ -14,6 +14,7 @@ import java.util.Date;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.data.Representant;
+
 /**
  * class that represents representants updater
  *
@@ -28,7 +29,7 @@ public abstract class RepresentantsUpdater extends AsyncTask<Void, Void, ArrayLi
     /**
      * Method that execute the http task
      *
-     * @param context app actual context
+     * @param context  app actual context
      * @param dateFrom sales from datefrom
      */
     public RepresentantsUpdater(Context context, Date dateFrom) {
@@ -45,17 +46,25 @@ public abstract class RepresentantsUpdater extends AsyncTask<Void, Void, ArrayLi
     protected ArrayList<Representant> doInBackground(Void... params) {
         try {
             // form the url with the fields
-            final String url= AppUtils.formGetUrl(context.getString(R.string.REST_SERVER_URL),Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)),context.getString(R.string.REST_REQUEST_REPRESENTANT_UPDATE),new ArrayList<String>(){{add(context.getString(R.string.REST_FIELD_URL));add(context.getString(R.string.REST_FIELD_DB_NAME));add(context.getString(R.string.REST_FIELD_DATE_FROM));}},new ArrayList<String>(){{add(context.getString(R.string.DB_URL));add(context.getString(R.string.DB_NAME));add(AppUtils.formDateTimeSql(dateFrom));}});
+            final String url = AppUtils.formGetUrl(context.getString(R.string.REST_SERVER_URL), Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)), context.getString(R.string.REST_REQUEST_REPRESENTANT_UPDATE), new ArrayList<String>() {{
+                add(context.getString(R.string.REST_FIELD_URL));
+                add(context.getString(R.string.REST_FIELD_DB_NAME));
+                add(context.getString(R.string.REST_FIELD_DATE_FROM));
+            }}, new ArrayList<String>() {{
+                add(AppUtils.serverName);
+                add(AppUtils.dBName);
+                add(AppUtils.formDateTimeSql(dateFrom));
+            }});
 
             // use the rest template
             RestTemplate restTemplate = new RestTemplate();
             // format response according to JSON
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             // get the results
-            ArrayList<Representant> salesDB=new ArrayList<>();
+            ArrayList<Representant> salesDB = new ArrayList<>();
             ArrayList<d2si.apps.planetedashboard.webservice.data.Representant> representants = new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, d2si.apps.planetedashboard.webservice.data.Representant[].class)));
-            for (d2si.apps.planetedashboard.webservice.data.Representant representant:representants) {
-                      salesDB.add(new Representant(representant.getRep_code(),representant.getRep_nom(),representant.getRep_prenom()));
+            for (d2si.apps.planetedashboard.webservice.data.Representant representant : representants) {
+                salesDB.add(new Representant(representant.getRep_code(), representant.getRep_nom(), representant.getRep_prenom()));
             }
             return salesDB;
         } catch (Exception e) {
@@ -70,8 +79,8 @@ public abstract class RepresentantsUpdater extends AsyncTask<Void, Void, ArrayLi
      *
      * @param representants return from the web service
      */
-    protected void onPostExecute(ArrayList<Representant> representants){
-            onPost(representants);
+    protected void onPostExecute(ArrayList<Representant> representants) {
+        onPost(representants);
     }
 
     /**

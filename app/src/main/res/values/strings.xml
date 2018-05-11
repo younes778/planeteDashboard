@@ -17,6 +17,7 @@
     <string name="REST_REQUEST_TIERS_UPDATE">tiersUpdate</string>
     <string name="REST_REQUEST_REPRESENTANT_UPDATE">representantsUpdate</string>
 
+    <string name="REST_REQUEST_SERVER">server</string>
     <string name="REST_REQUEST_USER">user</string>
     <string name="REST_REQUEST_SALES_TEMPLATE">salestemplate</string>
     <string name="REST_FIELD_URL">url</string>
@@ -26,11 +27,7 @@
     <string name="REST_FIELD_USER">user</string>
     <string name="REST_FIELD_PASSWORD">password</string>
 
-    <!--                DataBase Data               -->
-    <string name="DB_URL">d2si.ddns.net</string>
-    <string name="DB_NAME">SOMAFEPLANETE</string>
-
-    <!--                App d2si.apps.planetedashboard.database.data                -->
+    <!--                App data                -->
     <integer name="db_local_version">3</integer>
     <string name="app_name">PLANETE <b>DASHBOARD</b></string>
     <string name="activity_login">LOGIN</string>
@@ -78,21 +75,30 @@
     <string name="tv_quantity_sold">Qty.sold</string>
     <string name="tv_articles_number">No.invoice</string>
     <string name="tv_average_price">Avg.price</string>
+    <string name="tv_configuration">APP <b>CONFIGURATION</b></string>
 
     <!--                Edit Texts                -->
     <string name="et_user">User</string>
     <string name="et_user_helper">Enter the user name</string>
     <string name="et_password">Password</string>
     <string name="et_password_helper">Enter the user password</string>
+    <string name="et_server">Server Name</string>
+    <string name="et_server_helper">Enter the server name</string>
+    <string name="et_database">Database</string>
+    <string name="et_database_helper">Enter the database name</string>
     <string name="et_error_not_empty">Field must not be empty</string>
 
     <!--                 Buttons                   -->
     <string name="btn_login"><b>Login</b></string>
+    <string name="btn_connectivity_test"><b>Test connectivity</b></string>
 
     <!--            Progress                -->
     <string name="progress_login_title">Login</string>
-    <string name="progress_login_content">Connecting ......</string>
+    <string name="progress_server_title">Connecting to server</string>
     <string name="progress_updating_title">Refresh data</string>
+
+    <string name="progress_login_content">Connecting ......</string>
+    <string name="progress_server_content">Establishing Connection</string>
     <string name="progress_updating_content">Updating ......</string>
 
     <!--           Shared Preferences       -->
@@ -124,6 +130,7 @@
     <string name="pref_password">password</string>
 
     <!--                Dialogs             -->
+
     <string name="dialog_logout_title">Log out</string>
     <string name="dialog_filter_title">Filter by</string>
 
@@ -148,6 +155,7 @@
 
     <!--            Errors              -->
     <string name="error_login">Unable to login!</string>
+    <string name="error_server">Unable to establish connexion with server!</string>
 
     <!--            Menus               -->
     <string name="filter_none">Filter: None</string>

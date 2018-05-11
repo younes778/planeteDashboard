@@ -30,9 +30,9 @@ public abstract class ArticlesGetter extends AsyncTask<Void, Void, ArrayList<Art
     /**
      * Method that execute the http task
      *
-     * @param context app actual context
+     * @param context  app actual context
      * @param dateFrom sales from datefrom
-     * @param dateTo sales to dateTo
+     * @param dateTo   sales to dateTo
      */
     public ArticlesGetter(Context context, Date dateFrom, Date dateTo) {
         this.context = context;
@@ -49,17 +49,27 @@ public abstract class ArticlesGetter extends AsyncTask<Void, Void, ArrayList<Art
     protected ArrayList<Article> doInBackground(Void... params) {
         try {
             // form the url with the fields
-            final String url= AppUtils.formGetUrl(context.getString(R.string.REST_SERVER_URL),Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)),context.getString(R.string.REST_REQUEST_ARTICLES_GET),new ArrayList<String>(){{add(context.getString(R.string.REST_FIELD_URL));add(context.getString(R.string.REST_FIELD_DB_NAME));add(context.getString(R.string.REST_FIELD_DATE_FROM));add(context.getString(R.string.REST_FIELD_DATE_TO));}},new ArrayList<String>(){{add(context.getString(R.string.DB_URL));add(context.getString(R.string.DB_NAME));add(AppUtils.formDateSql(dateFrom));add(AppUtils.formDateSql(dateTo));}});
+            final String url = AppUtils.formGetUrl(context.getString(R.string.REST_SERVER_URL), Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)), context.getString(R.string.REST_REQUEST_ARTICLES_GET), new ArrayList<String>() {{
+                add(context.getString(R.string.REST_FIELD_URL));
+                add(context.getString(R.string.REST_FIELD_DB_NAME));
+                add(context.getString(R.string.REST_FIELD_DATE_FROM));
+                add(context.getString(R.string.REST_FIELD_DATE_TO));
+            }}, new ArrayList<String>() {{
+                add(AppUtils.serverName);
+                add(AppUtils.dBName);
+                add(AppUtils.formDateSql(dateFrom));
+                add(AppUtils.formDateSql(dateTo));
+            }});
 
             // use the rest template
             RestTemplate restTemplate = new RestTemplate();
             // format response according to JSON
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             // get the results
-            ArrayList<Article> salesDB=new ArrayList<>();
+            ArrayList<Article> salesDB = new ArrayList<>();
             ArrayList<d2si.apps.planetedashboard.webservice.data.Article> articles = new ArrayList<>(Arrays.asList(restTemplate.getForObject(url, d2si.apps.planetedashboard.webservice.data.Article[].class)));
-            for (d2si.apps.planetedashboard.webservice.data.Article article:articles) {
-                       salesDB.add(new Article(article.getArt_code(),article.getArt_lib(),article.getFar_lib()));
+            for (d2si.apps.planetedashboard.webservice.data.Article article : articles) {
+                salesDB.add(new Article(article.getArt_code(), article.getArt_lib(), article.getFar_lib()));
             }
             return salesDB;
         } catch (Exception e) {
@@ -74,8 +84,8 @@ public abstract class ArticlesGetter extends AsyncTask<Void, Void, ArrayList<Art
      *
      * @param articles return from the web service
      */
-    protected void onPostExecute(ArrayList<Article> articles){
-            onPost(articles);
+    protected void onPostExecute(ArrayList<Article> articles) {
+        onPost(articles);
     }
 
     /**

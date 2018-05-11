@@ -40,6 +40,8 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  */
 public class AppUtils {
 
+    public static String serverName;
+    public static String dBName;
     public static ArrayList<IIcon> MENU_DRAWABLES = new ArrayList() {{
         add(CommunityMaterial.Icon.cmd_tag_text_outline);
         add(CommunityMaterial.Icon.cmd_package_variant_closed);
@@ -58,13 +60,25 @@ public class AppUtils {
     public static Typeface fontAppBold;
 
     /**
-     * Method that initialize the d2si.apps.planetedashboard.database.data resources
+     * Method that initialize the data resources
      *
      * @param context App actual context
      */
     public static void init(Context context) {
         addChartColors(context);
         initializeFonts(context);
+        initServer(context);
+    }
+
+    /**
+     * Method that initialize server and database name
+     *
+     * @param context App actual context
+     */
+    public static void initServer(Context context){
+        SharedPreferences pref = AppUtils.getSharedPreference(context);
+        serverName = pref.getString(context.getString(R.string.pref_key_server), "");
+        dBName = pref.getString(context.getString(R.string.pref_key_database), "");
     }
 
     /**

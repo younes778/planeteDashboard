@@ -4,10 +4,13 @@ import android.os.Bundle;
 
 import d2si.apps.planetedashboard.R;
 
+import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
+
 public class SettingsActivity extends com.fnp.materialpreferences.PreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        typeface(this);
 
         /**
          * We load a PreferenceFragment which is the recommended way by Android

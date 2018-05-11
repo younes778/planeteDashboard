@@ -55,8 +55,8 @@ public abstract class RepresentantsGetter extends AsyncTask<Void, Void, ArrayLis
                 add(context.getString(R.string.REST_FIELD_DATE_FROM));
                 add(context.getString(R.string.REST_FIELD_DATE_TO));
             }}, new ArrayList<String>() {{
-                add(context.getString(R.string.DB_URL));
-                add(context.getString(R.string.DB_NAME));
+                add(AppUtils.serverName);
+                add(AppUtils.dBName);
                 add(AppUtils.formDateSql(dateFrom));
                 add(AppUtils.formDateSql(dateTo));
             }});
