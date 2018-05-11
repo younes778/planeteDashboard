@@ -64,17 +64,13 @@ public class SalesYearFragment extends Fragment {
 
         // fill data and labels
         for (int i = 0; i < 12; i++) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.MONTH, 1);
-            calendar.set(Calendar.DAY_OF_MONTH, i + 1);
-            final Date dateFrom = new Date(calendar.getTimeInMillis());
-            calendar.set(Calendar.MONTH, 0);
-            final Date dateTo = new Date(calendar.getTimeInMillis());
+            final Calendar calendar = Calendar.getInstance();
+            final int j=i;
 
             months.add(new DateFormatSymbols().getMonths()[i]);
             data.add(new ArrayList<Float>() {{
-                add(SalesController.getSalesTotalByDay(dateFrom));
-                add(SalesController.getSalesTotalByDay(dateTo) * -1);
+                add(SalesController.getSalesByMonth(calendar.get(Calendar.YEAR),j));
+                add(SalesController.getSalesByMonth(calendar.get(Calendar.YEAR)-1,j));
             }});
         }
 

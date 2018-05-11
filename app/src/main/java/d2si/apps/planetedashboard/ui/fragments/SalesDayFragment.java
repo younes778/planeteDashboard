@@ -84,8 +84,6 @@ public class SalesDayFragment extends Fragment {
         tv_yesterday_date.setText(AppUtils.getYesterdayDateFormatted());
 
         Calendar calendarToday = Calendar.getInstance();
-        calendarToday.set(Calendar.MONTH, 0);
-        calendarToday.set(Calendar.DAY_OF_MONTH, 9);
         Date dateToday = new Date(calendarToday.getTimeInMillis());
         tv_today_sales.setText(AppUtils.getCurrencyFormatted(getActivity(), SalesController.getSalesTotalByDay(dateToday), true));
         tv_today_average.setText(AppUtils.getCurrencyFormatted(getActivity(), SalesController.getSalesAverageByDay(dateToday), false));
@@ -93,8 +91,7 @@ public class SalesDayFragment extends Fragment {
         tv_today_articles_number.setText(SalesController.getSalesNoInvoiceByDay(dateToday) + "");
 
         Calendar calendarYesterday = Calendar.getInstance();
-        calendarYesterday.set(Calendar.MONTH, 0);
-        calendarYesterday.set(Calendar.DAY_OF_MONTH, 7);
+        calendarYesterday.set(Calendar.DAY_OF_MONTH, calendarYesterday.get(Calendar.DAY_OF_MONTH)-1);
         Date dateYesterday = new Date(calendarYesterday.getTimeInMillis());
         tv_yesterday_sales.setText(AppUtils.getCurrencyFormatted(getActivity(), SalesController.getSalesTotalByDay(dateYesterday), true));
         tv_yesterday_average.setText(AppUtils.getCurrencyFormatted(getActivity(), SalesController.getSalesAverageByDay(dateYesterday), false));

@@ -134,6 +134,18 @@ public abstract class SalesController {
         return total;
     }
 
+    public static float getSalesByMonth(int year,int month){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR,year);
+        calendar.set(Calendar.MONTH,month);
+        float total = 0;
+        for (int i=0;i<31;i++){
+            calendar.set(Calendar.DAY_OF_MONTH,i+1);
+            total+= getSalesTotalByDay(new Date(calendar.getTimeInMillis()));
+        }
+        return total;
+    }
+
 
     /**
      * Method that get sales number for the day date

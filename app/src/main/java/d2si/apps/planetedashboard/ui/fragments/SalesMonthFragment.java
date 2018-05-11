@@ -62,10 +62,9 @@ public class SalesMonthFragment extends Fragment {
         // fill data and labels
         for (int i = 0; i < 31; i++) {
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.MONTH, 1);
             calendar.set(Calendar.DAY_OF_MONTH, i + 1);
             final Date dateFrom = new Date(calendar.getTimeInMillis());
-            calendar.set(Calendar.MONTH, 0);
+            calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH)-1);
             final Date dateTo = new Date(calendar.getTimeInMillis());
 
             legend.add((i + 1) + "");

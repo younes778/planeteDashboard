@@ -60,12 +60,12 @@ public class SalesWeekFragment extends Fragment {
         setTitles.add(AppUtils.getLastWeekDateFormatted(getActivity()));
 
         // fill data and labels
-        for (int i = 7; i < 14; i++) {
+        for (int i = 0; i < 7; i++) {
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.MONTH, 1);
-            calendar.set(Calendar.DAY_OF_MONTH, i + 1);
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH)-(7-i));
             final Date dateFrom = new Date(calendar.getTimeInMillis());
-            calendar.set(Calendar.MONTH, 0);
+            calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH)-(14-i));
             final Date dateTo = new Date(calendar.getTimeInMillis());
 
             data.add(new ArrayList<Float>() {{
