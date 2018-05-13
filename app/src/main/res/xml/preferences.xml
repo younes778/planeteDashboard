@@ -6,6 +6,7 @@
     <PreferenceCategory android:title="@string/pref_title_sync" >
 
         <EditTextPreference
+            android:focusable="false"
             android:dependency="@string/pref_key_sync_auto"
             android:editable="false"
             android:key="@string/pref_key_last_sync"

@@ -52,7 +52,7 @@ public class SplashActivity extends RealmActivity {
                 else {
                     // Test if already logged
                     SharedPreferences pref = AppUtils.getSharedPreference(getBaseContext());
-                    Boolean isLogged = pref.getBoolean(getString(R.string.pref_is_connected), false);
+                    Boolean isLogged = pref.getBoolean(getString(R.string.pref_key_connected), false);
                     if (isLogged)  // launched the main menu activity
                         AppUtils.launchActivity(SplashActivity.this, MainMenuActivity.class, true, null);
                     else  // launch the login activity

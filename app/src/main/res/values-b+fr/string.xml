@@ -39,22 +39,34 @@
     <string name="tv_quantity_sold">Qty.vendu</string>
     <string name="tv_articles_number">No.ventes</string>
     <string name="tv_average_price">prix.moyen</string>
+    <string name="tv_configuration"><b>CONFIGURATION</b></string>
 
     <!--                Edit Texts                -->
     <string name="et_user">Utilisateur</string>
-    <string name="et_user_helper">Introduisez le nom d\'utilisateur</string>
     <string name="et_password">Mot de passe</string>
+    <string name="et_server">Nome de serveur</string>
+    <string name="et_database">Nom de la base de données</string>
+
+    <string name="et_user_helper">Introduisez le nom d\'utilisateu</string>
     <string name="et_password_helper">Introduisez le mot de passe</string>
-    <string name="et_error_not_empty">Field must not be empty</string>
+    <string name="et_server_helper">Introduisez le nom de serveur</string>
+    <string name="et_database_helper">Introduisez le nom de la base de données</string>
+
+    <string name="et_error_not_empty">Les champs ne doivent pas être vide</string>
 
     <!--                 Buttons                   -->
     <string name="btn_login"><b>Connecter</b></string>
+    <string name="btn_connectivity_test"><b>Test de connectivité</b></string>
 
     <!--            Progress                -->
+
     <string name="progress_login_title">Connexion</string>
-    <string name="progress_login_content">Connexion ......</string>
+    <string name="progress_server_title">Connexion au serveur</string>
     <string name="progress_updating_title">Mise à jour des données</string>
-    <string name="progress_updating_content">Mise à jour ......</string>
+
+    <string name="progress_login_content">Connexion ......</string>
+    <string name="progress_server_content">Etablissement de la connexion</string>
+    <string name="progress_updating_content">Cette opération peut être longue ......</string>
 
     <!--                Dialogs             -->
     <string name="dialog_logout_title">Déconnecter</string>
@@ -80,6 +92,7 @@
 
     <!--            Errors              -->
     <string name="error_login">Impossible de se connecter!</string>
+    <string name="error_server">Impossible de se connecter au serveur!</string>
 
     <!--            Menus               -->
     <string name="filter_none">Filtrer: Aucun</string>

@@ -7,8 +7,11 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,14 +61,14 @@ public class LoginActivity extends RealmActivity {
         // if all validated launch main activity
         if (validateUser() && validatePassword()) {
             SharedPreferences pref = AppUtils.getSharedPreference(this);
-            String user = pref.getString(getString(R.string.pref_user), "");
-            String password = pref.getString(getString(R.string.pref_password), "");
+            String user = pref.getString(getString(R.string.pref_key_user), "");
+            String password = pref.getString(getString(R.string.pref_key_password), "");
 
             // check if it is the last user then we don't need to update data
             if (user.equalsIgnoreCase(et_user.getText().toString()) && password.equals(et_password.getText().toString())) {
                 SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(this);
                 // save in preferences the connected user
-                editor.putBoolean(getString(R.string.pref_is_connected), true);
+                editor.putBoolean(getString(R.string.pref_key_connected), true);
                 editor.apply();
                 AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
 
@@ -91,6 +94,10 @@ public class LoginActivity extends RealmActivity {
                     @Override
                     public void onSalesGet() {
                         dialog.dismiss();
+                        SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(getBaseContext());
+                        // save in preferences the last sync time
+                        editor.putString(getString(R.string.pref_key_last_sync), new SimpleDateFormat(AppUtils.dateFormat, Locale.getDefault()).format(date1));
+                        editor.apply();
                         AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
                     }
 
@@ -105,7 +112,7 @@ public class LoginActivity extends RealmActivity {
                                     .progress(true, 0)
                                     .cancelable(false)
                                     .show();
-                            this.getSalesByDate(LoginActivity.this, date1, date2);
+                            this.getSalesByDate(LoginActivity.this, date2, date1);
                         } else {
                             Toast.makeText(getBaseContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
                         }

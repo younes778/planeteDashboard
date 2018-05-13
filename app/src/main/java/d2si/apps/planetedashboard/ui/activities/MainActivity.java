@@ -29,9 +29,12 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,6 +89,8 @@ public class MainActivity extends RealmActivity {
     private MaterialSpinner showSpinner;
     private MaterialSpinner familySpinner;
     private MaterialDialog dialog;
+    private Date dateUpdate;
+    private Date dateLastSync;
 
     @Override
     /**
@@ -124,7 +129,7 @@ public class MainActivity extends RealmActivity {
 
         // Get user name
         SharedPreferences pref = AppUtils.getSharedPreference(this);
-        String userName = pref.getString(getString(R.string.pref_user), "Client D2SI");
+        String userName = pref.getString(getString(R.string.pref_key_user), "Client D2SI");
 
         // Add Items to the nav drawer
         navDrawer = new DrawerBuilder()
@@ -173,7 +178,7 @@ public class MainActivity extends RealmActivity {
                                             @Override
                                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                                 SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(MainActivity.this);
-                                                editor.putBoolean(getString(R.string.pref_is_connected), false);
+                                                editor.putBoolean(getString(R.string.pref_key_connected), false);
                                                 editor.apply();
                                                 AppUtils.launchActivity(MainActivity.this, LoginActivity.class, true, null);
                                             }
@@ -193,20 +198,29 @@ public class MainActivity extends RealmActivity {
                                         .cancelable(false)
                                         .show();
 
-                                Calendar calendar = Calendar.getInstance();
-                                calendar.set(Calendar.DAY_OF_MONTH, 16);
-                                calendar.set(Calendar.MONTH, 1);
-                                calendar.set(Calendar.HOUR, 0);
-                                calendar.set(Calendar.SECOND, 0);
-                                calendar.set(Calendar.MINUTE, 0);
-                                calendar.set(Calendar.MILLISECOND, 0);
-                                final Date date1 = new Date(calendar.getTimeInMillis());
+                                // the new last sync date
+                                dateLastSync = new Date(Calendar.getInstance().getTimeInMillis());
+
+                                SimpleDateFormat format = new SimpleDateFormat(AppUtils.dateFormat);
+                                SharedPreferences pref = AppUtils.getSharedPreference(getBaseContext());
+                                final String lastUpdate = pref.getString(getString(R.string.pref_key_last_sync), "");
+
+                                try {
+                                    dateUpdate = format.parse(lastUpdate);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
                                 // update data
                                 final DataGetter dataGetter = new DataGetter() {
                                     @Override
                                     public void onSalesUpdate() {
                                         dialog.dismiss();
                                         setupTabs(fragment_to_launch);
+                                        SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(getBaseContext());
+                                        // save in preferences the connected user
+                                        editor.putString(getString(R.string.pref_key_last_sync), new SimpleDateFormat(AppUtils.dateFormat, Locale.getDefault()).format(dateLastSync));
+                                        editor.apply();
                                     }
 
                                     @Override
@@ -220,7 +234,7 @@ public class MainActivity extends RealmActivity {
                                     }
                                 };
 
-                                dataGetter.updateSalesByDate(getBaseContext(), date1);
+                                dataGetter.updateSalesByDate(getBaseContext(), dateUpdate);
                                 break;
 
                         }

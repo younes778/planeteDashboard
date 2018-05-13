@@ -70,9 +70,9 @@ public abstract class DataGetter {
                 if (isConnected) {
                     SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(context);
                     // save in preferences the connected user
-                    editor.putBoolean(context.getString(R.string.pref_is_connected), true);
-                    editor.putString(context.getString(R.string.pref_user), user);
-                    editor.putString(context.getString(R.string.pref_password), password);
+                    editor.putBoolean(context.getString(R.string.pref_key_connected), true);
+                    editor.putString(context.getString(R.string.pref_key_user), user);
+                    editor.putString(context.getString(R.string.pref_key_password), password);
                     editor.apply();
                 }
                 onUserUpdate(isConnected);

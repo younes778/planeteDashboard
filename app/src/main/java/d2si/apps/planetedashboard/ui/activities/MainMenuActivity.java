@@ -2,6 +2,7 @@ package d2si.apps.planetedashboard.ui.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.mikepenz.iconics.IconicsDrawable;
@@ -72,6 +73,8 @@ public class MainMenuActivity extends RealmActivity {
                 .color(Color.WHITE));
         img_providers.setImageDrawable(new IconicsDrawable(this).icon(AppUtils.MENU_DRAWABLES.get(4))
                 .color(Color.WHITE));
+
+        Log.e("server",AppUtils.serverName+" "+AppUtils.dBName);
 
 
     }

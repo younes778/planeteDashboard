@@ -134,17 +134,52 @@ public abstract class SalesController {
         return total;
     }
 
-    public static float getSalesByMonth(int year,int month){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR,year);
-        calendar.set(Calendar.MONTH,month);
+    public static float getSalesTotalByDate(Date date1,Date date2) {
+        // set the date between 00:00:00.000 and 23:59:59.999
         float total = 0;
-        for (int i=0;i<31;i++){
-            calendar.set(Calendar.DAY_OF_MONTH,i+1);
-            total+= getSalesTotalByDay(new Date(calendar.getTimeInMillis()));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date dateFrom = new Date(calendar.getTimeInMillis());
+        calendar.setTime(date2);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        Date dateTo = new Date(calendar.getTimeInMillis());
+        Realm realm = Realm.getDefaultInstance();
+        // get all documents
+        RealmResults<Document> documents = realm.where(Document.class).between("date", dateFrom, dateTo).findAll();
+        for (Document document : documents) {
+            // according to the filter applied
+            // if none then procede to lignes
+            // if filtered by client check that client exists, same for representant
+            if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isClientExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isRepresentantExist(filters, document.getRep_code()))) {
+                int sign = 1;
+                // we apply the negative sing if it is negative sales
+                if (document.getDoc_type().equalsIgnoreCase("vn")) sign = -1;
+                // we get all lignes having doc_numero as secondary key
+                RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
+                for (Ligne ligne : lignes)
+                    total += ligne.getLig_p_net() * ligne.getLig_qte() * sign;
+            } else if (filter == FILTER.ITEM) { // if the filter is item
+                int sign = 1;
+                if (document.getDoc_type().equalsIgnoreCase("vn")) sign = -1;
+                RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
+                for (Ligne ligne : lignes) {
+                    // we check if the article exists then we added the total
+                    if (isArticleExist(filters, ligne.getArt_code()))
+                        total += ligne.getLig_p_net() * ligne.getLig_qte() * sign;
+                }
+            }
         }
+        realm.close();
         return total;
     }
+
 
 
     /**

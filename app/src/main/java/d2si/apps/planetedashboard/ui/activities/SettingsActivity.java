@@ -1,7 +1,11 @@
 package d2si.apps.planetedashboard.ui.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.Preference;
 
+import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
@@ -10,20 +14,51 @@ public class SettingsActivity extends com.fnp.materialpreferences.PreferenceActi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.preferences);
         typeface(this);
 
-        /**
-         * We load a PreferenceFragment which is the recommended way by Android
-         * see @http://developer.android.com/guide/topics/ui/settings.html#Fragment
-         * @TargetApi(11)
-         */
-        setPreferenceFragment(new MyPreferenceFragment());
-    }
+        findPreference(getString(R.string.pref_key_last_sync)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                SharedPreferences pref = AppUtils.getSharedPreference(getBaseContext());
+                String lastSync = pref.getString(getString(R.string.pref_key_last_sync), "");
+                ((EditTextPreference) preference).getEditText().setText(lastSync);
+                return false;
+            }
+        });
 
-    public static class MyPreferenceFragment extends com.fnp.materialpreferences.PreferenceFragment {
-        @Override
-        public int addPreferencesFromResource() {
-            return R.xml.preferences; // Your preference file
-        }
+        findPreference(getString(R.string.pref_key_server)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                ((EditTextPreference) preference).getEditText().setText(AppUtils.serverName);
+                return false;
+            }
+        });
+
+        findPreference(getString(R.string.pref_key_database)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                ((EditTextPreference) preference).getEditText().setText(AppUtils.dBName);
+                return false;
+            }
+        });
+
+        findPreference(getString(R.string.pref_key_server)).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                AppUtils.serverName = (String) o;
+                return false;
+            }
+        });
+
+        findPreference(getString(R.string.pref_key_database)).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                AppUtils.dBName = (String) o;
+                return false;
+            }
+        });
+
+
     }
 }

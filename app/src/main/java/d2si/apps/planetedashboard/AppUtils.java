@@ -40,6 +40,7 @@ import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
  */
 public class AppUtils {
 
+    public static String dateFormat = "dd-MMM-yyyy HH:mm:ss";
     public static String serverName;
     public static String dBName;
     public static ArrayList<IIcon> MENU_DRAWABLES = new ArrayList() {{
