@@ -67,10 +67,10 @@ public class ClientsController {
      * @param which indexes of articles to return
      * @return sub list of clients with which indexes
      */
-    public static ArrayList<RealmObject> getClientsSubList(ArrayList<Tiers> tiers, ArrayList<Integer> which) {
-        ArrayList<RealmObject> filters = new ArrayList<>();
+    public static ArrayList<String> getClientsSubList(ArrayList<Tiers> tiers, ArrayList<Integer> which) {
+        ArrayList<String> filters = new ArrayList<>();
         for (int i = 0; i < which.size(); i++)
-            filters.add(tiers.get(which.get(i)));
+            filters.add(tiers.get(which.get(i)).getPcf_code());
         return filters;
     }
 

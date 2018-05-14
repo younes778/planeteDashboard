@@ -98,10 +98,10 @@ public class ArticlesController {
      * @param which    indexes of articles to return
      * @return sub list of articles with which indexes
      */
-    public static ArrayList<RealmObject> getArticlesSubList(ArrayList<Article> articles, ArrayList<Integer> which) {
-        ArrayList<RealmObject> filters = new ArrayList<>();
+    public static ArrayList<String> getArticlesSubList(ArrayList<Article> articles, ArrayList<Integer> which) {
+        ArrayList<String> filters = new ArrayList<>();
         for (int i = 0; i < which.size(); i++)
-            filters.add(articles.get(which.get(i)));
+            filters.add(articles.get(which.get(i)).getArt_code());
         return filters;
     }
 }

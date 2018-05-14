@@ -34,6 +34,7 @@ public class SalesYearFragment extends Fragment {
     @BindView(R.id.chart)
     AnyChartView chart;
     private View view;
+    public static ArrayList<Object> objects;
 
     @Override
     /**
@@ -64,23 +65,13 @@ public class SalesYearFragment extends Fragment {
 
         // fill data and labels
         for (int i = 0; i < 12; i++) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.MONTH,i);
-            calendar.set(Calendar.DAY_OF_MONTH,1);
-            final Date dateYearFrom = new Date(calendar.getTimeInMillis());
-            calendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-            final Date dateYearTo = new Date(calendar.getTimeInMillis());
-            calendar.set(Calendar.YEAR,calendar.get(Calendar.YEAR)-1);
-            calendar.set(Calendar.MONTH,i);
-            calendar.set(Calendar.DAY_OF_MONTH,1);
-            final Date dateLastYearFrom = new Date(calendar.getTimeInMillis());
-            calendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-            final Date dateLastYearTo = new Date(calendar.getTimeInMillis());
 
             months.add(new DateFormatSymbols().getMonths()[i]);
+            final int j=i;
+
             data.add(new ArrayList<Float>() {{
-                add(SalesController.getSalesTotalByDate(dateYearFrom,dateYearTo));
-                add(SalesController.getSalesTotalByDate(dateLastYearFrom,dateLastYearTo)*-1);
+                add((Float) objects.get(j*2));
+                add((Float) objects.get(j*2+1)*-1);
             }});
         }
 

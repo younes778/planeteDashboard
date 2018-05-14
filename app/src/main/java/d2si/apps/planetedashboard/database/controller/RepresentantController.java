@@ -65,10 +65,10 @@ public class RepresentantController {
      * @param which         indexes of articles to return
      * @return sub list of representants with which indexes
      */
-    public static ArrayList<RealmObject> getRepresentantSubList(ArrayList<Representant> representants, ArrayList<Integer> which) {
-        ArrayList<RealmObject> filters = new ArrayList<>();
+    public static ArrayList<String> getRepresentantSubList(ArrayList<Representant> representants, ArrayList<Integer> which) {
+        ArrayList<String> filters = new ArrayList<>();
         for (int i = 0; i < which.size(); i++)
-            filters.add(representants.get(which.get(i)));
+            filters.add(representants.get(which.get(i)).getRep_code());
         return filters;
     }
 

@@ -98,10 +98,12 @@
     <string name="progress_login_title">Login</string>
     <string name="progress_server_title">Connecting to server</string>
     <string name="progress_updating_title">Refresh data</string>
+    <string name="progress_calculating_title">Calculating</string>
 
     <string name="progress_login_content">Connecting ......</string>
     <string name="progress_server_content">Establishing Connection</string>
     <string name="progress_updating_content">It may takes sometime ......</string>
+    <string name="progress_calculating_content">Applying datas ......</string>
 
     <!--           Shared Preferences       -->
     <string name="pref_title">Preferences</string>

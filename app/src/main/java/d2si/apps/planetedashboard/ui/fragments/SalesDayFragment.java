@@ -7,14 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.database.controller.SalesController;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -54,6 +52,8 @@ public class SalesDayFragment extends Fragment {
     @BindView(R.id.tv_yesterday_average_price)
     TextView tv_yesterday_average;
 
+    public static List<Object> objects;
+
 
     @Override
     /**
@@ -82,21 +82,15 @@ public class SalesDayFragment extends Fragment {
         // set the texts
         tv_today_date.setText(AppUtils.getDayDateFormatted());
         tv_yesterday_date.setText(AppUtils.getYesterdayDateFormatted());
+        tv_today_sales.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(0), true));
+        tv_today_average.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(1), false));
+        tv_today_quantity.setText((int) objects.get(2) + "");
+        tv_today_articles_number.setText((int) objects.get(3) + "");
 
-        Calendar calendarToday = Calendar.getInstance();
-        Date dateToday = new Date(calendarToday.getTimeInMillis());
-        tv_today_sales.setText(AppUtils.getCurrencyFormatted(getActivity(), SalesController.getSalesTotalByDay(dateToday), true));
-        tv_today_average.setText(AppUtils.getCurrencyFormatted(getActivity(), SalesController.getSalesAverageByDay(dateToday), false));
-        tv_today_quantity.setText(SalesController.getSalesQuantityByDay(dateToday) + "");
-        tv_today_articles_number.setText(SalesController.getSalesNoInvoiceByDay(dateToday) + "");
-
-        Calendar calendarYesterday = Calendar.getInstance();
-        calendarYesterday.set(Calendar.DAY_OF_MONTH, calendarYesterday.get(Calendar.DAY_OF_MONTH)-1);
-        Date dateYesterday = new Date(calendarYesterday.getTimeInMillis());
-        tv_yesterday_sales.setText(AppUtils.getCurrencyFormatted(getActivity(), SalesController.getSalesTotalByDay(dateYesterday), true));
-        tv_yesterday_average.setText(AppUtils.getCurrencyFormatted(getActivity(), SalesController.getSalesAverageByDay(dateYesterday), false));
-        tv_yesterday_quantity.setText(SalesController.getSalesQuantityByDay(dateYesterday) + "");
-        tv_yesterday_articles_number.setText(SalesController.getSalesNoInvoiceByDay(dateYesterday) + "");
+        tv_yesterday_sales.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(4), true));
+        tv_yesterday_average.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(5), false));
+        tv_yesterday_quantity.setText((int) objects.get(6) + "");
+        tv_yesterday_articles_number.setText((int) objects.get(7) + "");
 
         return view;
     }

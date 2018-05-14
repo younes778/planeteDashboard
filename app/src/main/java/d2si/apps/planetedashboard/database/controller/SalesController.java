@@ -1,5 +1,6 @@
 package d2si.apps.planetedashboard.database.controller;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,7 +21,7 @@ import io.realm.RealmResults;
  *
  * @author younessennadj
  */
-public abstract class SalesController {
+public class SalesController {
     /**
      * Filter to be applied
      * None : for no filter
@@ -38,9 +39,10 @@ public abstract class SalesController {
      */
     public static FILTER filter = FILTER.NONE;
     /**
-     * list of objects to apply the filter
+     * list of ids to apply the filter
      */
-    public static ArrayList<RealmObject> filters;
+
+    public static ArrayList<String> filters;
 
     /**
      * Method that get sales total for the day date
@@ -70,7 +72,7 @@ public abstract class SalesController {
             // according to the filter applied
             // if none then procede to lignes
             // if filtered by client check that client exists, same for representant
-            if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isClientExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isRepresentantExist(filters, document.getRep_code()))) {
+            if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isIdExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isIdExist(filters, document.getRep_code()))) {
                 int sign = 1;
                 // we apply the negative sing if it is negative sales
                 if (document.getDoc_type().equalsIgnoreCase("vn")) sign = -1;
@@ -84,7 +86,7 @@ public abstract class SalesController {
                 RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
                 for (Ligne ligne : lignes) {
                     // we check if the article exists then we added the total
-                    if (isArticleExist(filters, ligne.getArt_code()))
+                    if (isIdExist(filters, ligne.getArt_code()))
                         total += ligne.getLig_p_net() * ligne.getLig_qte() * sign;
                 }
             }
@@ -116,7 +118,7 @@ public abstract class SalesController {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Document> documents = realm.where(Document.class).between("date", dateFrom, dateTo).findAll();
         for (Document document : documents) {
-            if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isClientExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isRepresentantExist(filters, document.getRep_code()))) {
+            if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isIdExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isIdExist(filters, document.getRep_code()))) {
                 RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
                 for (Ligne ligne : lignes)
                     total += ligne.getLig_qte();
@@ -125,7 +127,7 @@ public abstract class SalesController {
                 if (document.getDoc_type().equalsIgnoreCase("vn")) sign = -1;
                 RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
                 for (Ligne ligne : lignes) {
-                    if (isArticleExist(filters, ligne.getArt_code()))
+                    if (isIdExist(filters, ligne.getArt_code()))
                         total += ligne.getLig_qte();
                 }
             }
@@ -134,7 +136,7 @@ public abstract class SalesController {
         return total;
     }
 
-    public static float getSalesTotalByDate(Date date1,Date date2) {
+    public static float getSalesTotalByDate(Date date1, Date date2) {
         // set the date between 00:00:00.000 and 23:59:59.999
         float total = 0;
         Calendar calendar = Calendar.getInstance();
@@ -157,7 +159,7 @@ public abstract class SalesController {
             // according to the filter applied
             // if none then procede to lignes
             // if filtered by client check that client exists, same for representant
-            if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isClientExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isRepresentantExist(filters, document.getRep_code()))) {
+            if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isIdExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isIdExist(filters, document.getRep_code()))) {
                 int sign = 1;
                 // we apply the negative sing if it is negative sales
                 if (document.getDoc_type().equalsIgnoreCase("vn")) sign = -1;
@@ -171,7 +173,7 @@ public abstract class SalesController {
                 RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
                 for (Ligne ligne : lignes) {
                     // we check if the article exists then we added the total
-                    if (isArticleExist(filters, ligne.getArt_code()))
+                    if (isIdExist(filters, ligne.getArt_code()))
                         total += ligne.getLig_p_net() * ligne.getLig_qte() * sign;
                 }
             }
@@ -179,7 +181,6 @@ public abstract class SalesController {
         realm.close();
         return total;
     }
-
 
 
     /**
@@ -205,13 +206,13 @@ public abstract class SalesController {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Document> documents = realm.where(Document.class).between("date", dateFrom, dateTo).findAll();
         for (Document document : documents) {
-            if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isClientExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isRepresentantExist(filters, document.getRep_code()))) {
+            if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isIdExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isIdExist(filters, document.getRep_code()))) {
                 total++;
             } else if (filter == FILTER.ITEM) {
                 RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
                 boolean isArticleExist = false;
                 for (Ligne ligne : lignes) {
-                    if (isArticleExist(filters, ligne.getArt_code())) {
+                    if (isIdExist(filters, ligne.getArt_code())) {
                         isArticleExist = true;
                         break;
                     }
@@ -235,45 +236,97 @@ public abstract class SalesController {
     }
 
     /**
-     * Method that check if article with id exist in articles
+     * Method that check if id exist in ids
      *
-     * @param articles list of articles
+     * @param ids list of articles
      * @param id       article Id
-     * @return true if article exist, false else
+     * @return true if id exist, false else
      */
-    private static boolean isArticleExist(ArrayList<RealmObject> articles, String id) {
-        for (int i = 0; i < articles.size(); i++) {
-            if (((Article) articles.get(i)).getArt_code().equalsIgnoreCase(id)) return true;
+    private static boolean isIdExist(ArrayList<String> ids, String id) {
+        for (int i = 0; i < ids.size(); i++) {
+            if (ids.get(i).equalsIgnoreCase(id)) return true;
         }
         return false;
     }
 
-    /**
-     * Method that check if client with id exist in tiers
-     *
-     * @param tiers list of clients
-     * @param id    client Id
-     * @return true if client exist, false else
-     */
-    private static boolean isClientExist(ArrayList<RealmObject> tiers, String id) {
-        for (int i = 0; i < tiers.size(); i++) {
-            if (((Tiers) tiers.get(i)).getPcf_code().equalsIgnoreCase(id)) return true;
-        }
-        return false;
+    public static ArrayList<Object> getDayData() {
+        ArrayList<Object> data = new ArrayList<>();
+
+        Calendar calendarToday = Calendar.getInstance();
+        Date dateToday = new Date(calendarToday.getTimeInMillis());
+        data.add(getSalesTotalByDay(dateToday));
+        data.add(getSalesAverageByDay(dateToday));
+        data.add(getSalesQuantityByDay(dateToday));
+        data.add(getSalesNoInvoiceByDay(dateToday));
+
+        Calendar calendarYesterday = Calendar.getInstance();
+        calendarYesterday.set(Calendar.DAY_OF_MONTH, calendarYesterday.get(Calendar.DAY_OF_MONTH) - 1);
+        Date dateYesterday = new Date(calendarYesterday.getTimeInMillis());
+        data.add(getSalesTotalByDay(dateYesterday));
+        data.add(getSalesAverageByDay(dateYesterday));
+        data.add(getSalesQuantityByDay(dateYesterday));
+        data.add(getSalesNoInvoiceByDay(dateYesterday));
+
+        return data;
     }
 
-    /**
-     * Method that check if representant with id exist in representants
-     *
-     * @param representants list of articles
-     * @param id            article Id
-     * @return true if representant exist, false else
-     */
-    private static boolean isRepresentantExist(ArrayList<RealmObject> representants, String id) {
-        for (int i = 0; i < representants.size(); i++) {
-            if (((Representant) representants.get(i)).getRep_code().equalsIgnoreCase(id))
-                return true;
+    public static ArrayList<Object> getWeekData() {
+        ArrayList<Object> data = new ArrayList<>();
+
+        for (int i = 0; i < 7; i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - (6 - i));
+            final Date dateFrom = new Date(calendar.getTimeInMillis());
+            calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - (13 - i));
+            final Date dateTo = new Date(calendar.getTimeInMillis());
+
+            data.add(getSalesTotalByDay(dateFrom));
+            data.add(getSalesTotalByDay(dateTo));
         }
-        return false;
+        return data;
     }
+
+    public static ArrayList<Object> getMonthData() {
+        ArrayList<Object> data = new ArrayList<>();
+
+        for (int i = 0; i < 31; i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_MONTH, i + 1);
+            final Date dateFrom = new Date(calendar.getTimeInMillis());
+            calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 1);
+            final Date dateTo = new Date(calendar.getTimeInMillis());
+
+            data.add(getSalesTotalByDay(dateFrom));
+            data.add(getSalesTotalByDay(dateTo));
+        }
+
+        return data;
+    }
+
+    public static ArrayList<Object> getYearData() {
+        ArrayList<Object> data = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.MONTH,i);
+            calendar.set(Calendar.DAY_OF_MONTH,1);
+            final Date dateYearFrom = new Date(calendar.getTimeInMillis());
+            calendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+            final Date dateYearTo = new Date(calendar.getTimeInMillis());
+            calendar.set(Calendar.YEAR,calendar.get(Calendar.YEAR)-1);
+            calendar.set(Calendar.MONTH,i);
+            calendar.set(Calendar.DAY_OF_MONTH,1);
+            final Date dateLastYearFrom = new Date(calendar.getTimeInMillis());
+            calendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+            final Date dateLastYearTo = new Date(calendar.getTimeInMillis());
+
+            data.add(getSalesTotalByDate(dateYearFrom,dateYearTo));
+            data.add(getSalesTotalByDate(dateLastYearFrom,dateLastYearTo));
+        }
+
+        return data;
+    }
+
+
 }

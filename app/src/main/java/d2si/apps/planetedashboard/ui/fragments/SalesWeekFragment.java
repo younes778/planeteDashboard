@@ -34,6 +34,7 @@ public class SalesWeekFragment extends Fragment {
     @BindView(R.id.chart)
     AnyChartView chart;
     private View view;
+    public static ArrayList<Object> objects;
 
     @Override
     /**
@@ -52,7 +53,7 @@ public class SalesWeekFragment extends Fragment {
         // List data titles
         ArrayList<String> setTitles = new ArrayList<>();
         // List data
-        ArrayList<ArrayList<Float>> data = new ArrayList<>();
+        final ArrayList<ArrayList<Float>> data = new ArrayList<>();
 
 
         // fill data titles
@@ -61,16 +62,11 @@ public class SalesWeekFragment extends Fragment {
 
         // fill data and labels
         for (int i = 0; i < 7; i++) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH)-(7-i));
-            final Date dateFrom = new Date(calendar.getTimeInMillis());
-            calendar = Calendar.getInstance();
-            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH)-(14-i));
-            final Date dateTo = new Date(calendar.getTimeInMillis());
 
+            final int j=i;
             data.add(new ArrayList<Float>() {{
-                add(SalesController.getSalesTotalByDay(dateFrom));
-                add(SalesController.getSalesTotalByDay(dateTo));
+                add((Float) objects.get(j*2));
+                add((Float) objects.get(j*2+1));
             }});
         }
 

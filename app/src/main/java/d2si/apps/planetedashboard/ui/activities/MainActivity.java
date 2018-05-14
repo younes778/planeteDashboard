@@ -44,6 +44,7 @@ import d2si.apps.planetedashboard.database.controller.ArticlesController;
 import d2si.apps.planetedashboard.database.controller.ClientsController;
 import d2si.apps.planetedashboard.database.controller.RepresentantController;
 import d2si.apps.planetedashboard.database.controller.SalesController;
+import d2si.apps.planetedashboard.database.controller.SalesFragmentDataSetter;
 import d2si.apps.planetedashboard.database.data.Article;
 import d2si.apps.planetedashboard.database.data.Representant;
 import d2si.apps.planetedashboard.database.data.Tiers;
@@ -216,11 +217,25 @@ public class MainActivity extends RealmActivity {
                                     @Override
                                     public void onSalesUpdate() {
                                         dialog.dismiss();
-                                        setupTabs(fragment_to_launch);
                                         SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(getBaseContext());
                                         // save in preferences the connected user
                                         editor.putString(getString(R.string.pref_key_last_sync), new SimpleDateFormat(AppUtils.dateFormat, Locale.getDefault()).format(dateLastSync));
                                         editor.apply();
+
+                                        dialog = new MaterialDialog.Builder(MainActivity.this)
+                                                .title(R.string.progress_calculating_title)
+                                                .content(R.string.progress_calculating_content)
+                                                .progress(true, 0)
+                                                .cancelable(false)
+                                                .show();
+
+                                        new SalesFragmentDataSetter() {
+                                            @Override
+                                            public void onDataSet() {
+                                                dialog.dismiss();
+                                                setupTabs(fragment_to_launch);
+                                            }
+                                        }.execute();
                                     }
 
                                     @Override
@@ -335,9 +350,24 @@ public class MainActivity extends RealmActivity {
 
         switch (filter) {
             case NONE: // if none apply no filter
-                SalesController.filter = SalesController.FILTER.NONE;
-                SalesController.filters = null;
-                setupTabs(0);
+                if (SalesController.filter!=SalesController.FILTER.NONE) {
+                    SalesController.filter = SalesController.FILTER.NONE;
+                    SalesController.filters = null;
+                    dialog = new MaterialDialog.Builder(MainActivity.this)
+                            .title(R.string.progress_calculating_title)
+                            .content(R.string.progress_calculating_content)
+                            .progress(true, 0)
+                            .cancelable(false)
+                            .show();
+
+                    new SalesFragmentDataSetter() {
+                        @Override
+                        public void onDataSet() {
+                            dialog.dismiss();
+                            setupTabs(0);
+                        }
+                    }.execute();
+                }
                 break;
             case ITEM: {// if item setup articles ,spinner show (Label,Id) and spinner familly and the select all function
                 articles = ArticlesController.getAllArticles();
@@ -346,7 +376,7 @@ public class MainActivity extends RealmActivity {
                 choiceRecyclerAdapter = new ChoiceRecyclerAdapter(getBaseContext(), dataToShow);
 
 
-                MaterialDialog dialog = new MaterialDialog.Builder(this)
+                MaterialDialog filterDialog = new MaterialDialog.Builder(this)
                         .title(R.string.dialog_filter_title)
                         .customView(R.layout.dialog_filter, false)
                         .autoDismiss(false)
@@ -355,11 +385,26 @@ public class MainActivity extends RealmActivity {
                         .neutralText(R.string.dialog_select_all)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            public void onClick(@NonNull MaterialDialog dia, @NonNull DialogAction which) {
                                 SalesController.filter = SalesController.FILTER.ITEM;
                                 SalesController.filters = ArticlesController.getArticlesSubList(articles, FilterCheckBox.getItemSelected(dataToShow));
-                                setupTabs(0);
-                                dialog.dismiss();
+
+                                dialog = new MaterialDialog.Builder(MainActivity.this)
+                                        .title(R.string.progress_calculating_title)
+                                        .content(R.string.progress_calculating_content)
+                                        .progress(true, 0)
+                                        .cancelable(false)
+                                        .show();
+
+                                new SalesFragmentDataSetter() {
+                                    @Override
+                                    public void onDataSet() {
+                                        dialog.dismiss();
+                                        setupTabs(0);
+                                    }
+                                }.execute();
+
+                                dia.dismiss();
                             }
                         })
                         .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -377,7 +422,7 @@ public class MainActivity extends RealmActivity {
                         })
                         .show();
 
-                View dialogView = dialog.getCustomView();
+                View dialogView = filterDialog.getCustomView();
                 typeface(dialogView);
                 choiceList = dialogView.findViewById(R.id.recycler_choice);
 
@@ -433,7 +478,7 @@ public class MainActivity extends RealmActivity {
                 choiceRecyclerAdapter = new ChoiceRecyclerAdapter(getBaseContext(), dataToShow);
 
 
-                MaterialDialog dialog = new MaterialDialog.Builder(this)
+               dialog = new MaterialDialog.Builder(this)
                         .title(R.string.dialog_filter_title)
                         .customView(R.layout.dialog_filter, false)
                         .autoDismiss(false)
@@ -442,11 +487,24 @@ public class MainActivity extends RealmActivity {
                         .neutralText(R.string.dialog_select_all)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            public void onClick(@NonNull MaterialDialog dia, @NonNull DialogAction which) {
                                 SalesController.filter = SalesController.FILTER.CLIENT;
                                 SalesController.filters = ClientsController.getClientsSubList(clients, FilterCheckBox.getItemSelected(dataToShow));
-                                setupTabs(0);
                                 dialog.dismiss();
+                                dialog = new MaterialDialog.Builder(MainActivity.this)
+                                        .title(R.string.progress_calculating_title)
+                                        .content(R.string.progress_calculating_content)
+                                        .progress(true, 0)
+                                        .cancelable(false)
+                                        .show();
+
+                                new SalesFragmentDataSetter() {
+                                    @Override
+                                    public void onDataSet() {
+                                        dialog.dismiss();
+                                        setupTabs(0);
+                                    }
+                                }.execute();
                             }
                         })
                         .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -519,7 +577,7 @@ public class MainActivity extends RealmActivity {
                 choiceRecyclerAdapter = new ChoiceRecyclerAdapter(getBaseContext(), dataToShow);
 
 
-                MaterialDialog dialog = new MaterialDialog.Builder(this)
+                dialog = new MaterialDialog.Builder(this)
                         .title(R.string.dialog_filter_title)
                         .customView(R.layout.dialog_filter, false)
                         .autoDismiss(false)
@@ -528,11 +586,24 @@ public class MainActivity extends RealmActivity {
                         .neutralText(R.string.dialog_select_all)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            public void onClick(@NonNull MaterialDialog dia, @NonNull DialogAction which) {
                                 SalesController.filter = SalesController.FILTER.REPRESENTANT;
                                 SalesController.filters = RepresentantController.getRepresentantSubList(representants, FilterCheckBox.getItemSelected(dataToShow));
-                                setupTabs(0);
                                 dialog.dismiss();
+                                dialog = new MaterialDialog.Builder(MainActivity.this)
+                                        .title(R.string.progress_calculating_title)
+                                        .content(R.string.progress_calculating_content)
+                                        .progress(true, 0)
+                                        .cancelable(false)
+                                        .show();
+
+                                new SalesFragmentDataSetter() {
+                                    @Override
+                                    public void onDataSet() {
+                                        dialog.dismiss();
+                                        setupTabs(0);
+                                    }
+                                }.execute();
                             }
                         })
                         .onNegative(new MaterialDialog.SingleButtonCallback() {
