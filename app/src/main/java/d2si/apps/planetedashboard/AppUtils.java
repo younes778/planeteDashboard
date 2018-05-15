@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -366,6 +368,19 @@ public class AppUtils {
      */
     public static SharedPreferences.Editor getSharedPreferenceEdito(Context context) {
         return context.getSharedPreferences("Pref", Context.MODE_PRIVATE).edit();
+    }
+
+    /**
+     * Method that check if there is an active internet connexion
+     *
+     * @param context actual context
+     * @return true if there is an active internet connexion, false else
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 

@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.controller.SalesController;
 import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
 import d2si.apps.planetedashboard.webservice.httpgetter.ServerDBGetter;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
@@ -57,7 +58,7 @@ public class ConfigurationActivity extends RealmActivity {
         // if all validated launch main activity
         if (validateServer() && validateDatabase()) {
 
-
+            if (AppUtils.isNetworkAvailable(getBaseContext())) {
                 dialog = new MaterialDialog.Builder(this)
                         .title(R.string.progress_server_title)
                         .content(R.string.progress_server_content)
@@ -83,6 +84,10 @@ public class ConfigurationActivity extends RealmActivity {
                         }
                     }
                 }.execute();
+            }
+            else Toast.makeText(getBaseContext(),getString(R.string.error_no_connexion),Toast.LENGTH_LONG).show();
+
+
 
         }
     }

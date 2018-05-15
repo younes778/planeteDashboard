@@ -78,6 +78,9 @@
     <string name="tv_average_price">Avg.price</string>
     <string name="tv_configuration"><b>CONFIGURATION</b></string>
 
+    <!--                Errors                     -->
+    <string name="error_no_connexion">Please, check your internet connexion!</string>
+
     <!--                Edit Texts                -->
     <string name="et_user">User</string>
     <string name="et_password">Password</string>

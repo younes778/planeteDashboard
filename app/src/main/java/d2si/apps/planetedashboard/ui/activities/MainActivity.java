@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -190,48 +191,51 @@ public class MainActivity extends RealmActivity {
                                 break;
                             case 10: // sync data
                                 navDrawer.setSelection(fragment_to_launch + 1);
-                                dialog = new MaterialDialog.Builder(MainActivity.this)
-                                        .title(R.string.progress_updating_title)
-                                        .content(R.string.progress_updating_content)
-                                        .progress(true, 0)
-                                        .cancelable(false)
-                                        .show();
-
 
                                 // update data
-                                final DataGetter dataGetter = new DataGetter() {
-                                    @Override
-                                    public void onSalesUpdate() {
-                                        dialog.dismiss();
 
-                                        dialog = new MaterialDialog.Builder(MainActivity.this)
-                                                .title(R.string.progress_calculating_title)
-                                                .content(R.string.progress_calculating_content)
-                                                .progress(true, 0)
-                                                .cancelable(false)
-                                                .show();
+                                if (AppUtils.isNetworkAvailable(getBaseContext())) {
+                                    dialog = new MaterialDialog.Builder(MainActivity.this)
+                                            .title(R.string.progress_updating_title)
+                                            .content(R.string.progress_updating_content)
+                                            .progress(true, 0)
+                                            .cancelable(false)
+                                            .show();
+                                    final DataGetter dataGetter = new DataGetter() {
+                                        @Override
+                                        public void onSalesUpdate() {
+                                            dialog.dismiss();
 
-                                        new SalesFragmentDataSetter() {
-                                            @Override
-                                            public void onDataSet() {
-                                                dialog.dismiss();
-                                                setupTabs(fragment_to_launch);
-                                            }
-                                        }.execute();
-                                    }
+                                            dialog = new MaterialDialog.Builder(MainActivity.this)
+                                                    .title(R.string.progress_calculating_title)
+                                                    .content(R.string.progress_calculating_content)
+                                                    .progress(true, 0)
+                                                    .cancelable(false)
+                                                    .show();
 
-                                    @Override
-                                    public void onSalesGet() {
+                                            new SalesFragmentDataSetter() {
+                                                @Override
+                                                public void onDataSet() {
+                                                    dialog.dismiss();
+                                                    setupTabs(fragment_to_launch);
+                                                }
+                                            }.execute();
+                                        }
 
-                                    }
+                                        @Override
+                                        public void onSalesGet() {
 
-                                    @Override
-                                    public void onUserUpdate(Boolean user) {
+                                        }
 
-                                    }
-                                };
+                                        @Override
+                                        public void onUserUpdate(Boolean user) {
 
-                                dataGetter.updateSalesByDate(getBaseContext(), SalesController.getLastSyncDate());
+                                        }
+                                    };
+
+                                    dataGetter.updateSalesByDate(getBaseContext(), SalesController.getLastSyncDate());
+                                }
+                                else Toast.makeText(getBaseContext(),getString(R.string.error_no_connexion),Toast.LENGTH_LONG).show();
                                 break;
 
                         }

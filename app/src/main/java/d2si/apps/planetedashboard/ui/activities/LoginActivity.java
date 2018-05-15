@@ -19,6 +19,7 @@ import butterknife.OnClick;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
+import d2si.apps.planetedashboard.webservice.httpgetter.ServerDBGetter;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
@@ -73,54 +74,59 @@ public class LoginActivity extends RealmActivity {
                 AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
 
             } else { // it is a new user therefor we need to update the data
-                dialog = new MaterialDialog.Builder(this)
-                        .title(R.string.progress_login_title)
-                        .content(R.string.progress_login_content)
-                        .progress(true, 0)
-                        .cancelable(false)
-                        .show();
 
-                Calendar calendar = Calendar.getInstance();
-                final Date date1 = new Date(calendar.getTimeInMillis());
-                calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR)-1);
-                calendar.set(Calendar.DAY_OF_MONTH,1);
-                calendar.set(Calendar.MONTH,0);
-                calendar.set(Calendar.HOUR,0);
-                calendar.set(Calendar.MINUTE,0);
-                calendar.set(Calendar.SECOND,0);
-                final Date date2 = new Date(calendar.getTimeInMillis());
+                if (AppUtils.isNetworkAvailable(getBaseContext())) {
+                    dialog = new MaterialDialog.Builder(this)
+                            .title(R.string.progress_login_title)
+                            .content(R.string.progress_login_content)
+                            .progress(true, 0)
+                            .cancelable(false)
+                            .show();
 
-                final DataGetter dataGetter = new DataGetter() {
-                    @Override
-                    public void onSalesUpdate() {
+                    Calendar calendar = Calendar.getInstance();
+                    final Date date1 = new Date(calendar.getTimeInMillis());
+                    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR)-1);
+                    calendar.set(Calendar.DAY_OF_MONTH,1);
+                    calendar.set(Calendar.MONTH,0);
+                    calendar.set(Calendar.HOUR,0);
+                    calendar.set(Calendar.MINUTE,0);
+                    calendar.set(Calendar.SECOND,0);
+                    final Date date2 = new Date(calendar.getTimeInMillis());
 
-                    }
+                    final DataGetter dataGetter = new DataGetter() {
+                        @Override
+                        public void onSalesUpdate() {
 
-                    @Override
-                    public void onSalesGet() {
-                        dialog.dismiss();
-                        AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
-                    }
-
-                    @Override
-                    public void onUserUpdate(Boolean user) {
-                        dialog.dismiss();
-                        if (user) {
-
-                            dialog = new MaterialDialog.Builder(LoginActivity.this)
-                                    .title(R.string.progress_updating_title)
-                                    .content(R.string.progress_updating_content)
-                                    .progress(true, 0)
-                                    .cancelable(false)
-                                    .show();
-                            this.getSalesByDate(LoginActivity.this, date2, date1);
-                        } else {
-                            Toast.makeText(getBaseContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
                         }
-                    }
-                };
 
-                dataGetter.checkUserCrediants(getBaseContext(), et_user.getText().toString(), et_password.getText().toString());
+                        @Override
+                        public void onSalesGet() {
+                            dialog.dismiss();
+                            AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
+                        }
+
+                        @Override
+                        public void onUserUpdate(Boolean user) {
+                            dialog.dismiss();
+                            if (user) {
+
+                                dialog = new MaterialDialog.Builder(LoginActivity.this)
+                                        .title(R.string.progress_updating_title)
+                                        .content(R.string.progress_updating_content)
+                                        .progress(true, 0)
+                                        .cancelable(false)
+                                        .show();
+                                this.getSalesByDate(LoginActivity.this, date2, date1);
+                            } else {
+                                Toast.makeText(getBaseContext(), R.string.error_login, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    };
+
+                    dataGetter.checkUserCrediants(getBaseContext(), et_user.getText().toString(), et_password.getText().toString());
+                }
+                else Toast.makeText(getBaseContext(),getString(R.string.error_no_connexion),Toast.LENGTH_LONG).show();
+
             }
         }
     }
