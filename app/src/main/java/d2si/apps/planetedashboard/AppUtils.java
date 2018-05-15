@@ -296,6 +296,26 @@ public class AppUtils {
         realm.close();
     }
 
+    public static String getFormattedDate(Date date){
+        SimpleDateFormat f = new SimpleDateFormat(dateFormat);
+       return f.format(date);
+    }
+
+    /**
+     * Method that add object to database
+     *
+     * @param object objects to add
+     */
+    public static void addOneObjectToRealm(RealmObject object) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+
+        realm.copyToRealm(object); // Persist unmanaged objects
+
+        realm.commitTransaction();
+        realm.close();
+    }
+
 
     /**
      * Method that delete all database data

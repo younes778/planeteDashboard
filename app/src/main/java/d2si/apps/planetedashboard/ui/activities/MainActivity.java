@@ -90,8 +90,6 @@ public class MainActivity extends RealmActivity {
     private MaterialSpinner showSpinner;
     private MaterialSpinner familySpinner;
     private MaterialDialog dialog;
-    private Date dateUpdate;
-    private Date dateLastSync;
 
     @Override
     /**
@@ -199,28 +197,12 @@ public class MainActivity extends RealmActivity {
                                         .cancelable(false)
                                         .show();
 
-                                // the new last sync date
-                                dateLastSync = new Date(Calendar.getInstance().getTimeInMillis());
-
-                                SimpleDateFormat format = new SimpleDateFormat(AppUtils.dateFormat);
-                                SharedPreferences pref = AppUtils.getSharedPreference(getBaseContext());
-                                final String lastUpdate = pref.getString(getString(R.string.pref_key_last_sync), "");
-
-                                try {
-                                    dateUpdate = format.parse(lastUpdate);
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
 
                                 // update data
                                 final DataGetter dataGetter = new DataGetter() {
                                     @Override
                                     public void onSalesUpdate() {
                                         dialog.dismiss();
-                                        SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(getBaseContext());
-                                        // save in preferences the connected user
-                                        editor.putString(getString(R.string.pref_key_last_sync), new SimpleDateFormat(AppUtils.dateFormat, Locale.getDefault()).format(dateLastSync));
-                                        editor.apply();
 
                                         dialog = new MaterialDialog.Builder(MainActivity.this)
                                                 .title(R.string.progress_calculating_title)
@@ -249,7 +231,7 @@ public class MainActivity extends RealmActivity {
                                     }
                                 };
 
-                                dataGetter.updateSalesByDate(getBaseContext(), dateUpdate);
+                                dataGetter.updateSalesByDate(getBaseContext(), SalesController.getLastSyncDate());
                                 break;
 
                         }

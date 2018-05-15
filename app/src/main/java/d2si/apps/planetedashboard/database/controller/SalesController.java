@@ -9,6 +9,7 @@ import d2si.apps.planetedashboard.database.data.Article;
 import d2si.apps.planetedashboard.database.data.Document;
 import d2si.apps.planetedashboard.database.data.Ligne;
 import d2si.apps.planetedashboard.database.data.Representant;
+import d2si.apps.planetedashboard.database.data.SyncReport;
 import d2si.apps.planetedashboard.database.data.Tiers;
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -326,6 +327,13 @@ public class SalesController {
         }
 
         return data;
+    }
+
+    public static Date getLastSyncDate(){
+        Realm realm = Realm.getDefaultInstance();
+        Date date=realm.where(SyncReport.class).findAll().maxDate("date");
+        realm.close();
+        return date;
     }
 
 

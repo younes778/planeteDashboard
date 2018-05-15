@@ -35,6 +35,7 @@
     <string name="current_currency">DZ</string>
     <string name="currency"><b>%1$s</b> %2$s</string>
     <string name="app_copyright">© 2018 <b>DSSI</b></string>
+    <string name="sync_report_tables_updated">Documents,Articles,Lignes,Tiers,Clients,Representants</string>
 
 
 
@@ -111,7 +112,7 @@
     <string name="pref_title_server">Server Name</string>
     <string name="pref_title_database">Database Name</string>
     <string name="pref_title_sync_auto">Auto sync</string>
-    <string name="pref_title_sync_delay">Sync Delay</string>
+    <string name="pref_title_sync_delay">Sync Delay (Minutes)</string>
     <string name="pref_title_last_sync">Last sync</string>
 
     <string name="pref_key">pref</string>

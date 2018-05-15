@@ -7,6 +7,7 @@ import android.preference.Preference;
 
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.controller.SalesController;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -20,9 +21,7 @@ public class SettingsActivity extends com.fnp.materialpreferences.PreferenceActi
         findPreference(getString(R.string.pref_key_last_sync)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                SharedPreferences pref = AppUtils.getSharedPreference(getBaseContext());
-                String lastSync = pref.getString(getString(R.string.pref_key_last_sync), "");
-                ((EditTextPreference) preference).getEditText().setText(lastSync);
+                ((EditTextPreference) preference).getEditText().setText(AppUtils.getFormattedDate(SalesController.getLastSyncDate()));
                 return false;
             }
         });

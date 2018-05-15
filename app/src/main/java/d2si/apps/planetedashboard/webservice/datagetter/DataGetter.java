@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import d2si.apps.planetedashboard.database.data.Article;
 import d2si.apps.planetedashboard.database.data.Document;
 import d2si.apps.planetedashboard.database.data.Ligne;
 import d2si.apps.planetedashboard.database.data.Representant;
+import d2si.apps.planetedashboard.database.data.SyncReport;
 import d2si.apps.planetedashboard.database.data.Tiers;
 import d2si.apps.planetedashboard.webservice.httpgetter.ArticlesGetter;
 import d2si.apps.planetedashboard.webservice.httpgetter.ArticlesUpdater;
@@ -125,6 +127,7 @@ public abstract class DataGetter {
                                                 new DataBaseHandler(objectsToCopy) {
                                                     @Override
                                                     public void onPost() {
+                                                        AppUtils.addOneObjectToRealm(new SyncReport(dateTo,true,context.getString(R.string.sync_report_tables_updated)));
                                                         onSalesGet();
                                                     }
                                                 }.execute();
@@ -152,6 +155,7 @@ public abstract class DataGetter {
      * @param dateFrom start date
      */
     public void updateSalesByDate(final Context context, final Date dateFrom) {
+        final Date lastSync = new Date(Calendar.getInstance().getTimeInMillis());
 
         new SalesUpdater(context, dateFrom) {
             @Override
@@ -186,6 +190,8 @@ public abstract class DataGetter {
                                                 new DataBaseUpdater(objectsToCopy) {
                                                     @Override
                                                     public void onPost() {
+
+                                                        AppUtils.addOneObjectToRealm(new SyncReport(lastSync,true,context.getString(R.string.sync_report_tables_updated)));
                                                         onSalesUpdate();
                                                     }
                                                 }.execute();

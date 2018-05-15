@@ -99,10 +99,6 @@ public class LoginActivity extends RealmActivity {
                     @Override
                     public void onSalesGet() {
                         dialog.dismiss();
-                        SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(getBaseContext());
-                        // save in preferences the last sync time
-                        editor.putString(getString(R.string.pref_key_last_sync), new SimpleDateFormat(AppUtils.dateFormat, Locale.getDefault()).format(date1));
-                        editor.apply();
                         AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
                     }
 
