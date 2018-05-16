@@ -2,6 +2,7 @@ package d2si.apps.planetedashboard.database.data;
 
 import java.util.Date;
 
+import d2si.apps.planetedashboard.AppUtils;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -64,5 +65,9 @@ public class SyncReport extends RealmObject {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String toString(){
+        return  (success?"✓":"✗")+" "+AppUtils.getFormattedDate(date)+" : "+tablesUpdated+"\n";
     }
 }

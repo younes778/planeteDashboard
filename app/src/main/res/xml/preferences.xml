@@ -3,49 +3,58 @@
     android:key="@string/pref_key"
     android:title="@string/pref_title">
 
-    <PreferenceCategory android:title="@string/pref_title_sync" >
+    <PreferenceCategory android:title="@string/pref_title_sync">
 
         <EditTextPreference
-            android:focusable="false"
-            android:dependency="@string/pref_key_sync_auto"
             android:editable="false"
+            android:focusable="false"
             android:key="@string/pref_key_last_sync"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:summary="@string/pref_summary_last_sync"
             android:title="@string/pref_title_last_sync" />
 
-    <EditTextPreference
-        android:inputType="textUri"
-        android:key="@string/pref_key_server"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="@string/pref_summary_server"
-        android:title="@string/pref_title_server" />
+        <EditTextPreference
+            android:inputType="textUri"
+            android:key="@string/pref_key_server"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/pref_summary_server"
+            android:title="@string/pref_title_server" />
 
-    <EditTextPreference
-        android:key="@string/pref_key_database"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="@string/pref_summary_database"
-        android:title="@string/pref_title_database" />
+        <EditTextPreference
+            android:key="@string/pref_key_database"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/pref_summary_database"
+            android:title="@string/pref_title_database" />
 
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="@string/pref_key_sync_auto"
-        android:title="@string/pref_title_sync_auto"
-        android:summary="@string/pref_summary_sync_auto"
-        android:widgetLayout="@layout/mp_preference_switch"/>
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_sync_auto"
+            android:summary="@string/pref_summary_sync_auto"
+            android:title="@string/pref_title_sync_auto"
+            android:widgetLayout="@layout/mp_preference_switch" />
 
-    <EditTextPreference
-        android:dependency="@string/pref_key_sync_auto"
-        android:defaultValue="@integer/pref_default_sync_delay"
-        android:inputType="number"
-        android:key="@string/pref_key_sync_delay"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="@string/pref_summary_sync_delay"
-        android:title="@string/pref_title_sync_delay" />
+        <EditTextPreference
+            android:defaultValue="@integer/pref_default_sync_delay"
+            android:dependency="@string/pref_key_sync_auto"
+            android:inputType="number"
+            android:key="@string/pref_key_sync_delay"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/pref_summary_sync_delay"
+            android:title="@string/pref_title_sync_delay" />
+
+
+        <EditTextPreference
+            android:editable="false"
+            android:focusable="false"
+            android:key="@string/pref_key_sync_report"
+            android:selectAllOnFocus="true"
+            android:singleLine="false"
+            android:summary="@string/pref_summary_sync_report"
+            android:title="@string/pref_title_sync_report" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -12,6 +12,7 @@ import d2si.apps.planetedashboard.database.data.Representant;
 import d2si.apps.planetedashboard.database.data.SyncReport;
 import d2si.apps.planetedashboard.database.data.Tiers;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 
@@ -424,6 +425,15 @@ public class SalesController {
         Date date=realm.where(SyncReport.class).equalTo("success",true).findAll().maxDate("date");
         realm.close();
         return date;
+    }
+
+    public static String getSyncReport(){
+        String res="";
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<SyncReport> syncReports=realm.where(SyncReport.class).findAll();
+        for (SyncReport syncReport:syncReports) res+=syncReport.toString();
+        realm.close();
+        return res;
     }
 
 

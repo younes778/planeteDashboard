@@ -125,6 +125,7 @@
     <string name="pref_title_sync_auto">Auto sync</string>
     <string name="pref_title_sync_delay">Sync Delay (Minutes)</string>
     <string name="pref_title_last_sync">Last sync</string>
+    <string name="pref_title_sync_report">Synchronization Report</string>
 
     <string name="pref_key">pref</string>
     <string name="pref_key_server">server</string>
@@ -135,12 +136,14 @@
     <string name="pref_key_connected">isConnected</string>
     <string name="pref_key_user">user</string>
     <string name="pref_key_password">password</string>
+    <string name="pref_key_sync_report">syncReport</string>
 
     <string name="pref_summary_server">The server containing the database</string>
     <string name="pref_summary_database">Name of the database containing the ERP</string>
     <string name="pref_summary_sync_auto">Tell if the synchronization is automatically done</string>
     <string name="pref_summary_sync_delay">The frequency of syncing data from server</string>
     <string name="pref_summary_last_sync">Date &amp; time of the last sync</string>
+    <string name="pref_summary_sync_report">Consult all database synchronizations report</string>
 
     <integer name="pref_default_sync_delay">60</integer>
 

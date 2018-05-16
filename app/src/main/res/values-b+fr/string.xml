@@ -111,11 +111,13 @@
     <string name="pref_title_sync_auto">Auto synchronisation</string>
     <string name="pref_title_sync_delay">Délai de synchornisation (Minutes)</string>
     <string name="pref_title_last_sync">Dernière synchronisation</string>
+    <string name="pref_title_sync_report">Rapport de synchronisation</string>
 
     <string name="pref_summary_server">Le serveur contenant la base de données</string>
     <string name="pref_summary_database">Nom de la base de données contenante des données</string>
     <string name="pref_summary_sync_auto">définir si la synchronisation devrait se faire automatiquement</string>
     <string name="pref_summary_sync_delay">La fréquence de synchronisation à partir de serveur</string>
     <string name="pref_summary_last_sync">Date &amp; temps de la dernière synchronisation</string>
+    <string name="pref_summary_sync_report">Consulter le rapport des synchronisations de la base de données</string>
 
 </resources>

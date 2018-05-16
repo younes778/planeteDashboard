@@ -321,6 +321,20 @@ public class AppUtils {
         realm.close();
     }
 
+    /**
+     * Method that add or update object to database
+     *
+     * @param object objects to add
+     */
+    public static void addOrUpdateOneObjectToRealm(RealmObject object) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+
+        realm.copyToRealmOrUpdate(object); // Persist unmanaged objects
+
+        realm.commitTransaction();
+        realm.close();
+    }
 
     /**
      * Method that delete all database data

@@ -18,6 +18,14 @@ public class SettingsActivity extends com.fnp.materialpreferences.PreferenceActi
         addPreferencesFromResource(R.xml.preferences);
         typeface(this);
 
+        findPreference(getString(R.string.pref_key_sync_report)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                ((EditTextPreference) preference).getEditText().setText(SalesController.getSyncReport());
+                return false;
+            }
+        });
+
         findPreference(getString(R.string.pref_key_last_sync)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
