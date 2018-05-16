@@ -2,16 +2,14 @@ package d2si.apps.planetedashboard.ui.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.balysv.materialripple.MaterialRippleLayout;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +17,6 @@ import butterknife.OnClick;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
-import d2si.apps.planetedashboard.webservice.httpgetter.ServerDBGetter;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
@@ -85,30 +82,43 @@ public class LoginActivity extends RealmActivity {
 
                     Calendar calendar = Calendar.getInstance();
                     final Date date1 = new Date(calendar.getTimeInMillis());
-                    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR)-1);
-                    calendar.set(Calendar.DAY_OF_MONTH,1);
-                    calendar.set(Calendar.MONTH,0);
-                    calendar.set(Calendar.HOUR,0);
-                    calendar.set(Calendar.MINUTE,0);
-                    calendar.set(Calendar.SECOND,0);
+                    calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) - 1);
+                    calendar.set(Calendar.DAY_OF_MONTH, 1);
+                    calendar.set(Calendar.MONTH, 0);
+                    calendar.set(Calendar.HOUR, 0);
+                    calendar.set(Calendar.MINUTE, 0);
+                    calendar.set(Calendar.SECOND, 0);
                     final Date date2 = new Date(calendar.getTimeInMillis());
 
                     final DataGetter dataGetter = new DataGetter() {
                         @Override
-                        public void onSalesUpdate() {
+                        public void onSalesUpdate(boolean success) {
 
                         }
 
                         @Override
-                        public void onSalesGet() {
+                        public void onSalesGet(boolean success) {
                             dialog.dismiss();
-                            AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
+                            if (success) {
+                                SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(getBaseContext());
+                                // save in preferences the connected user
+                                editor.putBoolean(getString(R.string.pref_key_connected), true);
+                                editor.putString(getString(R.string.pref_key_user), et_user.getText().toString());
+                                editor.putString(getString(R.string.pref_key_password), et_password.getText().toString());
+                                editor.apply();
+                                AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
+                            }
+                            else
+                                Toast.makeText(getBaseContext(), R.string.error_connexion, Toast.LENGTH_SHORT).show();
+
                         }
 
                         @Override
                         public void onUserUpdate(Boolean user) {
                             dialog.dismiss();
-                            if (user) {
+                            if (user == null)
+                                Toast.makeText(getBaseContext(), R.string.error_connexion, Toast.LENGTH_SHORT).show();
+                            else if (user) {
 
                                 dialog = new MaterialDialog.Builder(LoginActivity.this)
                                         .title(R.string.progress_updating_title)
@@ -124,8 +134,8 @@ public class LoginActivity extends RealmActivity {
                     };
 
                     dataGetter.checkUserCrediants(getBaseContext(), et_user.getText().toString(), et_password.getText().toString());
-                }
-                else Toast.makeText(getBaseContext(),getString(R.string.error_no_connexion),Toast.LENGTH_LONG).show();
+                } else
+                    Toast.makeText(getBaseContext(), getString(R.string.error_no_connexion), Toast.LENGTH_LONG).show();
 
             }
         }
@@ -149,6 +159,21 @@ public class LoginActivity extends RealmActivity {
 
         // set the action bar title and font
         AppUtils.setActionBarTitle(this, R.string.activity_login);
+
+        // hide keyboard on click out of the fields
+        et_user.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                AppUtils.hideKeyboard(view,getBaseContext());
+            }
+        });
+
+        et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                AppUtils.hideKeyboard(view,getBaseContext());
+            }
+        });
 
 
     }

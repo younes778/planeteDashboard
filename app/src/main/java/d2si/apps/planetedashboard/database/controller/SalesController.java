@@ -331,7 +331,7 @@ public class SalesController {
 
     public static Date getLastSyncDate(){
         Realm realm = Realm.getDefaultInstance();
-        Date date=realm.where(SyncReport.class).findAll().maxDate("date");
+        Date date=realm.where(SyncReport.class).equalTo("success",true).findAll().maxDate("date");
         realm.close();
         return date;
     }

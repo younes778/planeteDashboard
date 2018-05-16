@@ -203,27 +203,29 @@ public class MainActivity extends RealmActivity {
                                             .show();
                                     final DataGetter dataGetter = new DataGetter() {
                                         @Override
-                                        public void onSalesUpdate() {
+                                        public void onSalesUpdate(boolean success) {
                                             dialog.dismiss();
+                                            if (success) {
+                                                dialog = new MaterialDialog.Builder(MainActivity.this)
+                                                        .title(R.string.progress_calculating_title)
+                                                        .content(R.string.progress_calculating_content)
+                                                        .progress(true, 0)
+                                                        .cancelable(false)
+                                                        .show();
 
-                                            dialog = new MaterialDialog.Builder(MainActivity.this)
-                                                    .title(R.string.progress_calculating_title)
-                                                    .content(R.string.progress_calculating_content)
-                                                    .progress(true, 0)
-                                                    .cancelable(false)
-                                                    .show();
-
-                                            new SalesFragmentDataSetter() {
-                                                @Override
-                                                public void onDataSet() {
-                                                    dialog.dismiss();
-                                                    setupTabs(fragment_to_launch);
-                                                }
-                                            }.execute();
+                                                new SalesFragmentDataSetter() {
+                                                    @Override
+                                                    public void onDataSet() {
+                                                        dialog.dismiss();
+                                                        setupTabs(fragment_to_launch);
+                                                    }
+                                                }.execute();
+                                            } else
+                                                Toast.makeText(getBaseContext(), R.string.error_connexion, Toast.LENGTH_SHORT).show();
                                         }
 
                                         @Override
-                                        public void onSalesGet() {
+                                        public void onSalesGet(boolean success) {
 
                                         }
 

@@ -2,21 +2,16 @@ package d2si.apps.planetedashboard.ui.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.balysv.materialripple.MaterialRippleLayout;
-
-import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.database.controller.SalesController;
-import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
 import d2si.apps.planetedashboard.webservice.httpgetter.ServerDBGetter;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
@@ -66,11 +61,13 @@ public class ConfigurationActivity extends RealmActivity {
                         .cancelable(false)
                         .show();
 
-                new ServerDBGetter(getBaseContext(),et_server.getText().toString(),et_database.getText().toString()) {
+                new ServerDBGetter(getBaseContext(), et_server.getText().toString(), et_database.getText().toString()) {
                     @Override
                     public void onPost(Boolean checked) {
                         dialog.dismiss();
-                        if (checked) {
+                        if (checked == null)
+                            Toast.makeText(getBaseContext(), R.string.error_connexion, Toast.LENGTH_SHORT).show();
+                        else if (checked) {
                             SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(getBaseContext());
                             // save in preferences the database server
                             AppUtils.serverName = et_server.getText().toString();
@@ -84,9 +81,8 @@ public class ConfigurationActivity extends RealmActivity {
                         }
                     }
                 }.execute();
-            }
-            else Toast.makeText(getBaseContext(),getString(R.string.error_no_connexion),Toast.LENGTH_LONG).show();
-
+            } else
+                Toast.makeText(getBaseContext(), getString(R.string.error_no_connexion), Toast.LENGTH_LONG).show();
 
 
         }
@@ -111,11 +107,20 @@ public class ConfigurationActivity extends RealmActivity {
         // set the action bar title and font
         AppUtils.setActionBarTitle(this, R.string.app_name);
 
+        // hide keyboard on click out of the fields
+        et_server.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                AppUtils.hideKeyboard(view,getBaseContext());
+            }
+        });
 
-
-        //Test
-        //if (AppUtils.VERSION_TEST)
-          //  AppUtils.launchActivity(this,SettingsActivity.class,true,null);
+        et_database.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                AppUtils.hideKeyboard(view,getBaseContext());
+            }
+        });
 
 
     }

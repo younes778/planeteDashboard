@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -58,6 +59,14 @@ public abstract class ArticlesUpdater extends AsyncTask<Void, Void, ArrayList<Ar
 
             // use the rest template
             RestTemplate restTemplate = new RestTemplate();
+
+            // Set connexion Timeout
+            HttpComponentsClientHttpRequestFactory clientHttpRequestFactory
+                    = new HttpComponentsClientHttpRequestFactory();
+            clientHttpRequestFactory.setConnectTimeout(AppUtils.CONNEXION_TIMEOUT);
+
+            restTemplate.setRequestFactory(clientHttpRequestFactory);
+
             // format response according to JSON
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             // get the results

@@ -2,7 +2,7 @@
 
     <!--                App Configuration           -->
     <!--                Rest Server Data            -->
-    <string name="REST_SERVER_URL">http://192.168.1.5</string>
+    <string name="REST_SERVER_URL">http://192.168.1.2</string>
     <string name="REST_SERVER_PORT">8080</string>
 
     <string name="REST_REQUEST_SALES_GET">salesGet</string>
@@ -35,7 +35,12 @@
     <string name="current_currency">DZ</string>
     <string name="currency"><b>%1$s</b> %2$s</string>
     <string name="app_copyright">© 2018 <b>DSSI</b></string>
-    <string name="sync_report_tables_updated">Documents,Articles,Lignes,Tiers,Clients,Representants</string>
+    <string name="sync_report_tables_updated">Updated : Documents,Articles,Lignes,Tiers,Representants</string>
+    <string name="sync_report_tables_error_document">Error on : Documents</string>
+    <string name="sync_report_tables_error_article">Error on : Articles</string>
+    <string name="sync_report_tables_error_ligne">Error on : Lignes</string>
+    <string name="sync_report_tables_error_tiers">Error on : Tiers</string>
+    <string name="sync_report_tables_error_representant">Error on : Representants</string>
 
 
 
@@ -165,6 +170,7 @@
     <!--            Errors              -->
     <string name="error_login">Unable to login!</string>
     <string name="error_server">Unable to establish connexion with server!</string>
+    <string name="error_connexion">There has been a problem connecting to the server!</string>
 
     <!--            Menus               -->
     <string name="filter_none">Filter: None</string>

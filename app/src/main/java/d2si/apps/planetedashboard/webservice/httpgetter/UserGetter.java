@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -61,6 +62,14 @@ public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
 
             // use the rest template
             RestTemplate restTemplate = new RestTemplate();
+
+            // Set connexion Timeout
+            HttpComponentsClientHttpRequestFactory clientHttpRequestFactory
+                    = new HttpComponentsClientHttpRequestFactory();
+            clientHttpRequestFactory.setConnectTimeout(AppUtils.CONNEXION_TIMEOUT);
+
+            restTemplate.setRequestFactory(clientHttpRequestFactory);
+
             // format response according to JSON
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
             // get the results

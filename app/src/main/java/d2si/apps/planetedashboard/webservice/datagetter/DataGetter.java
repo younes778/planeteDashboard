@@ -42,12 +42,12 @@ public abstract class DataGetter {
     /**
      * Method that executes on sales update
      */
-    public abstract void onSalesUpdate();
+    public abstract void onSalesUpdate(boolean succes);
 
     /**
      * Method that executes on sales get
      */
-    public abstract void onSalesGet();
+    public abstract void onSalesGet(boolean success);
 
     /**
      * Method that executes on user updated
@@ -69,14 +69,6 @@ public abstract class DataGetter {
         new UserGetter(context, user, password) {
             @Override
             public void onPost(Boolean isConnected) {
-                if (isConnected) {
-                    SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(context);
-                    // save in preferences the connected user
-                    editor.putBoolean(context.getString(R.string.pref_key_connected), true);
-                    editor.putString(context.getString(R.string.pref_key_user), user);
-                    editor.putString(context.getString(R.string.pref_key_password), password);
-                    editor.apply();
-                }
                 onUserUpdate(isConnected);
             }
         }.execute();
@@ -91,59 +83,78 @@ public abstract class DataGetter {
      * @param dateTo   end date
      */
     public void getSalesByDate(final Context context, final Date dateFrom, final Date dateTo) {
-        // delete all database data for test
+        // delete all database
         AppUtils.clearRealm();
 
         new SalesGetter(context, dateFrom, dateTo) {
             @Override
             public void onPost(ArrayList<Document> sales) {
-                objectsToCopy = new ArrayList<>();
+                if (sales == null) {
+                    AppUtils.addOneObjectToRealm(new SyncReport(dateTo, false, context.getString(R.string.sync_report_tables_error_document)));
+                    onSalesGet(false);
+                } else {
+                    objectsToCopy = new ArrayList<>();
+                    objectsToCopy.add(new ArrayList<RealmObject>(sales));
 
-                objectsToCopy.add(new ArrayList<RealmObject>(sales));
+                    new ArticlesGetter(context, dateFrom, dateTo) {
+                        @Override
+                        public void onPost(ArrayList<Article> articles) {
+                            if (articles == null) {
+                                AppUtils.addOneObjectToRealm(new SyncReport(dateTo, false, context.getString(R.string.sync_report_tables_error_article)));
+                                onSalesGet(false);
+                            } else {
+                                objectsToCopy.add(new ArrayList<RealmObject>(articles));
 
-                new ArticlesGetter(context, dateFrom, dateTo) {
-                    @Override
-                    public void onPost(ArrayList<Article> articles) {
-
-                        objectsToCopy.add(new ArrayList<RealmObject>(articles));
-
-                        new LignesGetter(context, dateFrom, dateTo) {
-                            @Override
-                            public void onPost(ArrayList<Ligne> lignes) {
-
-                                objectsToCopy.add(new ArrayList<RealmObject>(lignes));
-
-                                new TiersGetter(context, dateFrom, dateTo) {
+                                new LignesGetter(context, dateFrom, dateTo) {
                                     @Override
-                                    public void onPost(ArrayList<Tiers> tiers) {
+                                    public void onPost(ArrayList<Ligne> lignes) {
+                                        if (lignes == null) {
+                                            AppUtils.addOneObjectToRealm(new SyncReport(dateTo, false, context.getString(R.string.sync_report_tables_error_ligne)));
+                                            onSalesGet(false);
+                                        } else {
 
-                                        objectsToCopy.add(new ArrayList<RealmObject>(tiers));
+                                            objectsToCopy.add(new ArrayList<RealmObject>(lignes));
 
-                                        new RepresentantsGetter(context, dateFrom, dateTo) {
-                                            @Override
-                                            public void onPost(ArrayList<Representant> representants) {
+                                            new TiersGetter(context, dateFrom, dateTo) {
+                                                @Override
+                                                public void onPost(ArrayList<Tiers> tiers) {
+                                                    if (tiers == null) {
+                                                        AppUtils.addOneObjectToRealm(new SyncReport(dateTo, false, context.getString(R.string.sync_report_tables_error_tiers)));
+                                                        onSalesGet(false);
+                                                    } else {
+                                                        objectsToCopy.add(new ArrayList<RealmObject>(tiers));
 
-                                                objectsToCopy.add(new ArrayList<RealmObject>(representants));
-                                                new DataBaseHandler(objectsToCopy) {
-                                                    @Override
-                                                    public void onPost() {
-                                                        AppUtils.addOneObjectToRealm(new SyncReport(dateTo,true,context.getString(R.string.sync_report_tables_updated)));
-                                                        onSalesGet();
+                                                        new RepresentantsGetter(context, dateFrom, dateTo) {
+                                                            @Override
+                                                            public void onPost(ArrayList<Representant> representants) {
+                                                                if (representants == null) {
+                                                                    AppUtils.addOneObjectToRealm(new SyncReport(dateTo, false, context.getString(R.string.sync_report_tables_error_representant)));
+                                                                    onSalesGet(false);
+                                                                } else {
+                                                                    objectsToCopy.add(new ArrayList<RealmObject>(representants));
+                                                                    new DataBaseHandler(objectsToCopy) {
+                                                                        @Override
+                                                                        public void onPost() {
+                                                                            AppUtils.addOneObjectToRealm(new SyncReport(dateTo, true, context.getString(R.string.sync_report_tables_updated)));
+                                                                            onSalesGet(true);
+                                                                        }
+                                                                    }.execute();
+
+                                                                }
+                                                            }
+                                                        }.execute();
+
                                                     }
-                                                }.execute();
-
-                                            }
-                                        }.execute();
-
+                                                }
+                                            }.execute();
+                                        }
                                     }
                                 }.execute();
 
                             }
-                        }.execute();
-
-                    }
-                }.execute();
-
+                        }
+                    }.execute();
+                }
             }
         }.execute();
     }
@@ -160,54 +171,72 @@ public abstract class DataGetter {
         new SalesUpdater(context, dateFrom) {
             @Override
             public void onPost(ArrayList<Document> sales) {
-                objectsToCopy = new ArrayList<>();
+                if (sales == null) {
+                    AppUtils.addOneObjectToRealm(new SyncReport(lastSync, false, context.getString(R.string.sync_report_tables_error_document)));
+                    onSalesUpdate(false);
+                } else {
+                    objectsToCopy = new ArrayList<>();
+                    objectsToCopy.add(new ArrayList<RealmObject>(sales));
 
-                objectsToCopy.add(new ArrayList<RealmObject>(sales));
-
-                new LignesUpdater(context, dateFrom) {
-                    @Override
-                    public void onPost(ArrayList<Ligne> lignes) {
-
-                        objectsToCopy.add(new ArrayList<RealmObject>(lignes));
-
-                        new ArticlesUpdater(context, dateFrom) {
-                            @Override
-                            public void onPost(ArrayList<Article> articles) {
-
+                    new ArticlesUpdater(context, dateFrom) {
+                        @Override
+                        public void onPost(ArrayList<Article> articles) {
+                            if (articles == null) {
+                                AppUtils.addOneObjectToRealm(new SyncReport(lastSync, false, context.getString(R.string.sync_report_tables_error_article)));
+                                onSalesGet(false);
+                            } else {
                                 objectsToCopy.add(new ArrayList<RealmObject>(articles));
 
-                                new TiersUpdater(context, dateFrom) {
+                                new LignesUpdater(context, dateFrom) {
                                     @Override
-                                    public void onPost(ArrayList<Tiers> tiers) {
+                                    public void onPost(ArrayList<Ligne> lignes) {
+                                        if (lignes == null) {
+                                            AppUtils.addOneObjectToRealm(new SyncReport(lastSync, false, context.getString(R.string.sync_report_tables_error_ligne)));
+                                            onSalesUpdate(false);
+                                        } else {
 
-                                        objectsToCopy.add(new ArrayList<RealmObject>(tiers));
+                                            objectsToCopy.add(new ArrayList<RealmObject>(lignes));
 
-                                        new RepresentantsUpdater(context, dateFrom) {
-                                            @Override
-                                            public void onPost(ArrayList<Representant> representants) {
+                                            new TiersUpdater(context, dateFrom) {
+                                                @Override
+                                                public void onPost(ArrayList<Tiers> tiers) {
+                                                    if (tiers == null) {
+                                                        AppUtils.addOneObjectToRealm(new SyncReport(lastSync, false, context.getString(R.string.sync_report_tables_error_tiers)));
+                                                        onSalesUpdate(false);
+                                                    } else {
+                                                        objectsToCopy.add(new ArrayList<RealmObject>(tiers));
 
-                                                objectsToCopy.add(new ArrayList<RealmObject>(representants));
-                                                new DataBaseUpdater(objectsToCopy) {
-                                                    @Override
-                                                    public void onPost() {
+                                                        new RepresentantsUpdater(context, dateFrom) {
+                                                            @Override
+                                                            public void onPost(ArrayList<Representant> representants) {
+                                                                if (representants == null) {
+                                                                    AppUtils.addOneObjectToRealm(new SyncReport(lastSync, false, context.getString(R.string.sync_report_tables_error_representant)));
+                                                                    onSalesUpdate(false);
+                                                                } else {
+                                                                    objectsToCopy.add(new ArrayList<RealmObject>(representants));
+                                                                    new DataBaseHandler(objectsToCopy) {
+                                                                        @Override
+                                                                        public void onPost() {
+                                                                            AppUtils.addOneObjectToRealm(new SyncReport(lastSync, true, context.getString(R.string.sync_report_tables_updated)));
+                                                                            onSalesUpdate(true);
+                                                                        }
+                                                                    }.execute();
 
-                                                        AppUtils.addOneObjectToRealm(new SyncReport(lastSync,true,context.getString(R.string.sync_report_tables_updated)));
-                                                        onSalesUpdate();
+                                                                }
+                                                            }
+                                                        }.execute();
+
                                                     }
-                                                }.execute();
-
-                                            }
-                                        }.execute();
-
+                                                }
+                                            }.execute();
+                                        }
                                     }
                                 }.execute();
 
                             }
-                        }.execute();
-
-                    }
-                }.execute();
-
+                        }
+                    }.execute();
+                }
             }
         }.execute();
     }

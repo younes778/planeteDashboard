@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.typeface.IIcon;
@@ -45,6 +47,7 @@ public class AppUtils {
     public static String dateFormat = "dd-MMM-yyyy HH:mm:ss";
     public static String serverName;
     public static String dBName;
+    public static int CONNEXION_TIMEOUT = 20000;
     public static ArrayList<IIcon> MENU_DRAWABLES = new ArrayList() {{
         add(CommunityMaterial.Icon.cmd_tag_text_outline);
         add(CommunityMaterial.Icon.cmd_package_variant_closed);
@@ -381,6 +384,17 @@ public class AppUtils {
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    /**
+     * Method that hide soft keyboard on click in the activity
+     *
+     * @param view actual view
+     * @param context actual context
+     */
+    public static void hideKeyboard(View view,Context context) {
+        InputMethodManager inputMethodManager =(InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 
