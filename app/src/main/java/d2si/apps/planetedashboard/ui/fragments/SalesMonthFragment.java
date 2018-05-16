@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.controller.SalesController;
-import d2si.apps.planetedashboard.ui.data.CustomLineChart;
+import d2si.apps.planetedashboard.ui.data.CustomColumnChart;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -71,7 +71,7 @@ public class SalesMonthFragment extends Fragment {
             }});
         }
 
-        new CustomLineChart(chart, legend, data, setTitles);
+        new CustomColumnChart(chart, legend, data, setTitles);
 
         // initialize the font
         typeface(view);

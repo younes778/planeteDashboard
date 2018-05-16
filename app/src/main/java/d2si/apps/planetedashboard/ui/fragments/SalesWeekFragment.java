@@ -10,15 +10,12 @@ import com.anychart.anychart.AnyChartView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.database.controller.SalesController;
-import d2si.apps.planetedashboard.ui.data.CustomLineChart;
+import d2si.apps.planetedashboard.ui.data.CustomColumnChart;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -63,14 +60,14 @@ public class SalesWeekFragment extends Fragment {
         // fill data and labels
         for (int i = 0; i < 7; i++) {
 
-            final int j=i;
+            final int j = i;
             data.add(new ArrayList<Float>() {{
-                add((Float) objects.get(j*2));
-                add((Float) objects.get(j*2+1));
+                add((Float) objects.get(j * 2));
+                add((Float) objects.get(j * 2 + 1));
             }});
         }
 
-        new CustomLineChart(chart, Arrays.asList(getResources().getStringArray(R.array.days_shors)), data, setTitles);
+        new CustomColumnChart(chart, AppUtils.getDaysShort(getActivity()), data, setTitles);
         // initialize the font
         typeface(view);
         typeface(chart);

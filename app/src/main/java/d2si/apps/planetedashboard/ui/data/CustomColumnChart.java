@@ -3,12 +3,15 @@ package d2si.apps.planetedashboard.ui.data;
 import com.anychart.anychart.AnyChart;
 import com.anychart.anychart.AnyChartView;
 import com.anychart.anychart.Cartesian;
+import com.anychart.anychart.CartesianSeriesColumn;
 import com.anychart.anychart.CartesianSeriesLine;
 import com.anychart.anychart.DataEntry;
 import com.anychart.anychart.EnumsAnchor;
+import com.anychart.anychart.HoverMode;
 import com.anychart.anychart.Mapping;
 import com.anychart.anychart.MarkerType;
 import com.anychart.anychart.Orientation;
+import com.anychart.anychart.Position;
 import com.anychart.anychart.Set;
 import com.anychart.anychart.Stroke;
 import com.anychart.anychart.TooltipPositionMode;
@@ -24,10 +27,10 @@ import d2si.apps.planetedashboard.AppUtils;
  *
  * @author younessennadj
  */
-public class CustomLineChart {
+public class CustomColumnChart {
 
     private AnyChartView chart;
-    private Cartesian barChart;
+    private Cartesian columnChart;
 
     /**
      * constructor
@@ -37,44 +40,48 @@ public class CustomLineChart {
      * @param entries    data to show
      * @param dataTitles series titles
      */
-    public CustomLineChart(AnyChartView chart, List<String> legend, ArrayList<ArrayList<Float>> entries, List<String> dataTitles) {
+    public CustomColumnChart(AnyChartView chart, List<String> legend, ArrayList<ArrayList<Float>> entries, List<String> dataTitles) {
         this.chart = chart;
         customizeChart();
         customizeLegend();
         addData(legend, entries, dataTitles);
 
-        chart.setChart(barChart);
+        chart.setChart(columnChart);
 
     }
 
     public void customizeChart() {
-        barChart = AnyChart.line();
+        columnChart = AnyChart.column();
 
-        barChart.setAnimation(true);
-
-
-        barChart.setPadding(10d, 20d, 20d, 20d);
+        columnChart.setAnimation(true);
 
 
-        barChart.getCrosshair().setEnabled(true);
-        barChart.getCrosshair()
-                .setYLabel(true)
-                .setYStroke((Stroke) null, null, null, null, null);
+        columnChart.setPadding(10d, 20d, 20d, 20d);
 
-        barChart.getTooltip().setPositionMode(TooltipPositionMode.POINT);
 
+        columnChart.getTooltip()
+                .setTitleFormat("{%X}")
+                .setPosition(Position.CENTER_BOTTOM)
+                .setAnchor(EnumsAnchor.CENTER_BOTTOM)
+                .setOffsetX(0d)
+                .setOffsetY(5d)
+                .setFormat("{%Value}{groupsSeparator: }");
+
+        columnChart.getTooltip().setPositionMode(TooltipPositionMode.POINT);
+        columnChart.getInteractivity().setHoverMode(HoverMode.BY_X);
 
     }
 
     public void customizeLegend() {
 
-        barChart.getYAxis().getLabels().setFormat("{%Value}{scale:(1)(1000)(1000)(1000)|( )(K)(M)(B)}");
-        barChart.getYAxis().setOrientation(Orientation.RIGHT);
-        barChart.getXAxis().getLabels().setPadding(5d, 5d, 5d, 5d);
+        columnChart.getYScale().setMinimum(0d);
 
-        barChart.getLegend().setEnabled(true);
-        barChart.getLegend().setFontSize(13d);
-        barChart.getLegend().setPadding(0d, 0d, 10d, 0d);
+        columnChart.getYAxis().getLabels().setFormat("{%Value}{groupsSeparator: }");
+
+        columnChart.getLegend().setEnabled(true);
+        columnChart.getLegend().setInverted(true);
+        columnChart.getLegend().setFontSize(13d);
+        columnChart.getLegend().setPadding(0d, 0d, 20d, 0d);
 
     }
 
@@ -93,7 +100,8 @@ public class CustomLineChart {
                 mappingData = set.mapAs("{ x: 'x', value: 'value' }");
             else mappingData = set.mapAs("{ x: 'x', value: 'value" + (i + 1) + "' }");
 
-            CartesianSeriesLine series = barChart.line(mappingData);
+
+            CartesianSeriesColumn series = columnChart.column(mappingData);
             series.setName(dataTitles.get(i) + "")
                     .setColor(AppUtils.CHART_COLORS.get(i));
             series.getHovered().getMarkers().setEnabled(true);

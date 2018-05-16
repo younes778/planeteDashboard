@@ -397,5 +397,14 @@ public class AppUtils {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    public static ArrayList<String> getDaysShort(Context context){
+        ArrayList<String> daysShort = new ArrayList<>();
+        int i = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        for (int j=i%7;j!=i-1;j=(j+1)%7)
+            daysShort.add(context.getResources().getStringArray(R.array.days_shors)[j]);
+        daysShort.add(context.getResources().getStringArray(R.array.days_shors)[i-1]);
+        return daysShort;
+    }
+
 
 }

@@ -72,14 +72,13 @@ public class CustomBarChart {
                 .setOffsetY(0d)
                 .setFormat(
                         "function() {\n" +
-                                "      return '<span style=\"color: #FFFFFF\">DZ</span>' + Math.abs(this.value).toLocaleString();\n" +
+                                "      return '<span style=\"color: #FFFFFF\"></span>' + Math.abs(this.value).toLocaleString();\n" +
                                 "    }");
 
     }
 
     public void customizeLegend() {
         barChart.getYAxis().getLabels().setFormat("function(){return anychart.format.number(Math.abs(Math.ceil(this.value)),{scale:true})}");
-        //barChart.getYAxis().getLabels().setFormat("{%Value}{scale:(1000000)(1)|(M)}");
 
         barChart.getXAxis(0d).setOverlapMode(LabelsOverlapMode.ALLOW_OVERLAP);
 
