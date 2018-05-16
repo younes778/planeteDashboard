@@ -15,6 +15,7 @@ import d2si.apps.planetedashboard.database.controller.DataBaseUpdater;
 import d2si.apps.planetedashboard.database.data.Article;
 import d2si.apps.planetedashboard.database.data.Document;
 import d2si.apps.planetedashboard.database.data.Ligne;
+import d2si.apps.planetedashboard.database.data.QuickAccessData;
 import d2si.apps.planetedashboard.database.data.Representant;
 import d2si.apps.planetedashboard.database.data.SyncReport;
 import d2si.apps.planetedashboard.database.data.Tiers;

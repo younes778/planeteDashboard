@@ -60,21 +60,8 @@ public class MainMenuActivity extends RealmActivity {
      */
     @OnClick(R.id.btn_sales)
     void sales() {
-
-        dialog = new MaterialDialog.Builder(MainMenuActivity.this)
-                .title(R.string.progress_calculating_title)
-                .content(R.string.progress_calculating_content)
-                .progress(true, 0)
-                .cancelable(false)
-                .show();
-
-        new SalesFragmentDataSetter() {
-            @Override
-            public void onDataSet() {
-                dialog.dismiss();
-                AppUtils.launchActivity(MainMenuActivity.this, MainActivity.class, true, String.valueOf(MainActivity.FRAGMENT_SALES));
-            }
-        }.execute();
+        SalesController.updateSalesFragment();
+        AppUtils.launchActivity(MainMenuActivity.this,MainActivity.class,true,"0");
 
     }
 

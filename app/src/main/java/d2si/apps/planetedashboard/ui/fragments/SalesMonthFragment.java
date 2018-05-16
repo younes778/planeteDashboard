@@ -33,7 +33,7 @@ public class SalesMonthFragment extends Fragment {
     @BindView(R.id.chart)
     AnyChartView chart;
     private View view;
-    public static ArrayList<Object> objects;
+    public static ArrayList<Float> objects;
 
     @Override
     /**

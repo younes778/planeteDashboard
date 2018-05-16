@@ -8,9 +8,14 @@ import java.util.Date;
 import d2si.apps.planetedashboard.database.data.Article;
 import d2si.apps.planetedashboard.database.data.Document;
 import d2si.apps.planetedashboard.database.data.Ligne;
+import d2si.apps.planetedashboard.database.data.QuickAccessData;
 import d2si.apps.planetedashboard.database.data.Representant;
 import d2si.apps.planetedashboard.database.data.SyncReport;
 import d2si.apps.planetedashboard.database.data.Tiers;
+import d2si.apps.planetedashboard.ui.fragments.SalesDayFragment;
+import d2si.apps.planetedashboard.ui.fragments.SalesMonthFragment;
+import d2si.apps.planetedashboard.ui.fragments.SalesWeekFragment;
+import d2si.apps.planetedashboard.ui.fragments.SalesYearFragment;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -24,6 +29,8 @@ import io.realm.RealmResults;
  * @author younessennadj
  */
 public class SalesController {
+
+
     /**
      * Filter to be applied
      * None : for no filter
@@ -337,33 +344,33 @@ public class SalesController {
         return false;
     }
 
-    public static ArrayList<Object> getDayData() {
-        ArrayList<Object> data = new ArrayList<>();
+    public static ArrayList<Float> getDayData() {
+        ArrayList<Float> data = new ArrayList<>();
 
         Calendar calendarToday = Calendar.getInstance();
         Date dateToday = new Date(calendarToday.getTimeInMillis());
         data.add(getSalesTotalByDay(dateToday));
         data.add(getSalesAverageByDay(dateToday));
-        data.add(getSalesPositiveQuantityByDay(dateToday));
-        data.add(getSalesNegativeQuantityByDay(dateToday));
-        data.add(getSalesPositiveNoInvoiceByDay(dateToday));
-        data.add(getSalesNegativeNoInvoiceByDay(dateToday));
+        data.add((float)getSalesPositiveQuantityByDay(dateToday));
+        data.add((float)getSalesNegativeQuantityByDay(dateToday));
+        data.add((float)getSalesPositiveNoInvoiceByDay(dateToday));
+        data.add((float)getSalesNegativeNoInvoiceByDay(dateToday));
 
         Calendar calendarYesterday = Calendar.getInstance();
         calendarYesterday.set(Calendar.DAY_OF_MONTH, calendarYesterday.get(Calendar.DAY_OF_MONTH) - 1);
         Date dateYesterday = new Date(calendarYesterday.getTimeInMillis());
         data.add(getSalesTotalByDay(dateYesterday));
         data.add(getSalesAverageByDay(dateYesterday));
-        data.add(getSalesPositiveQuantityByDay(dateYesterday));
-        data.add(getSalesNegativeQuantityByDay(dateYesterday));
-        data.add(getSalesPositiveNoInvoiceByDay(dateYesterday));
-        data.add(getSalesNegativeNoInvoiceByDay(dateYesterday));
+        data.add((float)getSalesPositiveQuantityByDay(dateYesterday));
+        data.add((float)getSalesNegativeQuantityByDay(dateYesterday));
+        data.add((float)getSalesPositiveNoInvoiceByDay(dateYesterday));
+        data.add((float)getSalesNegativeNoInvoiceByDay(dateYesterday));
 
         return data;
     }
 
-    public static ArrayList<Object> getWeekData() {
-        ArrayList<Object> data = new ArrayList<>();
+    public static ArrayList<Float> getWeekData() {
+        ArrayList<Float> data = new ArrayList<>();
 
         for (int i = 0; i < 7; i++) {
             Calendar calendar = Calendar.getInstance();
@@ -379,8 +386,8 @@ public class SalesController {
         return data;
     }
 
-    public static ArrayList<Object> getMonthData() {
-        ArrayList<Object> data = new ArrayList<>();
+    public static ArrayList<Float> getMonthData() {
+        ArrayList<Float> data = new ArrayList<>();
 
         for (int i = 0; i < 31; i++) {
             Calendar calendar = Calendar.getInstance();
@@ -396,8 +403,8 @@ public class SalesController {
         return data;
     }
 
-    public static ArrayList<Object> getYearData() {
-        ArrayList<Object> data = new ArrayList<>();
+    public static ArrayList<Float> getYearData() {
+        ArrayList<Float> data = new ArrayList<>();
 
         for (int i = 0; i < 12; i++) {
             Calendar calendar = Calendar.getInstance();
@@ -434,6 +441,20 @@ public class SalesController {
         for (SyncReport syncReport:syncReports) res+=syncReport.toString();
         realm.close();
         return res;
+    }
+
+    public static void updateSalesFragment() {
+        Realm realm = Realm.getDefaultInstance();
+        QuickAccessData quickAccessData=realm.where(QuickAccessData.class).findFirst();
+        SalesDayFragment.objects = new ArrayList<>();
+        SalesDayFragment.objects.addAll(quickAccessData.getDay_data());
+        SalesWeekFragment.objects = new ArrayList<>();
+        SalesWeekFragment.objects.addAll(quickAccessData.getWeek_data());
+        SalesMonthFragment.objects = new ArrayList<>();
+        SalesMonthFragment.objects.addAll(quickAccessData.getMonth_data());
+        SalesYearFragment.objects = new ArrayList<>();
+        SalesYearFragment.objects.addAll(quickAccessData.getYear_data());
+        realm.close();
     }
 
 

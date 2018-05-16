@@ -341,20 +341,9 @@ public class MainActivity extends RealmActivity {
                 if (SalesController.filter!=SalesController.FILTER.NONE) {
                     SalesController.filter = SalesController.FILTER.NONE;
                     SalesController.filters = null;
-                    dialog = new MaterialDialog.Builder(MainActivity.this)
-                            .title(R.string.progress_calculating_title)
-                            .content(R.string.progress_calculating_content)
-                            .progress(true, 0)
-                            .cancelable(false)
-                            .show();
 
-                    new SalesFragmentDataSetter() {
-                        @Override
-                        public void onDataSet() {
-                            dialog.dismiss();
-                            setupTabs(0);
-                        }
-                    }.execute();
+                    SalesController.updateSalesFragment();
+                    setupTabs(0);
                 }
                 break;
             case ITEM: {// if item setup articles ,spinner show (Label,Id) and spinner familly and the select all function
