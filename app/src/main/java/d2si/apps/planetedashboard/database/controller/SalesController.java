@@ -97,12 +97,12 @@ public class SalesController {
     }
 
     /**
-     * Method that get sales quantity for the day date
+     * Method that get sales positive quantity for the day date
      *
      * @param date day of the sales
      * @return the quantity of articles sale
      */
-    public static int getSalesQuantityByDay(Date date) {
+    public static int getSalesPositiveQuantityByDay(Date date) {
         int total = 0;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -119,17 +119,58 @@ public class SalesController {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Document> documents = realm.where(Document.class).between("date", dateFrom, dateTo).findAll();
         for (Document document : documents) {
-            if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isIdExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isIdExist(filters, document.getRep_code()))) {
-                RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
-                for (Ligne ligne : lignes)
-                    total += ligne.getLig_qte();
-            } else if (filter == FILTER.ITEM) {
-                int sign = 1;
-                if (document.getDoc_type().equalsIgnoreCase("vn")) sign = -1;
-                RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
-                for (Ligne ligne : lignes) {
-                    if (isIdExist(filters, ligne.getArt_code()))
+            if (document.getDoc_type().equalsIgnoreCase("vp")) {
+                if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isIdExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isIdExist(filters, document.getRep_code()))) {
+                    RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
+                    for (Ligne ligne : lignes)
                         total += ligne.getLig_qte();
+                } else if (filter == FILTER.ITEM) {
+                    RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
+                    for (Ligne ligne : lignes) {
+                        if (isIdExist(filters, ligne.getArt_code()))
+                            total += ligne.getLig_qte();
+                    }
+                }
+            }
+        }
+        realm.close();
+        return total;
+    }
+
+    /**
+     * Method that get sales negative quantity for the day date
+     *
+     * @param date day of the sales
+     * @return the quantity of articles sale
+     */
+    public static int getSalesNegativeQuantityByDay(Date date) {
+        int total = 0;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date dateFrom = new Date(calendar.getTimeInMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        Date dateTo = new Date(calendar.getTimeInMillis());
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Document> documents = realm.where(Document.class).between("date", dateFrom, dateTo).findAll();
+        for (Document document : documents) {
+            if (document.getDoc_type().equalsIgnoreCase("vn")) {
+                if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isIdExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isIdExist(filters, document.getRep_code()))) {
+                    RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
+                    for (Ligne ligne : lignes)
+                        total += ligne.getLig_qte();
+                } else if (filter == FILTER.ITEM) {
+                    RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
+                    for (Ligne ligne : lignes) {
+                        if (isIdExist(filters, ligne.getArt_code()))
+                            total += ligne.getLig_qte();
+                    }
                 }
             }
         }
@@ -185,12 +226,12 @@ public class SalesController {
 
 
     /**
-     * Method that get sales number for the day date
+     * Method that get positive sales number for the day date
      *
      * @param date day of the sales
      * @return the sales number of articles sale
      */
-    public static int getSalesNoInvoiceByDay(Date date) {
+    public static int getSalesPositiveNoInvoiceByDay(Date date) {
         int total = 0;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -207,18 +248,63 @@ public class SalesController {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Document> documents = realm.where(Document.class).between("date", dateFrom, dateTo).findAll();
         for (Document document : documents) {
-            if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isIdExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isIdExist(filters, document.getRep_code()))) {
-                total++;
-            } else if (filter == FILTER.ITEM) {
-                RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
-                boolean isArticleExist = false;
-                for (Ligne ligne : lignes) {
-                    if (isIdExist(filters, ligne.getArt_code())) {
-                        isArticleExist = true;
-                        break;
+            if (document.getDoc_type().equalsIgnoreCase("vp")) {
+                if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isIdExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isIdExist(filters, document.getRep_code()))) {
+                    total++;
+                } else if (filter == FILTER.ITEM) {
+                    RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
+                    boolean isArticleExist = false;
+                    for (Ligne ligne : lignes) {
+                        if (isIdExist(filters, ligne.getArt_code())) {
+                            isArticleExist = true;
+                            break;
+                        }
                     }
+                    if (isArticleExist) total++;
                 }
-                if (isArticleExist) total++;
+            }
+        }
+        realm.close();
+        return total;
+    }
+
+    /**
+     * Method that get nagative sales number for the day date
+     *
+     * @param date day of the sales
+     * @return the sales number of articles sale
+     */
+    public static int getSalesNegativeNoInvoiceByDay(Date date) {
+        int total = 0;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date dateFrom = new Date(calendar.getTimeInMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        Date dateTo = new Date(calendar.getTimeInMillis());
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Document> documents = realm.where(Document.class).between("date", dateFrom, dateTo).findAll();
+        for (Document document : documents) {
+            if (document.getDoc_type().equalsIgnoreCase("vn")) {
+                if (filter == FILTER.NONE || (filter == FILTER.CLIENT && isIdExist(filters, document.getPcf_code())) || (filter == FILTER.REPRESENTANT && isIdExist(filters, document.getRep_code()))) {
+                    total++;
+                } else if (filter == FILTER.ITEM) {
+                    RealmResults<Ligne> lignes = realm.where(Ligne.class).contains("lig_doc_numero", document.getDoc_numero()).findAll();
+                    boolean isArticleExist = false;
+                    for (Ligne ligne : lignes) {
+                        if (isIdExist(filters, ligne.getArt_code())) {
+                            isArticleExist = true;
+                            break;
+                        }
+                    }
+                    if (isArticleExist) total++;
+                }
             }
         }
         realm.close();
@@ -232,8 +318,8 @@ public class SalesController {
      * @return the average price of articles sale
      */
     public static float getSalesAverageByDay(Date date) {
-        if (getSalesQuantityByDay(date) == 0) return 0;
-        return getSalesTotalByDay(date) / getSalesQuantityByDay(date);
+        if (getSalesPositiveQuantityByDay(date)+getSalesNegativeQuantityByDay(date) == 0) return 0;
+        return getSalesTotalByDay(date) / (getSalesPositiveQuantityByDay(date)+getSalesNegativeQuantityByDay(date));
     }
 
     /**
@@ -257,16 +343,20 @@ public class SalesController {
         Date dateToday = new Date(calendarToday.getTimeInMillis());
         data.add(getSalesTotalByDay(dateToday));
         data.add(getSalesAverageByDay(dateToday));
-        data.add(getSalesQuantityByDay(dateToday));
-        data.add(getSalesNoInvoiceByDay(dateToday));
+        data.add(getSalesPositiveQuantityByDay(dateToday));
+        data.add(getSalesNegativeQuantityByDay(dateToday));
+        data.add(getSalesPositiveNoInvoiceByDay(dateToday));
+        data.add(getSalesNegativeNoInvoiceByDay(dateToday));
 
         Calendar calendarYesterday = Calendar.getInstance();
         calendarYesterday.set(Calendar.DAY_OF_MONTH, calendarYesterday.get(Calendar.DAY_OF_MONTH) - 1);
         Date dateYesterday = new Date(calendarYesterday.getTimeInMillis());
         data.add(getSalesTotalByDay(dateYesterday));
         data.add(getSalesAverageByDay(dateYesterday));
-        data.add(getSalesQuantityByDay(dateYesterday));
-        data.add(getSalesNoInvoiceByDay(dateYesterday));
+        data.add(getSalesPositiveQuantityByDay(dateYesterday));
+        data.add(getSalesNegativeQuantityByDay(dateYesterday));
+        data.add(getSalesPositiveNoInvoiceByDay(dateYesterday));
+        data.add(getSalesNegativeNoInvoiceByDay(dateYesterday));
 
         return data;
     }

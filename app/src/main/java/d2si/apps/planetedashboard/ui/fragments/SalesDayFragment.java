@@ -84,13 +84,25 @@ public class SalesDayFragment extends Fragment {
         tv_yesterday_date.setText(AppUtils.getYesterdayDateFormatted());
         tv_today_sales.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(0), true));
         tv_today_average.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(1), false));
-        tv_today_quantity.setText((int) objects.get(2) + "");
-        tv_today_articles_number.setText((int) objects.get(3) + "");
+        if ((int) objects.get(2) == 0 && (int) objects.get(3) == 0)
+            tv_today_quantity.setText("0");
+        else
+        tv_today_quantity.setText((int) objects.get(2) + getString(R.string.tv_positive)+" "+(int) objects.get(3)+getString(R.string.tv_negative));
+        if ((int) objects.get(4) == 0 && (int) objects.get(5) == 0)
+            tv_today_articles_number.setText("0");
+        else
+        tv_today_articles_number.setText((int) objects.get(4) + getString(R.string.tv_positive)+" "+(int) objects.get(5)+getString(R.string.tv_negative));
 
-        tv_yesterday_sales.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(4), true));
-        tv_yesterday_average.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(5), false));
-        tv_yesterday_quantity.setText((int) objects.get(6) + "");
-        tv_yesterday_articles_number.setText((int) objects.get(7) + "");
+        tv_yesterday_sales.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(6), true));
+        tv_yesterday_average.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(7), false));
+        if ((int) objects.get(8) == 0 && (int) objects.get(9) == 0)
+            tv_yesterday_quantity.setText("0");
+        else
+        tv_yesterday_quantity.setText((int) objects.get(8) + getString(R.string.tv_positive)+" "+(int) objects.get(9)+getString(R.string.tv_negative));
+        if ((int) objects.get(10) == 0 && (int) objects.get(11) == 0)
+            tv_yesterday_articles_number.setText("0");
+        else
+        tv_yesterday_articles_number.setText((int) objects.get(10) + getString(R.string.tv_positive)+" "+(int) objects.get(11)+getString(R.string.tv_negative));
 
         return view;
     }

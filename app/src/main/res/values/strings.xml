@@ -82,6 +82,8 @@
     <string name="tv_articles_number">No.invoice</string>
     <string name="tv_average_price">Avg.price</string>
     <string name="tv_configuration"><b>CONFIGURATION</b></string>
+    <string name="tv_positive"><b>+</b></string>
+    <string name="tv_negative"><b>-</b></string>
 
     <!--                Errors                     -->
     <string name="error_no_connexion">Please, check your internet connexion!</string>
