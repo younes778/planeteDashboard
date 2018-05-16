@@ -29,7 +29,8 @@
 
     <!--                App data                -->
     <integer name="db_local_version">3</integer>
-    <string name="app_name">PLANETE <b>DASHBOARD</b></string>
+    <string name="app_name">PLANÈTE <b>DASHBOARD</b></string>
+    <string name="app_splash"><b>PLANÈTE\nDASHBOARD</b></string>
     <string name="activity_login">LOGIN</string>
     <string name="activity_settings">SETTINGS</string>
     <string name="current_currency">DZ</string>

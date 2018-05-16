@@ -59,7 +59,7 @@ public class SplashActivity extends RealmActivity {
                         AppUtils.launchActivity(SplashActivity.this, LoginActivity.class, true, null);
                 }
             }
-        }, 2000);
+        }, 3000);
 
 
         //Test
