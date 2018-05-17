@@ -184,7 +184,7 @@ public abstract class DataGetter {
                         public void onPost(ArrayList<Article> articles) {
                             if (articles == null) {
                                 AppUtils.addOneObjectToRealm(new SyncReport(lastSync, false, context.getString(R.string.sync_report_tables_error_article)));
-                                onSalesGet(false);
+                                onSalesUpdate(false);
                             } else {
                                 objectsToCopy.add(new ArrayList<RealmObject>(articles));
 
