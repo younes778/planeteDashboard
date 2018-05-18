@@ -2,6 +2,7 @@ package d2si.apps.planetedashboard.ui.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class LoginActivity extends RealmActivity {
     @BindView(R.id.btn_login)
     MaterialRippleLayout btn_login;
     private MaterialDialog dialog;
+    private String hashPass;
 
     /**
      * Method call when Login button clicked
@@ -62,8 +64,17 @@ public class LoginActivity extends RealmActivity {
             String user = pref.getString(getString(R.string.pref_key_user), "");
             String password = pref.getString(getString(R.string.pref_key_password), "");
 
+            hashPass=et_password.getText().toString();
+            try {
+                hashPass = AppUtils.encryptString(et_password.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            Log.e("hash",hashPass);
+
             // check if it is the last user then we don't need to update data
-            if (user.equalsIgnoreCase(et_user.getText().toString()) && password.equals(et_password.getText().toString())) {
+            if (user.equalsIgnoreCase(et_user.getText().toString()) && password.equals(hashPass)) {
                 SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(this);
                 // save in preferences the connected user
                 editor.putBoolean(getString(R.string.pref_key_connected), true);
@@ -104,7 +115,7 @@ public class LoginActivity extends RealmActivity {
                                 // save in preferences the connected user
                                 editor.putBoolean(getString(R.string.pref_key_connected), true);
                                 editor.putString(getString(R.string.pref_key_user), et_user.getText().toString());
-                                editor.putString(getString(R.string.pref_key_password), et_password.getText().toString());
+                                editor.putString(getString(R.string.pref_key_password), hashPass);
                                 editor.apply();
                                 AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
                             }
@@ -133,7 +144,7 @@ public class LoginActivity extends RealmActivity {
                         }
                     };
 
-                    dataGetter.checkUserCrediants(getBaseContext(), et_user.getText().toString(), et_password.getText().toString());
+                    dataGetter.checkUserCrediants(getBaseContext(), et_user.getText().toString(), hashPass);
                 } else
                     Toast.makeText(getBaseContext(), getString(R.string.error_no_connexion), Toast.LENGTH_LONG).show();
 

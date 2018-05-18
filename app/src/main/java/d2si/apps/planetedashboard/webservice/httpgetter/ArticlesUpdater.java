@@ -64,6 +64,7 @@ public abstract class ArticlesUpdater extends AsyncTask<Void, Void, ArrayList<Ar
             HttpComponentsClientHttpRequestFactory clientHttpRequestFactory
                     = new HttpComponentsClientHttpRequestFactory();
             clientHttpRequestFactory.setConnectTimeout(AppUtils.CONNEXION_TIMEOUT);
+            clientHttpRequestFactory.setReadTimeout(AppUtils.READ_TIMEOUT);
 
             restTemplate.setRequestFactory(clientHttpRequestFactory);
 

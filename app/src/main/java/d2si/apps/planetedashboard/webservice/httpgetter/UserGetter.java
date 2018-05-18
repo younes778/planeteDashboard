@@ -8,6 +8,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import d2si.apps.planetedashboard.AppUtils;
@@ -57,7 +58,7 @@ public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
                 add(AppUtils.serverName);
                 add(AppUtils.dBName);
                 add(user);
-                add(password);
+                add(URLEncoder.encode(password,"utf-8"));
             }});
 
             // use the rest template
@@ -67,6 +68,7 @@ public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
             HttpComponentsClientHttpRequestFactory clientHttpRequestFactory
                     = new HttpComponentsClientHttpRequestFactory();
             clientHttpRequestFactory.setConnectTimeout(AppUtils.CONNEXION_TIMEOUT);
+            clientHttpRequestFactory.setReadTimeout(AppUtils.READ_TIMEOUT);
 
             restTemplate.setRequestFactory(clientHttpRequestFactory);
 

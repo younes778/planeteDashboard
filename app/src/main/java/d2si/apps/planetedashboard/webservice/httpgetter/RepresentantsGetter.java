@@ -69,6 +69,7 @@ public abstract class RepresentantsGetter extends AsyncTask<Void, Void, ArrayLis
             HttpComponentsClientHttpRequestFactory clientHttpRequestFactory
                     = new HttpComponentsClientHttpRequestFactory();
             clientHttpRequestFactory.setConnectTimeout(AppUtils.CONNEXION_TIMEOUT);
+            clientHttpRequestFactory.setReadTimeout(AppUtils.READ_TIMEOUT);
 
             restTemplate.setRequestFactory(clientHttpRequestFactory);
 

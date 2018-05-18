@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
+import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -22,13 +23,21 @@ import com.norbsoft.typefacehelper.ActionBarHelper;
 import com.norbsoft.typefacehelper.TypefaceCollection;
 import com.norbsoft.typefacehelper.TypefaceHelper;
 
+import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.RC2ParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -48,6 +57,7 @@ public class AppUtils {
     public static String serverName;
     public static String dBName;
     public static int CONNEXION_TIMEOUT = 20000;
+    public static int READ_TIMEOUT = 5000000;
     public static ArrayList<IIcon> MENU_DRAWABLES = new ArrayList() {{
         add(CommunityMaterial.Icon.cmd_tag_text_outline);
         add(CommunityMaterial.Icon.cmd_package_variant_closed);
@@ -81,7 +91,7 @@ public class AppUtils {
      *
      * @param context App actual context
      */
-    public static void initServer(Context context){
+    public static void initServer(Context context) {
         SharedPreferences pref = AppUtils.getSharedPreference(context);
         serverName = pref.getString(context.getString(R.string.pref_key_server), "");
         dBName = pref.getString(context.getString(R.string.pref_key_database), "");
@@ -301,9 +311,9 @@ public class AppUtils {
         realm.close();
     }
 
-    public static String getFormattedDate(Date date){
+    public static String getFormattedDate(Date date) {
         SimpleDateFormat f = new SimpleDateFormat(dateFormat);
-       return f.format(date);
+        return f.format(date);
     }
 
     /**
@@ -403,21 +413,37 @@ public class AppUtils {
     /**
      * Method that hide soft keyboard on click in the activity
      *
-     * @param view actual view
+     * @param view    actual view
      * @param context actual context
      */
-    public static void hideKeyboard(View view,Context context) {
-        InputMethodManager inputMethodManager =(InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+    public static void hideKeyboard(View view, Context context) {
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static ArrayList<String> getDaysShort(Context context){
+    public static ArrayList<String> getDaysShort(Context context) {
         ArrayList<String> daysShort = new ArrayList<>();
         int i = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        for (int j=i%7;j!=i-1;j=(j+1)%7)
+        for (int j = i % 7; j != i - 1; j = (j + 1) % 7)
             daysShort.add(context.getResources().getStringArray(R.array.days_shors)[j]);
-        daysShort.add(context.getResources().getStringArray(R.array.days_shors)[i-1]);
+        daysShort.add(context.getResources().getStringArray(R.array.days_shors)[i - 1]);
         return daysShort;
+    }
+
+    public static String encryptString(String inputString) throws Exception {
+
+        String strKey = "RGBRGB";
+
+        final MessageDigest Sha = MessageDigest.getInstance("sha1");
+        byte[] hash = Sha.digest(strKey.getBytes("UTF-8"));
+        hash = Arrays.copyOf(hash, 16);
+        final SecretKey Key = new SecretKeySpec(hash, "DESede");
+        IvParameterSpec param= new IvParameterSpec(new byte[8]);
+        final Cipher cipher = Cipher.getInstance("DESede/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, Key, param);
+        byte[] byteBuff = cipher.doFinal(inputString.getBytes("UTF-8"));
+        return new String(Base64.encode(byteBuff, 0));
+
     }
 
 

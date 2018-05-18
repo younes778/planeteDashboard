@@ -64,6 +64,7 @@ public abstract class RepresentantsUpdater extends AsyncTask<Void, Void, ArrayLi
             HttpComponentsClientHttpRequestFactory clientHttpRequestFactory
                     = new HttpComponentsClientHttpRequestFactory();
             clientHttpRequestFactory.setConnectTimeout(AppUtils.CONNEXION_TIMEOUT);
+            clientHttpRequestFactory.setReadTimeout(AppUtils.READ_TIMEOUT);
 
             restTemplate.setRequestFactory(clientHttpRequestFactory);
 

@@ -69,6 +69,7 @@ public abstract class SalesGetter extends AsyncTask<Void, Void, ArrayList<Docume
             HttpComponentsClientHttpRequestFactory clientHttpRequestFactory
                     = new HttpComponentsClientHttpRequestFactory();
             clientHttpRequestFactory.setConnectTimeout(AppUtils.CONNEXION_TIMEOUT);
+            clientHttpRequestFactory.setReadTimeout(AppUtils.READ_TIMEOUT);
 
             restTemplate.setRequestFactory(clientHttpRequestFactory);
 
