@@ -2,7 +2,6 @@ package d2si.apps.planetedashboard.ui.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -66,7 +65,8 @@ public class LoginActivity extends RealmActivity {
             String password = pref.getString(getString(R.string.pref_key_password), "");
 
 
-            hashPass=et_password.getText().toString();
+            // Encrypt the password according to the encryption algorithm
+            hashPass = et_password.getText().toString();
             try {
                 hashPass = AppUtils.encryptString(et_password.getText().toString());
             } catch (Exception e) {
@@ -74,9 +74,9 @@ public class LoginActivity extends RealmActivity {
             }
 
             // check if it is the last user then we don't need to update data
-            if (user.equalsIgnoreCase(et_user.getText().toString()) && password.replace("\n","").trim().equals(hashPass.trim())) {
+            if (user.equalsIgnoreCase(et_user.getText().toString()) && password.replace("\n", "").trim().equals(hashPass.trim())) {
                 SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(this);
-                // save in preferences the connected user
+                // save in preferences the user connection
                 editor.putBoolean(getString(R.string.pref_key_connected), true);
                 editor.apply();
 
@@ -126,8 +126,7 @@ public class LoginActivity extends RealmActivity {
                                 UpdateJob.scheduleJob(getApplicationContext());
 
                                 AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
-                            }
-                            else
+                            } else
                                 Toast.makeText(getBaseContext(), R.string.error_connexion, Toast.LENGTH_SHORT).show();
 
                         }
@@ -183,14 +182,14 @@ public class LoginActivity extends RealmActivity {
         et_user.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                AppUtils.hideKeyboard(view,getBaseContext());
+                AppUtils.hideKeyboard(view, getBaseContext());
             }
         });
 
         et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                AppUtils.hideKeyboard(view,getBaseContext());
+                AppUtils.hideKeyboard(view, getBaseContext());
             }
         });
 

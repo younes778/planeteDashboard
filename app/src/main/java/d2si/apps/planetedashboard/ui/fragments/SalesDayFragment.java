@@ -87,22 +87,22 @@ public class SalesDayFragment extends Fragment {
         if (Math.round(objects.get(2)) == 0 && Math.round(objects.get(3)) == 0)
             tv_today_quantity.setText("0");
         else
-        tv_today_quantity.setText(Math.round(objects.get(2)) + getString(R.string.tv_positive)+" "+Math.round(objects.get(3))+getString(R.string.tv_negative));
+            tv_today_quantity.setText(Math.round(objects.get(2)) + getString(R.string.tv_positive) + " " + Math.round(objects.get(3)) + getString(R.string.tv_negative));
         if (Math.round(objects.get(4)) == 0 && Math.round(objects.get(5)) == 0)
             tv_today_articles_number.setText("0");
         else
-        tv_today_articles_number.setText(Math.round(objects.get(4)) + getString(R.string.tv_positive)+" "+Math.round(objects.get(5))+getString(R.string.tv_negative));
+            tv_today_articles_number.setText(Math.round(objects.get(4)) + getString(R.string.tv_positive) + " " + Math.round(objects.get(5)) + getString(R.string.tv_negative));
 
         tv_yesterday_sales.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(6), true));
         tv_yesterday_average.setText(AppUtils.getCurrencyFormatted(getActivity(), (float) objects.get(7), false));
         if (Math.round(objects.get(8)) == 0 && Math.round(objects.get(9)) == 0)
             tv_yesterday_quantity.setText("0");
         else
-        tv_yesterday_quantity.setText(Math.round(objects.get(8)) + getString(R.string.tv_positive)+" "+Math.round(objects.get(9))+getString(R.string.tv_negative));
+            tv_yesterday_quantity.setText(Math.round(objects.get(8)) + getString(R.string.tv_positive) + " " + Math.round(objects.get(9)) + getString(R.string.tv_negative));
         if (Math.round(objects.get(10)) == 0 && Math.round(objects.get(11)) == 0)
             tv_yesterday_articles_number.setText("0");
         else
-        tv_yesterday_articles_number.setText(Math.round(objects.get(10)) + getString(R.string.tv_positive)+" "+Math.round(objects.get(11))+getString(R.string.tv_negative));
+            tv_yesterday_articles_number.setText(Math.round(objects.get(10)) + getString(R.string.tv_positive) + " " + Math.round(objects.get(11)) + getString(R.string.tv_negative));
 
         return view;
     }

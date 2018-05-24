@@ -1,10 +1,8 @@
 package d2si.apps.planetedashboard;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,7 +36,6 @@ import java.util.List;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.RC2ParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import io.realm.Realm;
@@ -71,7 +68,6 @@ public class AppUtils {
         add(CommunityMaterial.Icon.cmd_sync);
     }};
 
-    public static boolean VERSION_TEST = true;
     public static String ACTIVITY_DATA = "Data";
     public static List<String> CHART_COLORS = new ArrayList<>();
     public static Typeface fontApp;
@@ -327,7 +323,7 @@ public class AppUtils {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
 
-        realm.copyToRealm(object); // Persist unmanaged objects
+        realm.copyToRealmOrUpdate(object); // Persist unmanaged objects
 
         realm.commitTransaction();
         realm.close();
@@ -423,26 +419,44 @@ public class AppUtils {
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    /**
+     * Method that return this week week days short depending on the actual day
+     *
+     * @param context App actual context
+     * @return week days short starting from today
+     */
     public static ArrayList<String> getDaysShort(Context context) {
+        // get the default days short
         ArrayList<String> daysShort = new ArrayList<>();
+        // get today index
         int i = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        // construct the new list and today is the first day of the week
         for (int j = i % 7; j != i - 1; j = (j + 1) % 7)
             daysShort.add(context.getResources().getStringArray(R.array.days_shors)[j]);
         daysShort.add(context.getResources().getStringArray(R.array.days_shors)[i - 1]);
         return daysShort;
     }
 
+    /**
+     * Method that encrypt password accoding to the triple DES method
+     *
+     * @param inputString input to be encrypted
+     * @return encrypted password
+     */
     public static String encryptString(String inputString) throws Exception {
-
+        // set the encryption key
         String strKey = "RGBRGB";
 
+        // apply the hash method (SHA1)
         final MessageDigest Sha = MessageDigest.getInstance("sha1");
         byte[] hash = Sha.digest(strKey.getBytes("UTF-8"));
         hash = Arrays.copyOf(hash, 16);
+        // Get the secret key using the triple DES method
         final SecretKey Key = new SecretKeySpec(hash, "DESede");
-        IvParameterSpec param= new IvParameterSpec(new byte[8]);
+        IvParameterSpec param = new IvParameterSpec(new byte[8]);
         final Cipher cipher = Cipher.getInstance("DESede/CBC/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, Key, param);
+        // get the result
         byte[] byteBuff = cipher.doFinal(inputString.getBytes("UTF-8"));
         return new String(Base64.encode(byteBuff, 0));
 

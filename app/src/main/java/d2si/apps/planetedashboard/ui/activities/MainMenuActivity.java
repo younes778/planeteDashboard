@@ -1,25 +1,11 @@
 package d2si.apps.planetedashboard.ui.activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.iconics.IconicsDrawable;
-
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,12 +13,6 @@ import butterknife.OnClick;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.controller.SalesController;
-import d2si.apps.planetedashboard.database.controller.SalesFragmentDataSetter;
-import d2si.apps.planetedashboard.database.data.Article;
-import d2si.apps.planetedashboard.ui.fragments.SalesDayFragment;
-import d2si.apps.planetedashboard.ui.fragments.SalesMonthFragment;
-import d2si.apps.planetedashboard.ui.fragments.SalesWeekFragment;
-import d2si.apps.planetedashboard.ui.fragments.SalesYearFragment;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -64,7 +44,7 @@ public class MainMenuActivity extends RealmActivity {
     @OnClick(R.id.btn_sales)
     void sales() {
         SalesController.updateSalesFragment();
-        AppUtils.launchActivity(MainMenuActivity.this,MainActivity.class,true,"0");
+        AppUtils.launchActivity(MainMenuActivity.this, MainActivity.class, true, "0");
 
     }
 

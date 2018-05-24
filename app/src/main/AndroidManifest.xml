@@ -40,10 +40,6 @@
             android:label="@string/app_name" />
 
         <activity
-            android:name=".ui.activities.TestActivity"
-            android:label="@string/app_name" />
-
-        <activity
             android:name=".ui.activities.SettingsActivity"
             android:label="@string/activity_settings"
             android:theme="@style/PreferenceTheme"/>

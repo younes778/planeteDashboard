@@ -9,14 +9,11 @@ import android.view.ViewGroup;
 import com.anychart.anychart.AnyChartView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.database.controller.SalesController;
 import d2si.apps.planetedashboard.ui.data.CustomColumnChart;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
@@ -62,12 +59,12 @@ public class SalesMonthFragment extends Fragment {
 
         // fill data and labels
         for (int i = 0; i < 31; i++) {
-            final int j=i;
+            final int j = i;
             legend.add((i + 1) + "");
 
             data.add(new ArrayList<Float>() {{
-                add((Float) objects.get(j*2));
-                add((Float) objects.get(j*2+1));
+                add((Float) objects.get(j * 2));
+                add((Float) objects.get(j * 2 + 1));
             }});
         }
 

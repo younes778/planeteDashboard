@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.anychart.anychart.AnyChartView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

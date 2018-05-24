@@ -12,12 +12,10 @@ import com.anychart.anychart.ValueDataEntry;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.database.controller.SalesController;
 import d2si.apps.planetedashboard.ui.data.CustomBarChart;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
@@ -67,11 +65,11 @@ public class SalesYearFragment extends Fragment {
         for (int i = 0; i < 12; i++) {
 
             months.add(new DateFormatSymbols().getMonths()[i]);
-            final int j=i;
+            final int j = i;
 
             data.add(new ArrayList<Float>() {{
-                add((Float) objects.get(j*2));
-                add((Float) objects.get(j*2+1)*-1);
+                add((Float) objects.get(j * 2));
+                add((Float) objects.get(j * 2 + 1) * -1);
             }});
         }
 

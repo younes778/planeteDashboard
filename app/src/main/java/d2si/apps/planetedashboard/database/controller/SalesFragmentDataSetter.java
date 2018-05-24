@@ -7,6 +7,13 @@ import d2si.apps.planetedashboard.ui.fragments.SalesMonthFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesWeekFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesYearFragment;
 
+/**
+ * Sales Fragment Data Setter
+ * <p>
+ * background task that update the sales fragments from the quick data access
+ *
+ * @author younessennadj
+ */
 public abstract class SalesFragmentDataSetter extends AsyncTask<Void, Void, Void> {
 
 

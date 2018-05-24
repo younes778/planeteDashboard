@@ -3,18 +3,9 @@ package d2si.apps.planetedashboard.ui.activities;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.webservice.httpgetter.ServerDBGetter;
-import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
-import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -62,13 +53,7 @@ public class SplashActivity extends RealmActivity {
         }, 3000);
 
 
-        //Test
-        //if (AppUtils.VERSION_TEST)
-          //  AppUtils.launchActivity(this,SettingsActivity.class,true,null);
-
-
     }
-
 
 
 }

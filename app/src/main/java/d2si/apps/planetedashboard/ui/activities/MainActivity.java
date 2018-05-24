@@ -30,12 +30,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -178,7 +173,7 @@ public class MainActivity extends RealmActivity {
                                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                                             @Override
                                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
+                                                // save the user disconnection
                                                 SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(MainActivity.this);
                                                 editor.putBoolean(getString(R.string.pref_key_connected), false);
                                                 editor.apply();
@@ -186,8 +181,8 @@ public class MainActivity extends RealmActivity {
                                                 // cancel the update job
                                                 SharedPreferences pref = AppUtils.getSharedPreference(getBaseContext());
                                                 int jobID = pref.getInt(getString(R.string.pref_key_update_job_id), -1);
-                                                if (jobID!=-1)
-                                                UpdateJob.cancelJob(jobID);
+                                                if (jobID != -1)
+                                                    UpdateJob.cancelJob(jobID);
 
                                                 AppUtils.launchActivity(MainActivity.this, LoginActivity.class, true, null);
                                             }
@@ -196,7 +191,7 @@ public class MainActivity extends RealmActivity {
                                 break;
                             case 9: // settings
                                 navDrawer.setSelection(fragment_to_launch + 1);
-                                AppUtils.launchActivity(MainActivity.this,SettingsActivity.class,false,null);
+                                AppUtils.launchActivity(MainActivity.this, SettingsActivity.class, false, null);
                                 break;
                             case 10: // sync data
                                 navDrawer.setSelection(fragment_to_launch + 1);
@@ -245,8 +240,8 @@ public class MainActivity extends RealmActivity {
                                     };
 
                                     dataGetter.updateSalesByDate(getBaseContext(), SalesController.getLastSyncDate());
-                                }
-                                else Toast.makeText(getBaseContext(),getString(R.string.error_no_connexion),Toast.LENGTH_LONG).show();
+                                } else
+                                    Toast.makeText(getBaseContext(), getString(R.string.error_no_connexion), Toast.LENGTH_LONG).show();
                                 break;
 
                         }
@@ -347,7 +342,7 @@ public class MainActivity extends RealmActivity {
 
         switch (filter) {
             case NONE: // if none apply no filter
-                if (SalesController.filter!=SalesController.FILTER.NONE) {
+                if (SalesController.filter != SalesController.FILTER.NONE) {
                     SalesController.filter = SalesController.FILTER.NONE;
                     SalesController.filters = null;
 
@@ -464,7 +459,7 @@ public class MainActivity extends RealmActivity {
                 choiceRecyclerAdapter = new ChoiceRecyclerAdapter(getBaseContext(), dataToShow);
 
 
-               dialog = new MaterialDialog.Builder(this)
+                dialog = new MaterialDialog.Builder(this)
                         .title(R.string.dialog_filter_title)
                         .customView(R.layout.dialog_filter, false)
                         .autoDismiss(false)

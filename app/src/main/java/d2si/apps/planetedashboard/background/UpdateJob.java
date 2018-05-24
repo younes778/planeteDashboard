@@ -19,50 +19,69 @@ import d2si.apps.planetedashboard.database.controller.SalesFragmentDataSetter;
 import d2si.apps.planetedashboard.database.data.SyncReport;
 import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
 
+/**
+ * UpdateJob
+ * <p>
+ * Job class that update the database from server in background
+ *
+ * @author younessennadj
+ */
 public class UpdateJob extends Job {
 
     public static final String TAG = "job_update";
 
     @Override
     @NonNull
+    /**
+     * Method that execute on Job received
+     *
+     * @param params job parameters
+     * @return job results
+     */
     protected Result onRunJob(Params params) {
         // run the update job
+        // get the auto sync value
         SharedPreferences pref = AppUtils.getSharedPreference(getContext());
         boolean isAutoSync = pref.getBoolean(getContext().getString(R.string.pref_key_sync_auto), true);
-        // check if auto sync is actif
+        // check if auto sync is active
         if (isAutoSync)
-        // check if internet is available
-        if (AppUtils.isNetworkAvailable(getContext())) {
+            // check if internet is available
+            if (AppUtils.isNetworkAvailable(getContext())) {
 
-            final DataGetter dataGetter = new DataGetter() {
-                @Override
-                public void onSalesUpdate(boolean success) {
+                final DataGetter dataGetter = new DataGetter() {
+                    @Override
+                    public void onSalesUpdate(boolean success) {
 
+                        // update the quick data access values
+                        new SalesFragmentDataSetter() {
+                            @Override
+                            public void onDataSet() {
+                            }
+                        }.execute();
+                    }
 
-                    new SalesFragmentDataSetter() {
-                        @Override
-                        public void onDataSet() {
-                        }
-                    }.execute();
-                }
+                    @Override
+                    public void onSalesGet(boolean success) {
 
-                @Override
-                public void onSalesGet(boolean success) {
+                    }
 
-                }
+                    @Override
+                    public void onUserUpdate(Boolean user) {
 
-                @Override
-                public void onUserUpdate(Boolean user) {
-
-                }
-            };
-
-            dataGetter.updateSalesByDate(getContext(), SalesController.getLastSyncDate());
-        } else
-            AppUtils.addOneObjectToRealm(new SyncReport(new Date(Calendar.getInstance().getTimeInMillis()), false, getContext().getString(R.string.sync_report_tables_error_connexion)));
+                    }
+                };
+                // execute the update from the last sync date
+                dataGetter.updateSalesByDate(getContext(), SalesController.getLastSyncDate());
+            } else // Internet not available job not executed correctly
+                AppUtils.addOneObjectToRealm(new SyncReport(new Date(Calendar.getInstance().getTimeInMillis()), false, getContext().getString(R.string.sync_report_tables_error_connexion)));
         return Result.SUCCESS;
     }
 
+    /**
+     * Method that schedule periodically a job
+     *
+     * @param context App actual context
+     */
     public static void scheduleJob(Context context) {
 
         // get sync period
@@ -70,18 +89,24 @@ public class UpdateJob extends Job {
         int syncDelay = pref.getInt(context.getString(R.string.pref_key_sync_delay), 60);
 
         // the minimum is 15 minutes
-        if (syncDelay<15) syncDelay=15;
+        if (syncDelay < 15) syncDelay = 15;
 
-        // start the priodic job
+        // start the periodic job
         int jobId = new JobRequest.Builder(UpdateJob.TAG)
                 .setPeriodic(TimeUnit.MINUTES.toMillis(syncDelay))
                 .build()
                 .schedule();
+
         // save the job id
         SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(context);
         editor.putInt(context.getString(R.string.pref_key_update_job_id), jobId);
     }
 
+    /**
+     * Method that cancel  a job
+     *
+     * @param jobId the job Id
+     */
     public static void cancelJob(int jobId) {
         JobManager.instance().cancel(jobId);
     }
