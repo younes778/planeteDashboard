@@ -26,7 +26,12 @@ public class UpdateJob extends Job {
     @Override
     @NonNull
     protected Result onRunJob(Params params) {
-        // run your job here
+        // run the update job
+        SharedPreferences pref = AppUtils.getSharedPreference(getContext());
+        boolean isAutoSync = pref.getBoolean(getContext().getString(R.string.pref_key_sync_auto), true);
+        // check if auto sync is actif
+        if (isAutoSync)
+        // check if internet is available
         if (AppUtils.isNetworkAvailable(getContext())) {
 
             final DataGetter dataGetter = new DataGetter() {
@@ -60,9 +65,16 @@ public class UpdateJob extends Job {
 
     public static void scheduleJob(Context context) {
 
+        // get sync period
+        SharedPreferences pref = AppUtils.getSharedPreference(context);
+        int syncDelay = pref.getInt(context.getString(R.string.pref_key_sync_delay), 60);
+
+        // the minimum is 15 minutes
+        if (syncDelay<15) syncDelay=15;
+
         // start the priodic job
         int jobId = new JobRequest.Builder(UpdateJob.TAG)
-                .setPeriodic(TimeUnit.MINUTES.toMillis(15))
+                .setPeriodic(TimeUnit.MINUTES.toMillis(syncDelay))
                 .build()
                 .schedule();
         // save the job id

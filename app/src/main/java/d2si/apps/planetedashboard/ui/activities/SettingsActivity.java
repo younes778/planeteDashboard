@@ -7,6 +7,7 @@ import android.preference.Preference;
 
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.background.UpdateJob;
 import d2si.apps.planetedashboard.database.controller.SalesController;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
@@ -17,6 +18,22 @@ public class SettingsActivity extends com.fnp.materialpreferences.PreferenceActi
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
         typeface(this);
+
+        findPreference(getString(R.string.pref_key_sync_delay)).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                // cancel the update job
+                SharedPreferences pref = AppUtils.getSharedPreference(getBaseContext());
+                int jobID = pref.getInt(getString(R.string.pref_key_update_job_id), -1);
+                if (jobID!=-1) {
+                    UpdateJob.cancelJob(jobID);
+                    // start the update job
+                    UpdateJob.scheduleJob(getApplicationContext());
+                }
+
+                return false;
+            }
+        });
 
         findPreference(getString(R.string.pref_key_sync_report)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
