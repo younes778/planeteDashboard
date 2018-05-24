@@ -215,7 +215,7 @@ public abstract class DataGetter {
                                                                     onSalesUpdate(false);
                                                                 } else {
                                                                     objectsToCopy.add(new ArrayList<RealmObject>(representants));
-                                                                    new DataBaseHandler(objectsToCopy) {
+                                                                    new DataBaseUpdater(objectsToCopy) {
                                                                         @Override
                                                                         public void onPost() {
                                                                             AppUtils.addOneObjectToRealm(new SyncReport(lastSync, true, context.getString(R.string.sync_report_tables_updated)));

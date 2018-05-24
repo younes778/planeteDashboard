@@ -93,4 +93,7 @@ dependencies {
     // Material preferences
     implementation 'com.fnp:material-preferences:0.1.4'
 
+    // Synchronization module
+    implementation 'com.evernote:android-job:1.2.5'
+
 }

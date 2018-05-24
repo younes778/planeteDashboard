@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.background.UpdateJob;
 import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
@@ -64,6 +65,7 @@ public class LoginActivity extends RealmActivity {
             String user = pref.getString(getString(R.string.pref_key_user), "");
             String password = pref.getString(getString(R.string.pref_key_password), "");
 
+
             hashPass=et_password.getText().toString();
             try {
                 hashPass = AppUtils.encryptString(et_password.getText().toString());
@@ -71,14 +73,16 @@ public class LoginActivity extends RealmActivity {
                 e.printStackTrace();
             }
 
-            Log.e("hash",hashPass);
-
             // check if it is the last user then we don't need to update data
-            if (user.equalsIgnoreCase(et_user.getText().toString()) && password.equals(hashPass)) {
+            if (user.equalsIgnoreCase(et_user.getText().toString()) && password.replace("\n","").trim().equals(hashPass.trim())) {
                 SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(this);
                 // save in preferences the connected user
                 editor.putBoolean(getString(R.string.pref_key_connected), true);
                 editor.apply();
+
+                // start the update job
+                UpdateJob.scheduleJob(getApplicationContext());
+
                 AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
 
             } else { // it is a new user therefor we need to update the data
@@ -117,6 +121,10 @@ public class LoginActivity extends RealmActivity {
                                 editor.putString(getString(R.string.pref_key_user), et_user.getText().toString());
                                 editor.putString(getString(R.string.pref_key_password), hashPass);
                                 editor.apply();
+
+                                // start the update job
+                                UpdateJob.scheduleJob(getApplicationContext());
+
                                 AppUtils.launchActivity(LoginActivity.this, MainMenuActivity.class, true, null);
                             }
                             else

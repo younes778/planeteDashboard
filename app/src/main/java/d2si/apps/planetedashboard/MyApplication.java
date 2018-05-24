@@ -3,8 +3,10 @@ package d2si.apps.planetedashboard;
 import android.app.Application;
 import android.content.Context;
 
+import com.evernote.android.job.JobManager;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
 
+import d2si.apps.planetedashboard.background.UpdateJobCreator;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -35,13 +37,9 @@ public class MyApplication extends Application {
         // init the AppUtils resources
         AppUtils.init(getBaseContext());
 
+        // init the update job
+        JobManager.create(this).addJobCreator(new UpdateJobCreator());
+
     }
 
-    /**
-     * Method call to initialize the icons library context
-     */
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
-    }
 }

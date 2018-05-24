@@ -1,6 +1,9 @@
 package d2si.apps.planetedashboard.ui.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -95,6 +98,7 @@ public class MainMenuActivity extends RealmActivity {
                 .color(Color.WHITE));
         img_providers.setImageDrawable(new IconicsDrawable(this).icon(AppUtils.MENU_DRAWABLES.get(4))
                 .color(Color.WHITE));
-
     }
+
+
 }

@@ -41,6 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.background.UpdateJob;
 import d2si.apps.planetedashboard.database.controller.ArticlesController;
 import d2si.apps.planetedashboard.database.controller.ClientsController;
 import d2si.apps.planetedashboard.database.controller.RepresentantController;
@@ -177,9 +178,17 @@ public class MainActivity extends RealmActivity {
                                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                                             @Override
                                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
                                                 SharedPreferences.Editor editor = AppUtils.getSharedPreferenceEdito(MainActivity.this);
                                                 editor.putBoolean(getString(R.string.pref_key_connected), false);
                                                 editor.apply();
+
+                                                // cancel the update job
+                                                SharedPreferences pref = AppUtils.getSharedPreference(getBaseContext());
+                                                int jobID = pref.getInt(getString(R.string.pref_key_update_job_id), -1);
+                                                if (jobID!=-1)
+                                                UpdateJob.cancelJob(jobID);
+
                                                 AppUtils.launchActivity(MainActivity.this, LoginActivity.class, true, null);
                                             }
                                         })
