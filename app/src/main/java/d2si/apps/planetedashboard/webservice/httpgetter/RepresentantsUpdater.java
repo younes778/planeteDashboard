@@ -14,6 +14,7 @@ import java.util.Date;
 
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.DataBaseUtils;
 import d2si.apps.planetedashboard.database.data.Representant;
 
 /**
@@ -54,7 +55,7 @@ public abstract class RepresentantsUpdater extends AsyncTask<Void, Void, ArrayLi
             }}, new ArrayList<String>() {{
                 add(AppUtils.serverName);
                 add(AppUtils.dBName);
-                add(AppUtils.formDateTimeSql(dateFrom));
+                add(DataBaseUtils.formDateTimeSql(dateFrom));
             }});
 
             // use the rest template

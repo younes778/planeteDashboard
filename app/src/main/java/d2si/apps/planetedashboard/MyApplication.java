@@ -2,6 +2,7 @@ package d2si.apps.planetedashboard;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import com.evernote.android.job.JobManager;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
@@ -17,7 +18,7 @@ import io.realm.RealmConfiguration;
  *
  * @author younessennadj
  */
-public class MyApplication extends Application {
+public class MyApplication extends MultiDexApplication {
     @Override
     /**
      * Method that create the application

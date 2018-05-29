@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.DataBaseUtils;
 import d2si.apps.planetedashboard.database.controller.SalesController;
 import d2si.apps.planetedashboard.database.controller.SalesFragmentDataSetter;
 import d2si.apps.planetedashboard.database.data.SyncReport;
@@ -73,7 +74,7 @@ public class UpdateJob extends Job {
                 // execute the update from the last sync date
                 dataGetter.updateSalesByDate(getContext(), SalesController.getLastSyncDate());
             } else // Internet not available job not executed correctly
-                AppUtils.addOneObjectToRealm(new SyncReport(new Date(Calendar.getInstance().getTimeInMillis()), false, getContext().getString(R.string.sync_report_tables_error_connexion)));
+                DataBaseUtils.addOneObjectToRealm(new SyncReport(new Date(Calendar.getInstance().getTimeInMillis()), false, getContext().getString(R.string.sync_report_tables_error_connexion)));
         return Result.SUCCESS;
     }
 

@@ -2,7 +2,7 @@ package d2si.apps.planetedashboard.database.data;
 
 import java.util.Date;
 
-import d2si.apps.planetedashboard.AppUtils;
+import d2si.apps.planetedashboard.database.DataBaseUtils;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -22,9 +22,9 @@ public class SyncReport extends RealmObject {
     /**
      * Document constructor
      *
-     * @param success true if it was a successful update, false otherwise
-     * @param tablesUpdated   a string of the database tables updated
-     * @param date       sync date
+     * @param success       true if it was a successful update, false otherwise
+     * @param tablesUpdated a string of the database tables updated
+     * @param date          sync date
      */
     public SyncReport(Date date, boolean success, String tablesUpdated) {
         this.id = date.toString();
@@ -67,7 +67,7 @@ public class SyncReport extends RealmObject {
         this.id = id;
     }
 
-    public String toString(){
-        return  (success?"✓":"✗")+" "+AppUtils.getFormattedDate(date)+" : "+tablesUpdated+"\n";
+    public String toString() {
+        return (success ? "✓" : "✗") + " " + DataBaseUtils.getFormattedDate(date) + " : " + tablesUpdated + "\n";
     }
 }

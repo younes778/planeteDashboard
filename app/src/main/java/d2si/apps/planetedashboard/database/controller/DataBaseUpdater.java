@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import java.util.ArrayList;
 import java.util.List;
 
-import d2si.apps.planetedashboard.AppUtils;
+import d2si.apps.planetedashboard.database.DataBaseUtils;
 import d2si.apps.planetedashboard.database.data.Document;
 import d2si.apps.planetedashboard.database.data.Ligne;
 import d2si.apps.planetedashboard.database.data.QuickAccessData;
@@ -61,7 +61,7 @@ public abstract class DataBaseUpdater extends AsyncTask<Void, Void, Void> {
         realm.commitTransaction();
         realm.close();
 
-        AppUtils.addOrUpdateOneObjectToRealm(new QuickAccessData(SalesController.getDayData(),SalesController.getWeekData(),SalesController.getMonthData(),SalesController.getYearData()));
+        DataBaseUtils.addOrUpdateOneObjectToRealm(new QuickAccessData(SalesController.getDayData(), SalesController.getWeekData(), SalesController.getMonthData(), SalesController.getYearData()));
 
         return null;
     }
