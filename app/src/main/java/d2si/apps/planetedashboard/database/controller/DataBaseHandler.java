@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
-import d2si.apps.planetedashboard.AppUtils;
+import d2si.apps.planetedashboard.database.DataBaseUtils;
 import d2si.apps.planetedashboard.database.data.QuickAccessData;
 import io.realm.RealmObject;
 
@@ -34,8 +34,8 @@ public abstract class DataBaseHandler extends AsyncTask<Void, Void, Void> {
      * @param params parameters to use in background
      */
     protected Void doInBackground(Void... params) {
-        AppUtils.addObjectToRealm(objectsToCopy);
-        AppUtils.addOrUpdateOneObjectToRealm(new QuickAccessData(SalesController.getDayData(),SalesController.getWeekData(),SalesController.getMonthData(),SalesController.getYearData()));
+        DataBaseUtils.addObjectToRealm(objectsToCopy);
+        DataBaseUtils.addOrUpdateOneObjectToRealm(new QuickAccessData(SalesController.getDayData(), SalesController.getWeekData(), SalesController.getMonthData(), SalesController.getYearData()));
         return null;
     }
 

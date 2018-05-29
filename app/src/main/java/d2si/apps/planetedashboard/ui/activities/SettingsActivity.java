@@ -8,6 +8,7 @@ import android.preference.Preference;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.background.UpdateJob;
+import d2si.apps.planetedashboard.database.DataBaseUtils;
 import d2si.apps.planetedashboard.database.controller.SalesController;
 
 /**
@@ -75,7 +76,7 @@ public class SettingsActivity extends com.fnp.materialpreferences.PreferenceActi
         findPreference(getString(R.string.pref_key_last_sync)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                ((EditTextPreference) preference).getEditText().setText(AppUtils.getFormattedDate(SalesController.getLastSyncDate()));
+                ((EditTextPreference) preference).getEditText().setText(DataBaseUtils.getFormattedDate(SalesController.getLastSyncDate()));
                 return false;
             }
         });

@@ -14,6 +14,7 @@ import java.util.Date;
 
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.DataBaseUtils;
 import d2si.apps.planetedashboard.database.data.Ligne;
 
 /**
@@ -58,8 +59,8 @@ public abstract class LignesGetter extends AsyncTask<Void, Void, ArrayList<Ligne
             }}, new ArrayList<String>() {{
                 add(AppUtils.serverName);
                 add(AppUtils.dBName);
-                add(AppUtils.formDateSql(dateFrom));
-                add(AppUtils.formDateSql(dateTo));
+                add(DataBaseUtils.formDateSql(dateFrom));
+                add(DataBaseUtils.formDateSql(dateTo));
             }});
 
             // use the rest template

@@ -14,6 +14,7 @@ import java.util.Date;
 
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
+import d2si.apps.planetedashboard.database.DataBaseUtils;
 import d2si.apps.planetedashboard.database.data.Ligne;
 import d2si.apps.planetedashboard.database.data.Tiers;
 
@@ -59,8 +60,8 @@ public abstract class TiersGetter extends AsyncTask<Void, Void, ArrayList<Tiers>
             }}, new ArrayList<String>() {{
                 add(AppUtils.serverName);
                 add(AppUtils.dBName);
-                add(AppUtils.formDateSql(dateFrom));
-                add(AppUtils.formDateSql(dateTo));
+                add(DataBaseUtils.formDateSql(dateFrom));
+                add(DataBaseUtils.formDateSql(dateTo));
             }});
 
             // use the rest template
