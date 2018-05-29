@@ -6,4 +6,9 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="PreferenceTheme" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
 </resources>

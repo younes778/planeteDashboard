@@ -37,6 +37,8 @@
     <style name="PreferenceTheme" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
     </style>
 
 
