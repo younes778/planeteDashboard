@@ -44,7 +44,7 @@
     <!--                Edit Texts                -->
     <string name="et_user">Utilisateur</string>
     <string name="et_password">Mot de passe</string>
-    <string name="et_server">Nome de serveur</string>
+    <string name="et_server">Nom du serveur de l\'entreprise</string>
     <string name="et_database">Nom de la base de données</string>
 
     <string name="et_user_helper">Introduisez le nom d\'utilisateu</string>
