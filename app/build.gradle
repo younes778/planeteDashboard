@@ -8,8 +8,8 @@ android {
         applicationId "d2si.apps.planetedashboard"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 3
-        versionName "0.9"
+        versionCode 100
+        versionName "0.9.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
