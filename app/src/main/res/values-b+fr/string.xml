@@ -2,7 +2,7 @@
 
 
     <!--                App d2si.apps.planetedashboard.database.data                -->
-    <string name="activity_login">CONNEXION</string>
+    <string name="activity_login">AUTHENTIFICATION</string>
     <string name="activity_settings">PREFERENCES</string>
 
     <!--                    Menu                 -->
@@ -31,7 +31,7 @@
     <string name="tab_day">JOUR</string>
     <string name="tab_week">SEMAINE</string>
     <string name="tab_month">MOIS</string>
-    <string name="tab_year">ANNEE</string>
+    <string name="tab_year">ANNÈE</string>
 
     <!--                Text Views                -->
     <string name="tv_today"><b>Aujourd\'hui</b></string>
@@ -46,6 +46,8 @@
     <string name="et_password">Mot de passe</string>
     <string name="et_server">Nom du serveur de l\'entreprise</string>
     <string name="et_database">Nom de la base de données</string>
+    <string name="et_database_user">Utilisateur de la base de données</string>
+    <string name="et_database_password">Mot de passe de l\'utilisateur de la base de données</string>
 
     <string name="et_user_helper">Introduisez le nom d\'utilisateu</string>
     <string name="et_password_helper">Introduisez le mot de passe</string>
@@ -55,7 +57,7 @@
     <string name="et_error_not_empty">Les champs ne doivent pas être vide</string>
 
     <!--                 Buttons                   -->
-    <string name="btn_login"><b>Connecter</b></string>
+    <string name="btn_login"><b>S\'authentifier</b></string>
     <string name="btn_connectivity_test"><b>Test de connectivité</b></string>
 
     <!--            Progress                -->
@@ -108,6 +110,8 @@
     <string name="pref_title_sync">Synchronisation</string>
     <string name="pref_title_server">Nom de serveur</string>
     <string name="pref_title_database">Nom de la base de données</string>
+    <string name="pref_title_database_user">Utilisateur de la base de données</string>
+    <string name="pref_title_database_password">Mot de passe de la base de données</string>
     <string name="pref_title_sync_auto">Auto synchronisation</string>
     <string name="pref_title_sync_delay">Délai de synchornisation (Minutes)</string>
     <string name="pref_title_last_sync">Dernière synchronisation</string>
@@ -115,6 +119,8 @@
 
     <string name="pref_summary_server">Le serveur contenant la base de données</string>
     <string name="pref_summary_database">Nom de la base de données contenante des données</string>
+    <string name="pref_summary_database_user">Utilisateur de la base de données</string>
+    <string name="pref_summary_database_password">Mot de passe de l\'utilisateur de la base de données</string>
     <string name="pref_summary_sync_auto">définir si la synchronisation devrait se faire automatiquement</string>
     <string name="pref_summary_sync_delay">La fréquence de synchronisation à partir de serveur</string>
     <string name="pref_summary_last_sync">Date &amp; temps de la dernière synchronisation</string>

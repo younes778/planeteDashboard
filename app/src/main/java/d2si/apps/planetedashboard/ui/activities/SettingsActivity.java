@@ -113,6 +113,46 @@ public class SettingsActivity extends com.fnp.materialpreferences.PreferenceActi
             }
         });
 
+        findPreference(getString(R.string.pref_key_database_user)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                ((EditTextPreference) preference).getEditText().setText(AppUtils.dBUser);
+                return false;
+            }
+        });
+
+        findPreference(getString(R.string.pref_key_database_user)).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                AppUtils.dBUser = (String) o;
+                return false;
+            }
+        });
+
+        findPreference(getString(R.string.pref_key_database_password)).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                ((EditTextPreference) preference).getEditText().setText(AppUtils.dBPassword);
+                return false;
+            }
+        });
+
+        findPreference(getString(R.string.pref_key_database_password)).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                // Encrypt the password according to the encryption algorithm
+                String hashPass = (String) o;
+                try {
+                    hashPass = AppUtils.encryptString((String) o);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                AppUtils.dBPassword = hashPass;
+                return false;
+            }
+        });
+
+
 
     }
 }

@@ -16,9 +16,9 @@ import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.database.DataBaseUtils;
 import d2si.apps.planetedashboard.database.controller.SalesController;
-import d2si.apps.planetedashboard.database.controller.SalesFragmentDataSetter;
+import d2si.apps.planetedashboard.database.controller.SalesFragmentController;
 import d2si.apps.planetedashboard.database.data.SyncReport;
-import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
+import d2si.apps.planetedashboard.webservice.controller.DataController;
 
 /**
  * UpdateJob
@@ -49,12 +49,12 @@ public class UpdateJob extends Job {
             // check if internet is available
             if (AppUtils.isNetworkAvailable(getContext())) {
 
-                final DataGetter dataGetter = new DataGetter() {
+                final DataController dataController = new DataController() {
                     @Override
                     public void onSalesUpdate(boolean success) {
 
                         // update the quick data access values
-                        new SalesFragmentDataSetter() {
+                        new SalesFragmentController() {
                             @Override
                             public void onDataSet() {
                             }
@@ -72,7 +72,7 @@ public class UpdateJob extends Job {
                     }
                 };
                 // execute the update from the last sync date
-                dataGetter.updateSalesByDate(getContext(), SalesController.getLastSyncDate());
+                dataController.updateSalesByDate(getContext(), SalesController.getLastSyncDate());
             } else // Internet not available job not executed correctly
                 DataBaseUtils.addOneObjectToRealm(new SyncReport(new Date(Calendar.getInstance().getTimeInMillis()), false, getContext().getString(R.string.sync_report_tables_error_connexion)));
         return Result.SUCCESS;

@@ -114,6 +114,53 @@
 
             </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
+            <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                android:id="@+id/field_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelText="@string/et_user"
+                app:secondaryColor="@color/colorPrimary"
+                app:primaryColor="@color/colorPrimary"
+                app:errorColor="@color/colorError"
+                android:layout_marginBottom="10dp"
+                app:panelBackgroundColor="@color/colorTextPrimary"
+                app:hasClearButton="true"
+                app:enabled="true"
+                >
+
+                <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                    android:id="@+id/et_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    />
+
+            </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+            <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                android:id="@+id/field_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelText="@string/et_password"
+                app:secondaryColor="@color/colorPrimary"
+                app:primaryColor="@color/colorPrimary"
+                app:errorColor="@color/colorError"
+                android:layout_marginBottom="10dp"
+                app:panelBackgroundColor="@color/colorTextPrimary"
+                app:hasClearButton="true"
+                app:enabled="true"
+                >
+
+                <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:inputType="textPassword"
+                    />
+
+            </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
             <com.balysv.materialripple.MaterialRippleLayout
                 android:id="@+id/btn_connectivity_test"
                 android:layout_width="match_parent"

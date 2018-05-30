@@ -52,6 +52,8 @@ public class AppUtils {
     public static String dateFormat = "dd-MMM-yyyy HH:mm:ss";
     public static String serverName;
     public static String dBName;
+    public static String dBUser;
+    public static String dBPassword;
     public static int CONNEXION_TIMEOUT = 20000;
     public static int READ_TIMEOUT = 5000000;
     public static ArrayList<IIcon> MENU_DRAWABLES = new ArrayList() {{
@@ -90,6 +92,8 @@ public class AppUtils {
         SharedPreferences pref = AppUtils.getSharedPreference(context);
         serverName = pref.getString(context.getString(R.string.pref_key_server), "");
         dBName = pref.getString(context.getString(R.string.pref_key_database), "");
+        dBUser = pref.getString(context.getString(R.string.pref_key_database_user), "");
+        dBPassword = pref.getString(context.getString(R.string.pref_key_database_password), "");
     }
 
     /**

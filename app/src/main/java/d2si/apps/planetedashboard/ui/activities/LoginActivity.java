@@ -17,7 +17,7 @@ import butterknife.OnClick;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 import d2si.apps.planetedashboard.background.UpdateJob;
-import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
+import d2si.apps.planetedashboard.webservice.controller.DataController;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
@@ -105,7 +105,7 @@ public class LoginActivity extends RealmActivity {
                     calendar.set(Calendar.SECOND, 0);
                     final Date date2 = new Date(calendar.getTimeInMillis());
 
-                    final DataGetter dataGetter = new DataGetter() {
+                    final DataController dataController = new DataController() {
                         @Override
                         public void onSalesUpdate(boolean success) {
 
@@ -151,7 +151,7 @@ public class LoginActivity extends RealmActivity {
                         }
                     };
 
-                    dataGetter.checkUserCrediants(getBaseContext(), et_user.getText().toString(), hashPass);
+                    dataController.checkUserCrediants(getBaseContext(), et_user.getText().toString(), hashPass);
                 } else
                     Toast.makeText(getBaseContext(), getString(R.string.error_no_connexion), Toast.LENGTH_LONG).show();
 

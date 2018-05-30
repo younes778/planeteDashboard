@@ -1,4 +1,4 @@
-package d2si.apps.planetedashboard.webservice.httpgetter;
+package d2si.apps.planetedashboard.webservice.controller;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -15,29 +15,35 @@ import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 
 /**
- * class that represents user getter
+ * class that represents server database getter
  *
  * @author younessennadj
  */
-public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
+public abstract class ServerController extends AsyncTask<Void, Void, Boolean> {
 
     private Context context;
-    private String user;
-    private String password;
-
+    private String server;
+    private String database;
+    private String dbUser;
+    private String dbPassword;
 
     /**
      * Method that execute the http task
      *
      * @param context  app actual context
-     * @param user     database user
-     * @param password database user password
+     * @param server   server url
+     * @param database database name
+     * @param user   user name
      */
-    public UserGetter(Context context, String user, String password) {
+    public ServerController(Context context, String server, String database, String user, String password) {
         this.context = context;
-        this.user = user;
-        this.password = password;
+        this.server = server;
+        this.database = database;
+        this.dbUser = user;
+        this.dbPassword = password;
     }
+
+
 
 
     @Override
@@ -49,16 +55,16 @@ public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
     protected Boolean doInBackground(final Void... params) {
         try {
             // form the url with the fields
-            final String url = AppUtils.formGetUrl(context.getString(R.string.REST_SERVER_URL), Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)), context.getString(R.string.REST_REQUEST_USER), new ArrayList<String>() {{
+            final String url = AppUtils.formGetUrl(context.getString(R.string.REST_SERVER_URL), Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)), context.getString(R.string.REST_REQUEST_SERVER), new ArrayList<String>() {{
                 add(context.getString(R.string.REST_FIELD_URL));
                 add(context.getString(R.string.REST_FIELD_DB_NAME));
-                add(context.getString(R.string.REST_FIELD_USER));
-                add(context.getString(R.string.REST_FIELD_PASSWORD));
+                add(context.getString(R.string.REST_FIELD_DB_USER));
+                add(context.getString(R.string.REST_FIELD_DB_PASSWORD));
             }}, new ArrayList<String>() {{
-                add(AppUtils.serverName);
-                add(AppUtils.dBName);
-                add(user);
-                add(URLEncoder.encode(password,"utf-8"));
+                add(server);
+                add(database);
+                add(dbUser);
+                add(URLEncoder.encode(dbPassword,"utf-8"));
             }});
 
             // use the rest template
@@ -87,17 +93,17 @@ public abstract class UserGetter extends AsyncTask<Void, Void, Boolean> {
     /**
      * Method that execute the http task
      *
-     * @param login return from the web service
+     * @param checked return from the web service
      */
-    protected void onPostExecute(Boolean login) {
-        onPost(login);
+    protected void onPostExecute(Boolean checked) {
+        onPost(checked);
     }
 
     /**
      * Method that execute on task finished
      *
-     * @param login is User permitted to connect
+     * @param checked is connection with server database is established
      */
-    public abstract void onPost(Boolean login);
+    public abstract void onPost(Boolean checked);
 
 }

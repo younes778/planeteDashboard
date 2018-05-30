@@ -29,6 +29,21 @@
             android:summary="@string/pref_summary_database"
             android:title="@string/pref_title_database" />
 
+        <EditTextPreference
+            android:key="@string/pref_key_database_user"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="@string/pref_summary_database_user"
+            android:title="@string/pref_title_database_user" />
+
+        <EditTextPreference
+            android:key="@string/pref_key_database_password"
+            android:selectAllOnFocus="true"
+            android:inputType="textPassword"
+            android:singleLine="true"
+            android:summary="@string/pref_summary_database_password"
+            android:title="@string/pref_title_database_password" />
+
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/pref_key_sync_auto"

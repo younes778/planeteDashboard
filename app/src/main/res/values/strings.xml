@@ -5,23 +5,22 @@
     <string name="REST_SERVER_URL">http://192.168.1.2</string>
     <string name="REST_SERVER_PORT">8080</string>
 
-    <string name="REST_REQUEST_SALES_GET">salesGet</string>
-    <string name="REST_REQUEST_ARTICLES_GET">articlesGet</string>
-    <string name="REST_REQUEST_LIGNES_GET">lignesGet</string>
-    <string name="REST_REQUEST_TIERS_GET">tiersGet</string>
-    <string name="REST_REQUEST_REPRESENTANT_GET">representantsGet</string>
+    <string name="REST_REQUEST_SALES">sales</string>
+    <string name="REST_REQUEST_ARTICLES">articles</string>
+    <string name="REST_REQUEST_LIGNES">lignes</string>
+    <string name="REST_REQUEST_TIERS">tiers</string>
+    <string name="REST_REQUEST_REPRESENTANT">representants</string>
+    <string name="REST_REQUEST_GET">Get</string>
+    <string name="REST_REQUEST_UPDATE">Update</string>
 
-    <string name="REST_REQUEST_SALES_UPDATE">salesUpdate</string>
-    <string name="REST_REQUEST_ARTICLES_UPDATE">articlesUpdate</string>
-    <string name="REST_REQUEST_LIGNES_UPDATE">lignesUpdate</string>
-    <string name="REST_REQUEST_TIERS_UPDATE">tiersUpdate</string>
-    <string name="REST_REQUEST_REPRESENTANT_UPDATE">representantsUpdate</string>
 
     <string name="REST_REQUEST_SERVER">server</string>
     <string name="REST_REQUEST_USER">user</string>
     <string name="REST_REQUEST_SALES_TEMPLATE">salestemplate</string>
     <string name="REST_FIELD_URL">url</string>
     <string name="REST_FIELD_DB_NAME">dbName</string>
+    <string name="REST_FIELD_DB_USER">dbUser</string>
+    <string name="REST_FIELD_DB_PASSWORD">dbPassword</string>
     <string name="REST_FIELD_DATE_FROM">dateFrom</string>
     <string name="REST_FIELD_DATE_TO">dateTo</string>
     <string name="REST_FIELD_USER">user</string>
@@ -31,7 +30,7 @@
     <integer name="db_local_version">3</integer>
     <string name="app_name">PLANÈTE <b>DASHBOARD</b></string>
     <string name="app_splash"><b>PLANÈTE\nDASHBOARD</b></string>
-    <string name="activity_login">LOGIN</string>
+    <string name="activity_login">AUTHENTIFICATION</string>
     <string name="activity_settings">SETTINGS</string>
     <string name="current_currency">DZ</string>
     <string name="currency"><b>%1$s</b> %2$s</string>
@@ -95,6 +94,8 @@
     <string name="et_password">Password</string>
     <string name="et_server">Server Name</string>
     <string name="et_database">Database Name</string>
+    <string name="et_database_user">Database User</string>
+    <string name="et_database_password">Database Password</string>
 
     <string name="et_user_helper">Enter the user name</string>
     <string name="et_password_helper">Enter the user password</string>
@@ -123,6 +124,8 @@
     <string name="pref_title_sync">Synchronization</string>
     <string name="pref_title_server">Server Name</string>
     <string name="pref_title_database">Database Name</string>
+    <string name="pref_title_database_user">Database User</string>
+    <string name="pref_title_database_password">Database Password</string>
     <string name="pref_title_sync_auto">Auto sync</string>
     <string name="pref_title_sync_delay">Sync Delay (Minutes)</string>
     <string name="pref_title_last_sync">Last sync</string>
@@ -131,6 +134,8 @@
     <string name="pref_key">pref</string>
     <string name="pref_key_server">server</string>
     <string name="pref_key_database">database</string>
+    <string name="pref_key_database_user">databaseUser</string>
+    <string name="pref_key_database_password">databasePassword</string>
     <string name="pref_key_sync_auto">autoSync</string>
     <string name="pref_key_sync_delay">delay</string>
     <string name="pref_key_last_sync">lastSync</string>
@@ -143,6 +148,8 @@
 
     <string name="pref_summary_server">The server containing the database</string>
     <string name="pref_summary_database">Name of the database containing the ERP</string>
+    <string name="pref_summary_database_user">User of the database</string>
+    <string name="pref_summary_database_password">User password of the database</string>
     <string name="pref_summary_sync_auto">Tell if the synchronization is automatically done</string>
     <string name="pref_summary_sync_delay">The frequency of syncing data from server</string>
     <string name="pref_summary_last_sync">Date &amp; time of the last sync</string>

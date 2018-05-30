@@ -14,7 +14,7 @@ import d2si.apps.planetedashboard.ui.fragments.SalesYearFragment;
  *
  * @author younessennadj
  */
-public abstract class SalesFragmentDataSetter extends AsyncTask<Void, Void, Void> {
+public abstract class SalesFragmentController extends AsyncTask<Void, Void, Void> {
 
 
     @Override

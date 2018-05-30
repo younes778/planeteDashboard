@@ -1,4 +1,4 @@
-package d2si.apps.planetedashboard.webservice.httpgetter;
+package d2si.apps.planetedashboard.webservice.controller;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -8,34 +8,37 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
 
 /**
- * class that represents server database getter
+ * class that represents user getter
  *
  * @author younessennadj
  */
-public abstract class ServerDBGetter extends AsyncTask<Void, Void, Boolean> {
+public abstract class UserController extends AsyncTask<Void, Void, Boolean> {
 
     private Context context;
-    private String server;
-    private String database;
+    private String user;
+    private String password;
+
 
     /**
      * Method that execute the http task
      *
      * @param context  app actual context
-     * @param server   server url
-     * @param database database name
+     * @param user     database user
+     * @param password database user password
      */
-    public ServerDBGetter(Context context, String server, String database) {
+    public UserController(Context context, String user, String password) {
         this.context = context;
-        this.server = server;
-        this.database = database;
+        this.user = user;
+        this.password = password;
     }
+
 
     @Override
     /**
@@ -46,12 +49,20 @@ public abstract class ServerDBGetter extends AsyncTask<Void, Void, Boolean> {
     protected Boolean doInBackground(final Void... params) {
         try {
             // form the url with the fields
-            final String url = AppUtils.formGetUrl(context.getString(R.string.REST_SERVER_URL), Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)), context.getString(R.string.REST_REQUEST_SERVER), new ArrayList<String>() {{
+            final String url = AppUtils.formGetUrl(context.getString(R.string.REST_SERVER_URL), Integer.parseInt(context.getString(R.string.REST_SERVER_PORT)), context.getString(R.string.REST_REQUEST_USER), new ArrayList<String>() {{
                 add(context.getString(R.string.REST_FIELD_URL));
                 add(context.getString(R.string.REST_FIELD_DB_NAME));
+                add(context.getString(R.string.REST_FIELD_DB_USER));
+                add(context.getString(R.string.REST_FIELD_DB_PASSWORD));
+                add(context.getString(R.string.REST_FIELD_USER));
+                add(context.getString(R.string.REST_FIELD_PASSWORD));
             }}, new ArrayList<String>() {{
-                add(server);
-                add(database);
+                add(AppUtils.serverName);
+                add(AppUtils.dBName);
+                add(AppUtils.dBUser);
+                add(URLEncoder.encode(AppUtils.dBPassword,"utf-8"));
+                add(user);
+                add(URLEncoder.encode(password,"utf-8"));
             }});
 
             // use the rest template
@@ -80,17 +91,17 @@ public abstract class ServerDBGetter extends AsyncTask<Void, Void, Boolean> {
     /**
      * Method that execute the http task
      *
-     * @param checked return from the web service
+     * @param login return from the web service
      */
-    protected void onPostExecute(Boolean checked) {
-        onPost(checked);
+    protected void onPostExecute(Boolean login) {
+        onPost(login);
     }
 
     /**
      * Method that execute on task finished
      *
-     * @param checked is connection with server database is established
+     * @param login is User permitted to connect
      */
-    public abstract void onPost(Boolean checked);
+    public abstract void onPost(Boolean login);
 
 }

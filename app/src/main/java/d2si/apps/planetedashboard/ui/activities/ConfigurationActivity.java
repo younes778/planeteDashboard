@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import d2si.apps.planetedashboard.AppUtils;
 import d2si.apps.planetedashboard.R;
-import d2si.apps.planetedashboard.webservice.httpgetter.ServerDBGetter;
+import d2si.apps.planetedashboard.webservice.controller.ServerController;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 
@@ -34,7 +34,16 @@ public class ConfigurationActivity extends RealmActivity {
     ExtendedEditText et_database;
     @BindView(R.id.field_database)
     TextFieldBoxes field_database;
+    @BindView(R.id.et_user)
+    ExtendedEditText et_user;
+    @BindView(R.id.field_user)
+    TextFieldBoxes field_user;
+    @BindView(R.id.et_password)
+    ExtendedEditText et_password;
+    @BindView(R.id.field_password)
+    TextFieldBoxes field_password;
     private MaterialDialog dialog;
+    private String hashPass;
 
     /**
      * Method call when test connectivity button clicked
@@ -46,12 +55,30 @@ public class ConfigurationActivity extends RealmActivity {
         if (!validateServer())
             field_server.setError(getString(R.string.et_error_not_empty), false);
 
-        // Validate Password
+        // Validate database name
         if (!validateDatabase())
             field_database.setError(getString(R.string.et_error_not_empty), false);
 
+        // Validate user
+        if (!validateUser())
+            field_user.setError(getString(R.string.et_error_not_empty), false);
+
+        // Validate Password
+        if (!validatePassword())
+            field_password.setError(getString(R.string.et_error_not_empty), false);
+
+
+
         // if all validated launch main activity
-        if (validateServer() && validateDatabase()) {
+        if (validateServer() && validateDatabase() && validateUser() && validatePassword()) {
+
+            // Encrypt the password according to the encryption algorithm
+            hashPass = et_password.getText().toString();
+            try {
+                hashPass = AppUtils.encryptString(et_password.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             if (AppUtils.isNetworkAvailable(getBaseContext())) {
                 dialog = new MaterialDialog.Builder(this)
@@ -61,7 +88,7 @@ public class ConfigurationActivity extends RealmActivity {
                         .cancelable(false)
                         .show();
 
-                new ServerDBGetter(getBaseContext(), et_server.getText().toString(), et_database.getText().toString()) {
+                new ServerController(getBaseContext(), et_server.getText().toString(), et_database.getText().toString(),et_user.getText().toString(),hashPass) {
                     @Override
                     public void onPost(Boolean checked) {
                         dialog.dismiss();
@@ -72,9 +99,15 @@ public class ConfigurationActivity extends RealmActivity {
                             // save in preferences the database server
                             AppUtils.serverName = et_server.getText().toString();
                             AppUtils.dBName = et_database.getText().toString();
+                            AppUtils.dBUser = et_user.getText().toString();
+                            AppUtils.dBPassword = hashPass;
+
                             editor.putString(getString(R.string.pref_key_server), et_server.getText().toString());
                             editor.putString(getString(R.string.pref_key_database), et_database.getText().toString());
+                            editor.putString(getString(R.string.pref_key_database_user), et_user.getText().toString());
+                            editor.putString(getString(R.string.pref_key_database_password), hashPass);
                             editor.apply();
+
                             AppUtils.launchActivity(ConfigurationActivity.this, LoginActivity.class, true, null);
                         } else {
                             Toast.makeText(getBaseContext(), R.string.error_server, Toast.LENGTH_SHORT).show();
@@ -111,14 +144,28 @@ public class ConfigurationActivity extends RealmActivity {
         et_server.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                AppUtils.hideKeyboard(view,getBaseContext());
+                AppUtils.hideKeyboard(view, getBaseContext());
             }
         });
 
         et_database.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                AppUtils.hideKeyboard(view,getBaseContext());
+                AppUtils.hideKeyboard(view, getBaseContext());
+            }
+        });
+
+        et_user.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                AppUtils.hideKeyboard(view, getBaseContext());
+            }
+        });
+
+        et_password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                AppUtils.hideKeyboard(view, getBaseContext());
             }
         });
 
@@ -139,6 +186,22 @@ public class ConfigurationActivity extends RealmActivity {
     private boolean validateDatabase() {
         // check field not empty
         return !et_database.getText().toString().equals("");
+    }
+
+    /**
+     * Method call to validate the user syntax
+     */
+    private boolean validateUser() {
+        // check field not empty
+        return !et_user.getText().toString().equals("");
+    }
+
+    /**
+     * Method call to validate the password syntax
+     */
+    private boolean validatePassword() {
+        // check field not empty
+        return !et_password.getText().toString().equals("");
     }
 
 

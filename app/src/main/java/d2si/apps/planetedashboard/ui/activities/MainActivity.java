@@ -41,7 +41,7 @@ import d2si.apps.planetedashboard.database.controller.ArticlesController;
 import d2si.apps.planetedashboard.database.controller.ClientsController;
 import d2si.apps.planetedashboard.database.controller.RepresentantController;
 import d2si.apps.planetedashboard.database.controller.SalesController;
-import d2si.apps.planetedashboard.database.controller.SalesFragmentDataSetter;
+import d2si.apps.planetedashboard.database.controller.SalesFragmentController;
 import d2si.apps.planetedashboard.database.data.Article;
 import d2si.apps.planetedashboard.database.data.Representant;
 import d2si.apps.planetedashboard.database.data.Tiers;
@@ -51,7 +51,7 @@ import d2si.apps.planetedashboard.ui.fragments.SalesDayFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesMonthFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesWeekFragment;
 import d2si.apps.planetedashboard.ui.fragments.SalesYearFragment;
-import d2si.apps.planetedashboard.webservice.datagetter.DataGetter;
+import d2si.apps.planetedashboard.webservice.controller.DataController;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
@@ -205,7 +205,7 @@ public class MainActivity extends RealmActivity {
                                             .progress(true, 0)
                                             .cancelable(false)
                                             .show();
-                                    final DataGetter dataGetter = new DataGetter() {
+                                    final DataController dataController = new DataController() {
                                         @Override
                                         public void onSalesUpdate(boolean success) {
                                             dialog.dismiss();
@@ -217,7 +217,7 @@ public class MainActivity extends RealmActivity {
                                                         .cancelable(false)
                                                         .show();
 
-                                                new SalesFragmentDataSetter() {
+                                                new SalesFragmentController() {
                                                     @Override
                                                     public void onDataSet() {
                                                         dialog.dismiss();
@@ -239,7 +239,7 @@ public class MainActivity extends RealmActivity {
                                         }
                                     };
 
-                                    dataGetter.updateSalesByDate(getBaseContext(), SalesController.getLastSyncDate());
+                                    dataController.updateSalesByDate(getBaseContext(), SalesController.getLastSyncDate());
                                 } else
                                     Toast.makeText(getBaseContext(), getString(R.string.error_no_connexion), Toast.LENGTH_LONG).show();
                                 break;
@@ -377,7 +377,7 @@ public class MainActivity extends RealmActivity {
                                         .cancelable(false)
                                         .show();
 
-                                new SalesFragmentDataSetter() {
+                                new SalesFragmentController() {
                                     @Override
                                     public void onDataSet() {
                                         dialog.dismiss();
@@ -479,7 +479,7 @@ public class MainActivity extends RealmActivity {
                                         .cancelable(false)
                                         .show();
 
-                                new SalesFragmentDataSetter() {
+                                new SalesFragmentController() {
                                     @Override
                                     public void onDataSet() {
                                         dialog.dismiss();
@@ -578,7 +578,7 @@ public class MainActivity extends RealmActivity {
                                         .cancelable(false)
                                         .show();
 
-                                new SalesFragmentDataSetter() {
+                                new SalesFragmentController() {
                                     @Override
                                     public void onDataSet() {
                                         dialog.dismiss();
