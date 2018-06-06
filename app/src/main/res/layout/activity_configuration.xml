@@ -16,23 +16,7 @@
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/login_background" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorBackgroundSecondary"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:elevation="2dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/app_copyright"
-        android:textColor="@color/colorPrimary" />
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false">
