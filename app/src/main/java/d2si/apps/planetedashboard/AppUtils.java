@@ -1,8 +1,8 @@
 package d2si.apps.planetedashboard;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +37,8 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import d2si.apps.planetedashboard.ui.activities.RealmActivity;
 
 import static com.norbsoft.typefacehelper.TypefaceHelper.typeface;
 
@@ -260,12 +262,12 @@ public class AppUtils {
      * @param activity the activity to load on
      * @param fragment The fragment to load
      */
-    public static void loadFragment(Activity activity, Fragment fragment) {
+    public static void loadFragment(RealmActivity activity, Fragment fragment) {
 
         // create a FragmentManager
-        FragmentManager fm = activity.getFragmentManager();
+        FragmentManager fm = activity.getSupportFragmentManager();
         // create a FragmentTransaction to begin the transaction and replace the Fragment
-        android.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
         // replace the FrameLayout with new Fragment
         fragmentTransaction.replace(R.id.fragment_manager, fragment);
         // save the changes
