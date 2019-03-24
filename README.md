@@ -1,35 +1,35 @@
-Planète Dashboard
+Planete Dashboard
 ===================================
-## Fonctionnement
+## Principal
 
-PLANÈTE DASHBOARD ou tableau de bord permet la centralisation en un seul point, d’un ensemble de données permettant de piloter efficacement votre activité. 
-La complexité des données et leur multiplication complique la synthèse des données et la mise en place de tableaux analytiques. PLANÈTE DASHBOARD vous permet de construire des tableaux de bord avec des indicateurs (KPI) pertinents ayant pour objectif :
+PLANETE DASHBOARD is a dashboard that allow to centralize data around a single point so you can efficiently track your activitiy. 
+The complexity of the data and their evolution make it harder to extract useful information and report analytic dashboards. PLANETE DASHBOARD allows you to generate reports around Key Performace Indicators  (KPI) with multiple goals:
 
-• De vous aider à augmenter votre chiffre d'affaires;.
+• Help you increase you turnover.
 
-• D’amplifier la satisfaction de vos clients. 
+• Amplify your clients satisfaction. 
 
-• D’optimiser vos achats et vos stocks.
+• Optimize buying and stocks.
 
-• De rendre votre entreprise plus agile et réactive. 
+• Help your company to be more agile and reactif. 
 
 
-## Architecture fonctionnelle
-Planète Dashboard est une application qui se répartie en plusieurs parties :
+## Architecture
+Planète Dashboard has many parts involved in:
 
-*	[Partie Applicative] elle se lance au niveau de smartphone (ayant comme Système d’exploitation Android), permettant de représenter les indicateurs sous forme d’un Dashboard avec des graphes explicites.
+*	[Mobile App] It launches in a smartphone (with Operation system Android), able to represent the data and indicators in form of an analytic dashboard with explicit graphics.
 
-*	[Base de données minimale]  portable avec la partie applicative, représentant les données minimales qui permet de lancer l’application. Cette dernière se met à jour régulièrement. Cette dernière est développé avec l’outil Realm une base de données très puissante dédiée pour mobile basée sur SQLite.
+*	[Minimal database]  This part represent the minimal data stocked in the application so it can run normally. Perdiocally, the data get updated. We have used for this part Realm a very scalable database based on SQLite.
 
-*	[Serveur de synchronisation]  Il permet de lier l’application se trouvant sur smartphone avec l’ERP et les bases de données des clients d’une manière efficace. Ainsi, il permet d’unifier l’accès aux données en permettant à n’importe quel utilisateur mobile d’accéder à une base de données spécifiques tout en respectant les contraintes de sécurité. Ce serveur est basé sur Spring une technologie fondée sur une architecture RestFull. Le langage de programmation utilisé à ce niveau est Java.
+*	[Synchronization Server]  Allows the secured connexion between the mobile app reside in the smartphone with the data reside in distant database. Then, it allows unified access for all mobile users for specific databases in a secured way. This web service has been implement using Spring respecting a restful architecture using Java as programming language. 
 
-## Technologies utilisées
-Planète Dashboard est une application qui se répartie en plusieurs parties :
+## Technologies used
+Planète Dashboard is an application with different parts, technologies that have been used are listed below :
 
-*	[Android studio - Android & Java](https://developer.android.com/about/) l'application est développée sous l'environement Android qui utilise le language de programation Java.
+*	[Android studio - Android & Java](https://developer.android.com/about/) the mobile app has been developed using Android Native and Java for programming.
 
-*	[Realm](https://realm.io/docs/java/latest/)  portable avec la partie applicative,  l’outil Realm une base de données très puissante dédiée pour mobile basée sur SQLite, plus fluide et simple à utiliser.
+*	[Realm](https://realm.io/docs/java/latest/)  Realm is a scalable database with very powerful functionalities based on SQLite default internal database for Android, but with an abstraction that make it more simple and rigide to use.
 
-*	[SqlServer](https://www.microsoft.com/en-us/sql-server/sql-server-2017)  L'ERP se trouve au niveau de client est basé sur SQL server, pour rêqueter ce dernier il faut utiliser le language SQL.
+*	[SqlServer](https://www.microsoft.com/en-us/sql-server/sql-server-2017)  SQLServer is used to request the database distant in the client server.
 
-* [Spring](https://spring.io/) Permet de mettre en place un serveur respectant l'architecture RESTFull. 
+* [Spring](https://spring.io/) Restfull Webservices creation to connect with the distant server having the data. 
